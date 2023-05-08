@@ -5,8 +5,7 @@ import ThemeProvider, { getPaletteFromLS } from "@/app/providers/ThemeProvider";
 import AdaptiveBackground from "@/components/AdaptiveBackground";
 import StylableClerkProvider from "@/app/providers/StylableClerkProvider";
 import { ClerkProvider } from "@clerk/nextjs";
-import AuthProvider from "@/providers/AuthProvider";
-import Header from '@/components/header';
+import Header from "@/components/header";
 import { dark } from "@clerk/themes";
 import { useRouter } from "next/navigation";
 import { ClientClerkProvider } from "@clerk/nextjs/dist/app-router/client/ClerkProvider";
@@ -24,18 +23,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-      <ThemeProvider>
-        <StylableClerkProvider>
-      <AuthProvider>
-        <html lang="en">
-          <body className={inter.className}>
-            <Header/>
-            <AdaptiveBackground>{children}</AdaptiveBackground>
-            {children}
-          </body>
-        </html>
-      </AuthProvider>
-        </StylableClerkProvider>
-      </ThemeProvider>
+    <ThemeProvider>
+      <StylableClerkProvider>
+        <AuthProvider>
+          <html lang="en">
+            <body className={inter.className}>
+              <Header />
+              <AdaptiveBackground>{children}</AdaptiveBackground>
+              {children}
+            </body>
+          </html>
+        </AuthProvider>
+      </StylableClerkProvider>
+    </ThemeProvider>
   );
 }
