@@ -21,7 +21,7 @@ model User {
   email     String
   password  String
   createdAt DateTime      @default(now())
-  editedAt  DateTime      @updatedAt
+  editedAt  DateTime?     @updatedAt
   deletedAt DateTime?
   projects  ProjectUser[]
 }
@@ -41,7 +41,7 @@ model ProjectUser {
   project         Project          @relation(fields: [projectId], references: [id])
   projectId       String
   createdAt       DateTime         @default(now())
-  editedAt        DateTime         @updatedAt
+  editedAt        DateTime?        @updatedAt
   deletedAt       DateTime?
   variableEdits   VariableEdit[]
   hiddenVariables HiddenVariable[]
@@ -52,22 +52,23 @@ model Project {
   name        String
   description String
   createdAt   DateTime      @default(now())
-  editedAt    DateTime      @updatedAt
+  editedAt    DateTime?     @updatedAt
   deletedAt   DateTime?
   variables   Variable[]
   users       ProjectUser[]
 }
 
 model Variable {
-  id                String         @id @default(uuid())
-  project           Project        @relation(fields: [projectId], references: [id])
+  id                String           @id @default(uuid())
+  project           Project          @relation(fields: [projectId], references: [id])
   projectId         String
-  createdAt         DateTime       @default(now())
+  createdAt         DateTime         @default(now())
   deletedAt         DateTime?
   name              String
   value             String
   minimalAccessRole Role
   edits             VariableEdit[]
+  HiddenVariable    HiddenVariable[]
 }
 
 model VariableEdit {
@@ -77,7 +78,7 @@ model VariableEdit {
   name              String
   value             String
   minimalAccessRole Role
-  editedAt          DateTime    @updatedAt
+  editedAt          DateTime?   @updatedAt
   editedBy          ProjectUser @relation(fields: [editedById], references: [id])
   editedById        String
 }
@@ -86,4 +87,6 @@ model HiddenVariable {
   id            String      @id @default(uuid())
   projectUser   ProjectUser @relation(fields: [projectUserId], references: [id])
   projectUserId String
+  variable      Variable    @relation(fields: [variableId], references: [id])
+  variableId    String
 }
