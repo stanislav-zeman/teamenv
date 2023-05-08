@@ -10,7 +10,6 @@ const pathnameUnathorized = (pathname: string) =>
 
 const AuthProvider: FC<{ children?: ReactNode }> = ({ children }) => {
   const { user } = useClerk();
-  const router = useRouter();
   const pathname = usePathname();
 
   if (!pathnameUnathorized(pathname) && !user) {
