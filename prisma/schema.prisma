@@ -59,15 +59,16 @@ model Project {
 }
 
 model Variable {
-  id                String         @id @default(uuid())
-  project           Project        @relation(fields: [projectId], references: [id])
+  id                String           @id @default(uuid())
+  project           Project          @relation(fields: [projectId], references: [id])
   projectId         String
-  createdAt         DateTime       @default(now())
+  createdAt         DateTime         @default(now())
   deletedAt         DateTime?
   name              String
   value             String
   minimalAccessRole Role
   edits             VariableEdit[]
+  HiddenVariable    HiddenVariable[]
 }
 
 model VariableEdit {
@@ -86,4 +87,6 @@ model HiddenVariable {
   id            String      @id @default(uuid())
   projectUser   ProjectUser @relation(fields: [projectUserId], references: [id])
   projectUserId String
+  variable      Variable    @relation(fields: [variableId], references: [id])
+  variableId    String
 }
