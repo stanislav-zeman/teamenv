@@ -13,7 +13,7 @@ export const signUp = {
 
 export const projects: ILink = {
   label: "Projects",
-  path: "/",
+  path: "/projects",
 };
 
 export const profile: ILink = {
