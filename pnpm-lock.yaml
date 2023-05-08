@@ -1,6 +1,9 @@
 lockfileVersion: '6.0'
 
 dependencies:
+  '@badrap/result':
+    specifier: ^0.2.13
+    version: 0.2.13
   '@prisma/client':
     specifier: ^4.13.0
     version: 4.13.0(prisma@4.13.0)
@@ -58,6 +61,10 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.13.11
+    dev: false
+
+  /@badrap/result@0.2.13:
+    resolution: {integrity: sha512-Qvyzz0dmGY0h8pwvBFo1BznAKf5Y5NXIDiqhPALWtfU7oHbAToCtPu4FlYQ3uysskSWLx8GUiyhe0nv0nDd/7Q==}
     dev: false
 
   /@eslint-community/eslint-utils@4.4.0(eslint@8.40.0):
