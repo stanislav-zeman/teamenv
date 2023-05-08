@@ -21,6 +21,7 @@ const all = async (name?: string): Promise<Result<Project[]>> => {
   try {
     const projects = await prisma.project.findMany({
       where: {
+        deletedAt: null,
         name: {
           contains: name,
           mode: "insensitive",
