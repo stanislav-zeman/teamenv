@@ -1,0 +1,24 @@
+{
+  "projects": [
+    {
+      "name": "React Start Project",
+      "description": "Bla bla bla."
+    },
+    {
+      "name": "React Yeet Project",
+      "description": ""
+    },
+    {
+      "name": "Angular Project",
+      "description": "Another description."
+    },
+    {
+      "name": "Django Project",
+      "description": "Python is a language."
+    },
+    {
+      "name": "Django",
+      "description": "No Project in name."
+    }
+  ]
+}
