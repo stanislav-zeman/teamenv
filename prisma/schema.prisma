@@ -21,7 +21,7 @@ model User {
   email     String
   password  String
   createdAt DateTime      @default(now())
-  editedAt  DateTime      @updatedAt
+  editedAt  DateTime?     @updatedAt
   deletedAt DateTime?
   projects  ProjectUser[]
 }
@@ -41,7 +41,7 @@ model ProjectUser {
   project         Project          @relation(fields: [projectId], references: [id])
   projectId       String
   createdAt       DateTime         @default(now())
-  editedAt        DateTime         @updatedAt
+  editedAt        DateTime?        @updatedAt
   deletedAt       DateTime?
   variableEdits   VariableEdit[]
   hiddenVariables HiddenVariable[]
@@ -52,7 +52,7 @@ model Project {
   name        String
   description String
   createdAt   DateTime      @default(now())
-  editedAt    DateTime      @updatedAt
+  editedAt    DateTime?     @updatedAt
   deletedAt   DateTime?
   variables   Variable[]
   users       ProjectUser[]
@@ -78,7 +78,7 @@ model VariableEdit {
   name              String
   value             String
   minimalAccessRole Role
-  editedAt          DateTime    @updatedAt
+  editedAt          DateTime?   @updatedAt
   editedBy          ProjectUser @relation(fields: [editedById], references: [id])
   editedById        String
 }
