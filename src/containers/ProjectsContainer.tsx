@@ -1,15 +1,17 @@
-import React from "react";
-import GenericLolInput from "@/components/common/GenericLolInput";
-import ProjectsSearchBar from "@/components/projects/ProjectsSearchBar";
+import React from 'react'
+import ProjectsSearchBar from '@/components/projects/ProjectsSearchBar'
+import { auth } from '@clerk/nextjs'
+import { useMyProjects } from '@/hooks/useMyProjects'
+import { Skeleton } from '@chakra-ui/react'
+import { ProjectsList } from '@/components/projects/ProjectsList'
 
 const ProjectsContainer = () => {
-  // TODO hook for fetching projects
-
   return (
     <div className="w-full h-full flex flex-col items-center align-middle">
       <ProjectsSearchBar />
+      <ProjectsList />
     </div>
-  );
-};
+  )
+}
 
-export default ProjectsContainer;
+export default ProjectsContainer
