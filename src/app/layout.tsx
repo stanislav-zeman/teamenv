@@ -10,6 +10,7 @@ import { dark } from '@clerk/themes'
 import { useRouter } from 'next/navigation'
 import { ClientClerkProvider } from '@clerk/nextjs/dist/app-router/client/ClerkProvider'
 import ReactQueryProvider from './providers/ReactQueryProvider'
+import { ClientChakraProvider } from './providers/ChakraProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -27,15 +28,14 @@ export default function RootLayout({
     <ThemeProvider>
       <ReactQueryProvider>
         <StylableClerkProvider>
-          <AuthProvider>
             <html lang="en">
               <body className={inter.className}>
-                <Header />
-                <AdaptiveBackground>{children}</AdaptiveBackground>
-                {children}
+                <ClientChakraProvider>
+                  <Header />
+                  <AdaptiveBackground>{children}</AdaptiveBackground>
+                </ClientChakraProvider>
               </body>
             </html>
-          </AuthProvider>
         </StylableClerkProvider>
       </ReactQueryProvider>
     </ThemeProvider>

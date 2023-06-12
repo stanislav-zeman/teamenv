@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@badrap/result": "^0.2.13",
+    "@chakra-ui/icons": "^2.0.19",
     "@chakra-ui/react": "^2.7.0",
     "@clerk/nextjs": "^4.17.1",
     "@clerk/themes": "^1.6.4",

@@ -13,6 +13,46 @@ export const mockedMyProjects: MyProject[] = [
       fullName: 'Petr Novák',
     },
     myRole: Role.GUEST,
+    members: [
+      {
+        id: 'i1f5a31f',
+        userName: 'xxJozinZBazinxx',
+        fullName: 'Petr Novák',
+        role: Role.OWNER,
+      },
+      {
+        id: "isfjiowsf",
+        userName: "lesbokrtek",
+        fullName: "Nikola Beneš",
+        role: Role.DEVELOPER
+      },
+      {
+        id: "sgwgescx",
+        userName: "lesbokrtek",
+        fullName: "Filip Kaštovský",
+        role: Role.MAINTAINER
+      },
+      {
+        id: "issdfwegw",
+        userName: "lesbokrtek",
+        fullName: "Luděk Bártek",
+        role: Role.GUEST
+      }
+    ],
+    variables: [
+      {
+        id: "afsdfsdf",
+        name: "HOST_CORE",
+        checked: false,
+        value: "https://tvoje-mama-je-tlusta.com"
+      },
+      {
+        id: "fadsgrgwew",
+        name: "DATABASE_URL",
+        checked: true,
+        value: "yeet@postgres"
+      }
+    ]
   },
   {
     id: 'fjabkf89',
@@ -25,6 +65,8 @@ export const mockedMyProjects: MyProject[] = [
       fullName: 'Ignác Boleslav',
     },
     myRole: Role.OWNER,
+    members: [],
+    variables: []
   },
   {
     id: 'fjabfa',
@@ -37,5 +79,7 @@ export const mockedMyProjects: MyProject[] = [
       fullName: 'Tomáš Fuk',
     },
     myRole: Role.DEVELOPER,
+    members: [],
+    variables: []
   },
 ]
