@@ -7,4 +7,5 @@ export interface MyProject extends BaseModel {
   description?: string
   owner: UserInfo
   myRole: Role
+  createdAt: Date
 }

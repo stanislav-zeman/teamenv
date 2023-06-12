@@ -4,12 +4,9 @@ import AuthProvider from '@/app/providers/AuthProvider'
 import ThemeProvider, { getPaletteFromLS } from '@/app/providers/ThemeProvider'
 import AdaptiveBackground from '@/components/AdaptiveBackground'
 import StylableClerkProvider from '@/app/providers/StylableClerkProvider'
-import { ClerkProvider } from '@clerk/nextjs'
 import Header from '@/components/header'
-import { dark } from '@clerk/themes'
-import { useRouter } from 'next/navigation'
-import { ClientClerkProvider } from '@clerk/nextjs/dist/app-router/client/ClerkProvider'
 import ReactQueryProvider from './providers/ReactQueryProvider'
+import { ClientChakraProvider } from './providers/ClientChakraProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -30,9 +27,10 @@ export default function RootLayout({
           <AuthProvider>
             <html lang="en">
               <body className={inter.className}>
-                <Header />
-                <AdaptiveBackground>{children}</AdaptiveBackground>
-                {children}
+                <ClientChakraProvider>
+                  <Header />
+                  <AdaptiveBackground>{children}</AdaptiveBackground>
+                </ClientChakraProvider>
               </body>
             </html>
           </AuthProvider>
