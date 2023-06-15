@@ -1,23 +1,15 @@
-import { projects, profile, settings } from "@/app/links";
-import Link from "next/link";
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  UserButton
-} from "@clerk/nextjs";
+import { projects, profile, settings } from '@/app/links'
+import Link from 'next/link'
+import { SignedIn, SignedOut, SignInButton, UserButton } from '@clerk/nextjs'
+import { NavigationLinks } from './navbar/NavigationLinks'
 
 const Header = () => {
   return (
     <nav className="flex flex-row h-16 bg-emerald-800 items-center just">
-      <Link href={"/"} className="w-1/2 p-5 shrink">
+      <Link href={'/projects'} className="w-1/2 p-5 shrink">
         <h1>TeamENV</h1>
       </Link>
-      <div className="flex items-stretch justify-around w-1/2">
-        <Link href={projects.path}>{projects.label}</Link> |
-        <Link href={profile.path}>{profile.label}</Link> |
-        <Link href={settings.path}>{settings.label}</Link> |
-      </div>
+      <NavigationLinks />
       <div className="p-5">
         <SignedIn>
           <UserButton />
@@ -30,4 +22,4 @@ const Header = () => {
   )
 }
 
-export default Header;
+export default Header

@@ -6,12 +6,16 @@ import { InfoOutlineIcon } from '@chakra-ui/icons'
 import { OwnerRow } from './OwnerRow'
 import { Role } from '@/models/Role'
 import { MoreButtonWithPopover } from './MoreButtonWithPopover'
+import { useRouter } from 'next/navigation'
+import { getProjectDefaultUrl } from '@/app/links'
 
 interface IProjectCard {
   project: MyProject
 }
 
 export const ProjectCard: FC<IProjectCard> = ({ project }) => {
+  const router = useRouter()
+
   return (
     <GridItem
       colSpan={2}
@@ -33,6 +37,7 @@ export const ProjectCard: FC<IProjectCard> = ({ project }) => {
             variant="ghost"
             colorScheme="whiteAlpha"
             aria-label="project info"
+            onClick={() => router.push(getProjectDefaultUrl(project.id))}
             icon={<InfoOutlineIcon fontSize="1.5rem" />}
           />
           {project.myRole > Role.DEVELOPER && (
