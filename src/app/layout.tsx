@@ -24,16 +24,14 @@ export default function RootLayout({
     <ThemeProvider>
       <ReactQueryProvider>
         <StylableClerkProvider>
-          <AuthProvider>
-            <html lang="en">
-              <body className={inter.className}>
-                <ClientChakraProvider>
-                  <Header />
-                  <AdaptiveBackground>{children}</AdaptiveBackground>
-                </ClientChakraProvider>
-              </body>
-            </html>
-          </AuthProvider>
+          <html lang="en">
+            <body className={inter.className}>
+              <ClientChakraProvider>
+                <Header />
+                <AdaptiveBackground>{children}</AdaptiveBackground>
+              </ClientChakraProvider>
+            </body>
+          </html>
         </StylableClerkProvider>
       </ReactQueryProvider>
     </ThemeProvider>
