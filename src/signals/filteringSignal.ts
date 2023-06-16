@@ -1,27 +1,44 @@
 'use client'
 
 import { Role } from '@/models/Role'
-import { useSignal } from '@preact/signals-react'
+import { signal, useSignal } from '@preact/signals-react'
 
-interface IFilter {
+export interface IFilter {
   order: 'desc' | 'asc'
-  search: ''
+  search: string
   dateFrom: Date | null
   dateTo: Date | null
   atLeastRole: Role
+  page: number
 }
 
-const getDefaultFilters = (): IFilter => ({
+export const getDefaultFilters = (): IFilter => ({
   order: 'desc',
   search: '',
   dateFrom: null,
   dateTo: null,
   atLeastRole: Role.GUEST,
+  page: 1,
 })
 
-const filteringSignal = useSignal<IFilter>(getDefaultFilters())
+export const filteringSignalToSearchParams = (): URLSearchParams => {
+  const params = new URLSearchParams()
+  params.set('order', filteringSignal.value.order)
+  params.set('search', filteringSignal.value.search)
+  params.set('dateFrom', filteringSignal.value.dateFrom?.toISOString() ?? '')
+  params.set('dateTo', filteringSignal.value.dateTo?.toISOString() ?? '')
+  params.set(
+    'atLeastRole',
+    filteringSignal.value.atLeastRole.valueOf().toString()
+  )
+  params.set('page', filteringSignal.value.page.toString())
 
-export const getFilters = () => ({ ...filteringSignal.value })
+  return params
+}
+
+const filteringSignal = signal<IFilter>(getDefaultFilters())
+
+export const getFilters = () => filteringSignal.value
 
 export const setFilters = (newFilters: IFilter) =>
   (filteringSignal.value = newFilters)

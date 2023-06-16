@@ -7,6 +7,7 @@ import StylableClerkProvider from '@/app/providers/StylableClerkProvider'
 import Header from '@/components/header'
 import ReactQueryProvider from './providers/ReactQueryProvider'
 import { ClientChakraProvider } from './providers/ClientChakraProvider'
+import { FilterProvider } from './providers/FilterProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -26,10 +27,12 @@ export default function RootLayout({
         <StylableClerkProvider>
           <html lang="en">
             <body className={inter.className}>
-              <ClientChakraProvider>
-                <Header />
-                <AdaptiveBackground>{children}</AdaptiveBackground>
-              </ClientChakraProvider>
+              <FilterProvider>
+                <ClientChakraProvider>
+                  <Header />
+                  <AdaptiveBackground>{children}</AdaptiveBackground>
+                </ClientChakraProvider>
+              </FilterProvider>
             </body>
           </html>
         </StylableClerkProvider>

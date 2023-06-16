@@ -1,33 +1,34 @@
-"use client";
+'use client'
 
-import React, { ChangeEvent, ChangeEventHandler, FC } from "react";
-import { useThemeContext } from "@/app/hooks/useThemeContext";
+import React, { ChangeEvent, ChangeEventHandler, FC, useState } from 'react'
+import { useThemeContext } from '@/app/hooks/useThemeContext'
+import {
+  filteringSignalToSearchParams,
+  getFilters,
+} from '@/signals/filteringSignal'
+import { usePathname, useRouter } from 'next/navigation'
+import useFilters from '@/app/hooks/useFilters'
+import { placeholderRandomizer } from '@/utils/placeholderRandomizer'
 
-interface IGeneric {
-  onChange?: (value: string) => void;
-  value?: string;
-}
+const GenericLolInput: FC = () => {
+  const { filters, pushFilters } = useFilters()
+  const [search, setSearch] = useState(filters.search)
 
-const GenericLolInput: FC<IGeneric> = ({ onChange, value }) => {
-  const { palette } = useThemeContext();
-
-  const darkMode = palette.mode === "dark";
-  const bgString = darkMode ? "bg-stone-900" : "bg-neutral-100";
-  const borderColor = darkMode ? "border-neutral-100" : "border-stone-900";
-  const textString = darkMode ? "text-white" : "text-black";
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (onChange) onChange(e.target.value);
-  };
-
-  const props = value ? { value, onChange: handleChange } : {};
+  const handleInputChange = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key == 'Enter') {
+      pushFilters('search', search)
+    }
+  }
 
   return (
     <input
-      className={`${bgString} ${textString} ${borderColor} border rounded-md px-2 py`}
-      {...props}
+      placeholder={placeholderRandomizer()}
+      onChange={(e) => setSearch(e.target.value)}
+      onKeyDown={(e) => handleInputChange(e)}
+      defaultValue={filters.search}
+      className={`bg-neutral-100" border-stone-900 text-black border rounded-md px-2 py`}
     />
-  );
-};
+  )
+}
 
-export default GenericLolInput;
+export default GenericLolInput

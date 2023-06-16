@@ -1,9 +1,9 @@
-"use client";
-import { Card, CardBody } from "@chakra-ui/react";
-import { FC, ReactNode } from "react";
+'use client'
+import { Card, CardBody } from '@chakra-ui/react'
+import { FC, ReactNode } from 'react'
 
 interface GenericCardProps {
-  children: ReactNode[];
+  children: ReactNode
 }
 
 const GenericCard: FC<GenericCardProps> = (props) => {
@@ -26,7 +26,7 @@ const GenericCard: FC<GenericCardProps> = (props) => {
         {props.children}
       </CardBody>
     </Card>
-  );
-};
+  )
+}
 
-export default GenericCard;
+export default GenericCard

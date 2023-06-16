@@ -1,7 +1,7 @@
 import { FC, ReactNode } from "react";
 
 interface GenericListProps {
-  children: ReactNode[];
+  children: ReactNode[] | ReactNode;
 }
 
 const GenericList: FC<GenericListProps> = ({ children }) => {
