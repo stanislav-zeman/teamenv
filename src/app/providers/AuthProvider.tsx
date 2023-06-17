@@ -1,22 +1,22 @@
-"use client";
-import React, { FC, ReactNode, useEffect } from "react";
-import { auth, useClerk } from "@clerk/nextjs";
-
-import { signIn, UnathorizedLinks } from "@/app/links";
-import { redirect, usePathname, useRouter } from "next/navigation";
-
-const pathnameUnathorized = (pathname: string) =>
-  Object.values(UnathorizedLinks).some((link) => link.path.includes(pathname));
+'use client'
+import React, { FC, ReactNode, useEffect } from 'react'
+import { useClerk } from '@clerk/nextjs'
 
 const AuthProvider: FC<{ children?: ReactNode }> = ({ children }) => {
-  const { user } = useClerk();
-  const pathname = usePathname();
+  const { user } = useClerk()
 
-  if (!pathnameUnathorized(pathname) && !user) {
-    redirect(signIn.path);
-  }
+  useEffect(() => {
+    // TODO API-call
+    if (user) {
+      const userInfo = {
+        id: user.id,
+        userName: user.username,
+        email: user.emailAddresses,
+      }
+    }
+  }, [user])
 
-  return <>{children}</>;
-};
+  return <>{children}</>
+}
 
-export default AuthProvider;
+export default AuthProvider

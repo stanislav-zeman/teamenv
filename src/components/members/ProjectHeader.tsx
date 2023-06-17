@@ -5,6 +5,8 @@ import { FC } from 'react'
 import GenericLolInput from '../common/GenericLolInput'
 import { useRouter } from 'next/navigation'
 import { OrderFilteringButtons } from '../common/OrderFilteringButtons'
+import { AtLeastRoleFilter } from '../common/AtLeastRoleFilter'
+import { DisplayFilterSwitch } from '../common/DisplayFilterSwitch'
 
 interface ProjectHeaderProps {
   id: string
@@ -38,7 +40,7 @@ const ProjectHeader: FC<ProjectHeaderProps> = (props) => {
   return (
     <Stack divider={<StackDivider borderColor="gray.700" />}>
       <Text fontSize="2xl">{props.name}</Text>
-      <div className="grid grid-cols-2 pl-16 py-2">
+      <div className="flex justify-between">
         <div>
           <Button
             variant="link"
@@ -57,7 +59,7 @@ const ProjectHeader: FC<ProjectHeaderProps> = (props) => {
           </Button>
         </div>
         <div className="flex items-center gap-7 justify-self-end pr-11">
-          <ViewIcon />
+          {props.members ? <AtLeastRoleFilter /> : <DisplayFilterSwitch />}
           <OrderFilteringButtons />
           <GenericLolInput />
           <AddIcon />

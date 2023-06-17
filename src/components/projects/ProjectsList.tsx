@@ -6,23 +6,21 @@ import { ProjectCard } from './ProjectCard'
 import useFilters from '@/app/hooks/useFilters'
 import { BaseFilters } from '@/models/Filters'
 import { usePathname, useRouter } from 'next/navigation'
+import { PaginationComponent } from '../common/PaginationComponent'
+import { MyProject } from '@/models/Project'
+import { FC } from 'react'
 
-export const ProjectsList = () => {
-  const { user } = useUser()
-  const pathName = usePathname()
-  const router = useRouter()
-  const filters = useFilters<BaseFilters>()
-  const { data: projects, isLoading, isError } = useMyProjects(user?.id || '-1', filters)
+interface IProjectList {
+  projects: MyProject[]
+}
 
-  if (isLoading) return <h3>Loading...</h3>
-  if (isError || !projects) return <h3>Error during fetching projects</h3>
-
+export const ProjectsList: FC<IProjectList> = ({ projects }) => {
   return (
     <Grid
       className="w-10/12 flex p-1 py-4 gap-4"
       templateColumns="repeat(6, 1fr)"
     >
-      {projects.docs.map((project) => (
+      {projects.map((project) => (
         <ProjectCard key={project.id} project={project} />
       ))}
     </Grid>

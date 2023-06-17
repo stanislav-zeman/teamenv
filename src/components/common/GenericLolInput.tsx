@@ -1,7 +1,6 @@
 'use client'
 
 import React, { ChangeEvent, ChangeEventHandler, FC, useState } from 'react'
-import { useThemeContext } from '@/app/hooks/useThemeContext'
 import {
   filteringSignalToSearchParams,
   getFilters,
