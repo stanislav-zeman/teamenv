@@ -1,12 +1,6 @@
 'use client'
-import {
-  parseFiltersFromParams,
-  setFilters,
-} from '@/signals/filteringSignal'
-import {
-  usePathname,
-  useSearchParams,
-} from 'next/navigation'
+import { parseFiltersFromParams, setFilters } from '@/signals/filteringSignal'
+import { usePathname, useSearchParams } from 'next/navigation'
 import { FC, ReactNode, useEffect } from 'react'
 
 export const FilterProvider: FC<{ children?: ReactNode }> = ({ children }) => {

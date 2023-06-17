@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 import { ReadonlyProjectNameDisplay } from './ReadonlyProjectNameDisplay'
-import { IconButton } from '@chakra-ui/react'
+import { IconButton, Input } from '@chakra-ui/react'
 import { EditIcon } from '@chakra-ui/icons'
 import useFilters from '@/app/hooks/useFilters'
 
@@ -24,16 +24,21 @@ export const EditableProjectNameDisplay: FC<IEditableProjectName> = ({
   }
 
   return (
-    <div className="flex">
+    <div className="flex gap-3 items-center min-w-md max-w-md">
       {editMode ? (
-        <></>
+        <Input
+          className="min-w-md"
+          value={inputProjectName}
+          onChange={(e) => setInputProjectName(e.target.value)}
+          onKeyDown={handleInputChange}
+        />
       ) : (
         <ReadonlyProjectNameDisplay projectName={projectName} />
       )}
       <IconButton
+        variant="ghost"
         aria-label="toggle edit"
         icon={<EditIcon />}
-        isActive={editMode}
         onClick={() => setEditMode(!editMode)}
       />
     </div>

@@ -1,7 +1,5 @@
-'use client'
-
 import { Role } from '@/models/Role'
-import { signal, useSignal } from '@preact/signals-react'
+import { signal } from '@preact/signals-react'
 import { ReadonlyURLSearchParams } from 'next/navigation'
 
 type DisplayOptions = 'all' | 'deleted' | 'non-deleted'

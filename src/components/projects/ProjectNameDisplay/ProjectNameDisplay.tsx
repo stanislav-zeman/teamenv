@@ -1,6 +1,7 @@
 import { Role } from '@/models/Role'
 import { FC } from 'react'
 import { ReadonlyProjectNameDisplay } from './ReadonlyProjectNameDisplay'
+import { EditableProjectNameDisplay } from './EditableProjectNameDisplay'
 
 interface IProjectNameDisplay {
   projectName: string
@@ -18,7 +19,9 @@ export const ProjectNameDisplay: FC<IProjectNameDisplay> = ({
   }
 
   return (
-
-    
+    <EditableProjectNameDisplay
+      projectName={projectName}
+      projectId={projectId}
+    />
   )
 }

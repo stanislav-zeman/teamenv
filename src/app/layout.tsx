@@ -28,18 +28,20 @@ export default function RootLayout({
     <MuiThemeProvider>
       <ReactQueryProvider>
         <StylableClerkProvider>
-          <html lang="en">
-            <body className={inter.className}>
-              <FilterProvider>
-                <ClientChakraProvider>
-                  <div className="flex flex-col h-screen">
-                    <Header />
-                    <AdaptiveBackground>{children}</AdaptiveBackground>
-                  </div>
-                </ClientChakraProvider>
-              </FilterProvider>
-            </body>
-          </html>
+          <AuthProvider>
+            <html lang="en">
+              <body className={inter.className}>
+                <FilterProvider>
+                  <ClientChakraProvider>
+                    <div className="flex flex-col h-screen">
+                      <Header />
+                      <AdaptiveBackground>{children}</AdaptiveBackground>
+                    </div>
+                  </ClientChakraProvider>
+                </FilterProvider>
+              </body>
+            </html>
+          </AuthProvider>
         </StylableClerkProvider>
       </ReactQueryProvider>
     </MuiThemeProvider>

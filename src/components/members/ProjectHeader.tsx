@@ -7,11 +7,14 @@ import { useRouter } from 'next/navigation'
 import { OrderFilteringButtons } from '../common/OrderFilteringButtons'
 import { AtLeastRoleFilter } from '../common/AtLeastRoleFilter'
 import { DisplayFilterSwitch } from '../common/DisplayFilterSwitch'
+import { ProjectNameDisplay } from '../projects/ProjectNameDisplay/ProjectNameDisplay'
+import { Role } from '@/models/Role'
 
 interface ProjectHeaderProps {
   id: string
   name: string
   members: boolean
+  myRole: Role
 }
 
 type LinkStyles = {
@@ -39,7 +42,11 @@ const ProjectHeader: FC<ProjectHeaderProps> = (props) => {
   const router = useRouter()
   return (
     <Stack divider={<StackDivider borderColor="gray.700" />}>
-      <Text fontSize="2xl">{props.name}</Text>
+      <ProjectNameDisplay
+        projectName={props.name}
+        projectId={props.id}
+        myRole={props.myRole}
+      />
       <div className="flex justify-between">
         <div>
           <Button

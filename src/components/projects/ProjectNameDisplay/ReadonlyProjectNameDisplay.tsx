@@ -8,5 +8,9 @@ export interface IProjectReadDisplay {
 export const ReadonlyProjectNameDisplay: FC<IProjectReadDisplay> = ({
   projectName,
 }) => {
-  return <Text fontSize="2xl">{projectName}</Text>
+  return (
+    <Text fontSize="2xl" className="min-w-md">
+      {projectName}
+    </Text>
+  )
 }

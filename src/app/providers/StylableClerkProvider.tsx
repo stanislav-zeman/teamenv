@@ -7,8 +7,6 @@ import { redirect, useRouter } from 'next/navigation'
 import { ClientClerkProvider } from '@clerk/nextjs/dist/app-router/client/ClerkProvider'
 
 const StylableClerkProvider: FC<{ children?: ReactNode }> = ({ children }) => {
-  useRouter()
-
   return (
     <ClientClerkProvider
       publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}

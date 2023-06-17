@@ -13,7 +13,7 @@ function parseFilters<T>(urlString: string): Partial<T> {
   return queryString.parse(urlString) as Partial<T>
 }
 
-export default function useFilters() {
+export const useFilters = () => {
   const filters = getFilters()
   const router = useRouter()
   const pathname = usePathname()
@@ -26,3 +26,5 @@ export default function useFilters() {
 
   return { filters, pushFilters }
 }
+
+export default useFilters
