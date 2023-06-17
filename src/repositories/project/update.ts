@@ -4,6 +4,7 @@ import type {
 } from "@prisma/client";
 import {Result} from "@badrap/result";
 import {ProjectUpdateData} from "@/repositories/project/types/data";
+import {isDeleted} from "@/repositories/commons";
 
 const update = async (data: ProjectUpdateData): Promise<Result<Project>> => {
   try {
