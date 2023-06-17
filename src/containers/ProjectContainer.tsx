@@ -13,20 +13,16 @@ interface IProjectContainerProps {
 }
 
 const ProjectContainer = ({ id, members }: IProjectContainerProps) => {
-  const project = useProject(id);
+  const {data: project, isError, isLoading} = useProject(id);
 
-  if (!project.data) return <h1>Not found..</h1>;
+  if (isLoading) return <h1>Loading..</h1>
+
+  if (!project || isError) return <h1>Not found..</h1>;
   
   return (
     <div className="px-28 pt-7">
-      <ProjectHeader id={id} name={project.data.name} members={members} />
-      {members ? (
-        <MemberList members={project.data.members} />
-      ) : project.data.variables.length ? (
-        <VariableList variables={project.data.variables} />
-      ) : (
-        <h1>No variables found..</h1>
-      )}
+      <ProjectHeader id={id} name={project.name} members={members} />
+        {members ? <MemberList members={project.members} /> : <VariableList variables={project.variables} />}
     </div>
   );
 };
