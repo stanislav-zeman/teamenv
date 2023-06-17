@@ -3,7 +3,7 @@ import {getAuth} from "@clerk/nextjs/server";
 import {ensureUser} from "@/repositories/user/create";
 
 
-async function POST(request: NextRequest): Promise<Response> {
+export async function POST(request: NextRequest): Promise<Response> {
   const user = getAuth(request);
   if (!user.userId) {
     console.log("no user id");
