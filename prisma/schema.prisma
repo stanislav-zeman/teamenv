@@ -19,7 +19,6 @@ model User {
   id        String        @id @default(uuid())
   username  String
   email     String
-  password  String
   createdAt DateTime      @default(now())
   editedAt  DateTime?
   deletedAt DateTime?
@@ -30,7 +29,7 @@ enum Role {
   OWNER
   MAINTAINER
   DEVELOPER
-  OBSERVER
+  GUEST
 }
 
 model ProjectUser {
