@@ -6,6 +6,8 @@ import { useMyProjects } from '@/hooks/useMyProjects'
 import { Skeleton } from '@chakra-ui/react'
 import { ProjectsList } from '@/components/projects/ProjectsList'
 import { PaginationComponent } from '@/components/common/PaginationComponent'
+import { closeDialog, openDialog } from '@/signals/dialogSignal'
+import { Button, Dialog, DialogContent } from '@mui/material'
 
 const ProjectsContainer = () => {
   const { user } = useUser()

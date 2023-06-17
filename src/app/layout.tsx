@@ -11,6 +11,7 @@ import ReactQueryProvider from './providers/ReactQueryProvider'
 import { ClientChakraProvider } from './providers/ClientChakraProvider'
 import { FilterProvider } from './providers/FilterProvider'
 import MuiThemeProvider from '@/app/providers/MuiThemeProvider'
+import { DialogProvider } from './providers/DialogProvider'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -30,16 +31,18 @@ export default function RootLayout({
         <StylableClerkProvider>
           <AuthProvider>
             <html lang="en">
-              <body className={inter.className}>
-                <FilterProvider>
-                  <ClientChakraProvider>
-                    <div className="flex flex-col h-screen">
-                      <Header />
-                      <AdaptiveBackground>{children}</AdaptiveBackground>
-                    </div>
-                  </ClientChakraProvider>
-                </FilterProvider>
-              </body>
+              <DialogProvider>
+                <body className={inter.className}>
+                  <FilterProvider>
+                    <ClientChakraProvider>
+                      <div className="flex flex-col h-screen">
+                        <Header />
+                        <AdaptiveBackground>{children}</AdaptiveBackground>
+                      </div>
+                    </ClientChakraProvider>
+                  </FilterProvider>
+                </body>
+              </DialogProvider>
             </html>
           </AuthProvider>
         </StylableClerkProvider>
