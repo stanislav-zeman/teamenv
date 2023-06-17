@@ -1,35 +1,25 @@
-'use client'
-import { FC } from 'react'
-import { Member } from '@/models/Member'
-import GenericCard from '../common/GenericCard'
-import { Avatar, Text } from '@chakra-ui/react'
-import MemberRole from './MemberRole'
-import { getRandomColor } from '@/hooks/getRandomColor'
-import { DeleteIcon, HamburgerIcon } from '@chakra-ui/icons'
-import { Role } from '@/models/Role'
-import GenericList from '../common/GenericList'
+"use client";
+import { FC, useMemo } from "react";
+import { Member } from "@/models/Member";
+import GenericCard from "../common/GenericCard";
+import { Avatar, Text } from "@chakra-ui/react";
+import MemberRole from "./MemberRole";
+import { DeleteIcon, HamburgerIcon } from "@chakra-ui/icons";
+import { Role } from "@/models/Role";
+import GenericList from "../common/GenericList";
+import { getRandomColors } from "@/utils/randomColor";
+import MemberItem from "./MemberItem";
 
 interface MemberListProps {
-  members: Member[]
+  members: Member[];
 }
 
-const icons = (role: Role) =>
-  role !== Role.OWNER
-    ? [<HamburgerIcon boxSize="15%" />, <DeleteIcon boxSize="15%" />]
-    : []
+const MemberList: FC<MemberListProps> = ({ members }) => {
+  const colors = useMemo(() => getRandomColors(members.length), [members]);
+  const rows = members.map((member, index) => (
+    <MemberItem key={member.id} member={member} color={colors[index]} />
+  ));
+  return <GenericList>{rows}</GenericList>;
+};
 
-const MemberList: FC<MemberListProps> = (props) => {
-  return (
-    <GenericList
-      children={
-        <>
-          {props.members.map((member) => (
-            <></>
-          ))}
-        </>
-      }
-    />
-  )
-}
-
-export default MemberList
+export default MemberList;

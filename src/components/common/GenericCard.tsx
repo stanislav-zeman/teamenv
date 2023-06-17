@@ -3,7 +3,7 @@ import { Card, CardBody } from '@chakra-ui/react'
 import { FC, ReactNode } from 'react'
 
 interface GenericCardProps {
-  children: ReactNode
+  children?: ReactNode
 }
 
 const GenericCard: FC<GenericCardProps> = (props) => {
