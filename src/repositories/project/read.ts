@@ -3,13 +3,28 @@ import type {
   Project
 } from "@prisma/client";
 import {Result} from "@badrap/result";
+import {ProjectData} from "@/repositories/project/types/data";
+import {isMember} from "@/repositories/user/read";
 
-const specific = async (id: string): Promise<Result<Project>> => {
+const specific = async (id: string, userId: string): Promise<Result<ProjectData>> => {
   try {
+    const membership = await isMember(userId, id);
+    if (membership.isErr) {
+      return Result.err(new Error("failed to check user membership"));
+    }
+
+    if (!membership.unwrap()) {
+      return Result.err(new Error("user is does not belong to the project"));
+    }
+
     const project = await prisma.project.findUniqueOrThrow({
       where: {
-        id,
+        id: id,
       },
+      include: {
+        variables: true,
+        users: true,
+      }
     });
     return Result.ok(project);
   } catch (e) {

@@ -1,11 +1,9 @@
 import {NextRequest, NextResponse} from "next/server";
 import read from "../../../repositories/project/read";
+import {getAuth} from "@clerk/nextjs/server";
 
-type Params = {
-  id: string;
-}
-
-export async function GET(request: NextRequest, context: { params: Params }) {
+export async function GET(request: NextRequest) {
+  console.log(getAuth(request))
   const res = await read.all();
   return NextResponse.json(res.unwrap());
 }

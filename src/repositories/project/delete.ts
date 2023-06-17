@@ -3,6 +3,7 @@ import type {
   Project
 } from "@prisma/client";
 import {Result} from "@badrap/result";
+import {isDeleted} from "@/repositories/commons";
 
 const deleteProject = async (id: string): Promise<Result<Project>> => {
   try {
