@@ -9,19 +9,19 @@ export async function getAll(search?: string): Promise<Result<User[]>> {
       where: {
         deletedAt: null,
         OR: [
-          {
-            username: {
-              contains: search,
-              mode: "insensitive",
+            {
+              username: {
+                contains: search,
+                mode: "insensitive",
+              },
             },
-          },
           {
             email: {
               contains: search,
-              mode: "insensitive",
+                mode: "insensitive",
             },
           },
-        ],
+        ]
       },
     });
     return Result.ok(users);
