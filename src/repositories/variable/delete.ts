@@ -3,8 +3,7 @@ import {Variable} from "@prisma/client";
 import prisma from "@/repositories/client";
 import {isDeleted} from "@/repositories/commons";
 
-
-async function deleteVariable(id: string): Promise<Result<Variable>> {
+async function remove(id: string): Promise<Result<Variable>> {
   try {
     const deleteTime = new Date();
     return Result.ok(
@@ -32,3 +31,5 @@ async function deleteVariable(id: string): Promise<Result<Variable>> {
     return Result.err(e as Error);
   }
 }
+
+export default remove;

@@ -3,7 +3,7 @@ import {getAuth} from "@clerk/nextjs/server";
 import read from "@/repositories/project/read";
 
 type Params = {
-  id: string;
+  projectId: string;
 };
 
 
@@ -12,9 +12,13 @@ export async function GET(request: NextRequest, context: { params: Params }): Pr
   if (user.userId === null) {
     return new Response(null, { status: 401 });
   }
-  const project = await read.specific(context.params.id, user.userId);
-  if (project.isErr) {
+
+  const result = await read.specific(context.params.projectId, user.userId);
+
+  if (result.isErr) {
     return new Response(null, { status: 500 });
   }
-  return new Response(JSON.stringify(project.unwrap()), { status: 200 });
+
+  const project = result.unwrap();
+  return new Response(JSON.stringify(project), { status: 200 });
 }
