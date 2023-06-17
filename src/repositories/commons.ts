@@ -5,6 +5,21 @@ type Deletable = {
   deletedAt: Date | null;
 }
 
+export function getPrismaRoles(role: number | undefined): Role[] {
+  switch (role) {
+    case 3:
+      return [Role.OWNER]
+    case 2:
+      return [Role.MAINTAINER, Role.OWNER]
+    case 1:
+      return [Role.DEVELOPER, Role.MAINTAINER, Role.OWNER]
+    case 0:
+      return [Role.GUEST, Role.DEVELOPER, Role.MAINTAINER, Role.OWNER]
+    default:
+      throw new Error("Invalid role!")
+  }
+}
+
 function getRolePriority(role: Role): number {
   switch (role) {
     case "GUEST":

@@ -5,16 +5,18 @@ import type {
 import {Result} from "@badrap/result";
 import {ProjectData} from "@/repositories/project/types/data";
 import {isMember} from "@/repositories/user/read";
+import {ProjectFilters} from "@/models/Filters";
+import {getPrismaRoles} from "@/repositories/commons";
 
 const specific = async (id: string, userId: string): Promise<Result<ProjectData>> => {
   try {
     const membership = await isMember(userId, id);
     if (membership.isErr) {
-      return Result.err(new Error("failed to check user membership"));
+      return Result.err(new Error("Failed to check user membership!"));
     }
 
     if (!membership.unwrap()) {
-      return Result.err(new Error("user is does not belong to the project"));
+      return Result.err(new Error("User does not belong to the project!"));
     }
 
     const project = await prisma.project.findUniqueOrThrow({
@@ -32,15 +34,32 @@ const specific = async (id: string, userId: string): Promise<Result<ProjectData>
   }
 };
 
-const all = async (name?: string): Promise<Result<Project[]>> => {
+const all = async (filters?: ProjectFilters): Promise<Result<Project[]>> => {
   try {
     const projects = await prisma.project.findMany({
       where: {
         deletedAt: null,
         name: {
-          contains: name,
+          contains: filters?.search ?? "",
           mode: "insensitive",
         },
+        users: {
+          some: {
+            AND: [
+              {
+                id: filters?.userId
+              },
+              {
+                role: {
+                  in: getPrismaRoles(filters?.atLeastRole)
+                }
+              }
+            ]
+          },
+        },
+      },
+      orderBy: {
+        name: filters?.order ?? "desc",
       },
     });
     return Result.ok(projects);
