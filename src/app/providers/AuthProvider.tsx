@@ -1,18 +1,16 @@
 'use client'
 import React, { FC, ReactNode, useEffect } from 'react'
 import { useClerk } from '@clerk/nextjs'
+import {useEnsureUser} from "@/hooks/mutations/useEnsureUser";
 
 const AuthProvider: FC<{ children?: ReactNode }> = ({ children }) => {
   const { user } = useClerk()
+  const {mutate} = useEnsureUser()
 
   useEffect(() => {
-    // TODO API-call
+    console.log("mutate");
     if (user) {
-      const userInfo = {
-        id: user.id,
-        userName: user.username,
-        email: user.emailAddresses,
-      }
+      mutate();
     }
   }, [user])
 
