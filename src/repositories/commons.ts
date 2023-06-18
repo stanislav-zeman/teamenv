@@ -1,5 +1,6 @@
 import {Role} from "@prisma/client";
 import {getRole} from "@/repositories/user/read";
+import {ModifyMemberData} from "@/repositories/user/types/data";
 
 type Deletable = {
   deletedAt: Date | null;
@@ -39,11 +40,23 @@ export function isDeleted(o: Deletable): boolean {
   return o.deletedAt !== null;
 }
 
-async function hasAtLeastRole(userId: string, projectId: string, role: Role): Promise<boolean> {
+export async function hasAtLeastRole(userId: string, projectId: string, role: Role): Promise<boolean> {
   const memberRole = await getRole(userId, projectId);
   if (memberRole.isOk) {
     return getRolePriority(memberRole.unwrap()) >= getRolePriority(role);
   }
   return false;
+}
+
+export async function canModify(data: ModifyMemberData): Promise<boolean> {
+  const userRole = await getRole(data.userId, data.projectId);
+  const memberRole = await getRole(data.memberId, data.projectId);
+
+  if (userRole.isErr || memberRole.isErr) {
+    throw new Error("Failed to retrieve roles!");
+  }
+
+  const priorityDiff = getRolePriority(userRole.unwrap()) - getRolePriority(memberRole.unwrap());
+  return priorityDiff > 0;
 }
 

@@ -3,12 +3,13 @@ import read from "../../../repositories/project/read";
 import {getAuth} from "@clerk/nextjs/server";
 import {ReadonlyURLSearchParams} from "next/navigation";
 import {parseFiltersFromParams} from "@/signals/filteringSignal";
+import {missingUserIdResponse} from "@/app/api/helpers";
 
 export async function GET(request: NextRequest) : Promise<Response> {
   const user = getAuth(request);
 
   if (!user.userId) {
-    return new Response(null, { status: 401 });
+    return missingUserIdResponse();
   }
 
   const searchParams = request.nextUrl.searchParams;

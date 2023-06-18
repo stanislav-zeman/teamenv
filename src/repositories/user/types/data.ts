@@ -4,3 +4,9 @@ export type EnsureUserData = {
   username: string;
   email: string;
 };
+
+export type ModifyMemberData = {
+  userId: string;
+  projectId: string;
+  memberId: string;
+};

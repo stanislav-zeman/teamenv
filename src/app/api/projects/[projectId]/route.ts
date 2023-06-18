@@ -1,6 +1,7 @@
 import {NextRequest} from "next/server";
 import {getAuth} from "@clerk/nextjs/server";
 import read from "@/repositories/project/read";
+import {missingUserIdResponse} from "@/app/api/helpers";
 
 type Params = {
   projectId: string;
@@ -10,7 +11,7 @@ type Params = {
 export async function GET(request: NextRequest, context: { params: Params }): Promise<Response> {
   const user = getAuth(request);
   if (user.userId === null) {
-    return new Response(null, { status: 401 });
+    return missingUserIdResponse();
   }
 
   const result = await read.specific(context.params.projectId, user.userId);

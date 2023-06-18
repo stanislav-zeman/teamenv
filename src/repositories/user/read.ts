@@ -1,9 +1,10 @@
 import {Role, User} from "@prisma/client";
 import prisma from "@/repositories/client";
 import {Result} from "@badrap/result";
+import {IFilter} from "@/signals/filteringSignal";
 
 
-export async function getAll(search?: string): Promise<Result<User[]>> {
+export async function getAll(filters?: IFilter): Promise<Result<User[]>> {
   try {
     const users = await prisma.user.findMany({
       where: {
@@ -11,13 +12,13 @@ export async function getAll(search?: string): Promise<Result<User[]>> {
         OR: [
             {
               username: {
-                contains: search,
+                contains: filters?.search ?? "",
                 mode: "insensitive",
               },
             },
           {
             email: {
-              contains: search,
+              contains: filters?.search ?? "",
                 mode: "insensitive",
             },
           },
