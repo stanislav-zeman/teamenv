@@ -1,7 +1,7 @@
 import {NextRequest} from "next/server";
 import {getAll} from "@/repositories/user/read";
-import {parseFiltersFromParams} from "@/signals/filteringSignal";
 import {ReadonlyURLSearchParams} from "next/navigation";
+import {parseFiltersFromParams} from "@/models/Filters";
 
 
 export async function GET(request: NextRequest): Promise<Response> {

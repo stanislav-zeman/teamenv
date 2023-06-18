@@ -1,7 +1,20 @@
 import {ModifyMemberData} from "@/repositories/user/types/data";
 import {Result} from "@badrap/result";
 import prisma from "../client";
-import {canModify, hasAtLeastRole} from "@/repositories/commons";
+import {getRole} from "@/repositories/user/read";
+import {Role} from "@prisma/client";
+
+function checkRoles(userRole: Role, memberRole: Role) {
+  if (userRole !== "OWNER") {
+    if (userRole !== "MAINTAINER") {
+      throw new Error("Insufficient role to delete project members!");
+    }
+    // there can only be 1 owner, therefore only "MAINTAINER" check is necessary
+    if (memberRole === "MAINTAINER") {
+      throw new Error("Cannot delete another maintainer!");
+    }
+  }
+}
 
 export async function deleteMember(data: ModifyMemberData): Promise<Result<boolean>> {
   try {
@@ -11,17 +24,15 @@ export async function deleteMember(data: ModifyMemberData): Promise<Result<boole
         const member = await transaction.projectUser.findFirstOrThrow({
           where: {
             deletedAt: null,
-            userId: data.userId,
+            userId: data.memberId,
           },
         });
-
-        if (!await hasAtLeastRole(data.userId, data.projectId, "MAINTAINER")) {
-          throw new Error("Insufficient role to delete project members!");
+        const userRole = await getRole(data.userId, data.projectId);
+        if (userRole.isErr) {
+          throw new Error("Failed to retrieve logged in user role!");
         }
 
-        if (!await canModify(data)) {
-          throw new Error("Cannot delete member with same or higher role!");
-        }
+        checkRoles(userRole.unwrap(), member.role);
 
         await transaction.projectUser.update({
           where: {

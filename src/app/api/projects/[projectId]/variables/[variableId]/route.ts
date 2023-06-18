@@ -3,20 +3,17 @@ import {getAuth} from "@clerk/nextjs/server";
 import {Variable} from "@/models/Variable";
 import variables from "@/repositories/variable/index"
 import {isMember} from "@/repositories/user/read";
-
-type Params = {
-  projectId: string;
-  variableId: string;
-};
+import {VariableParams} from "@/app/api/types";
+import {missingUserIdResponse, parseResult} from "@/app/api/helpers";
 
 // TODO: Implement helper functions for common behavior
-export async function GET(request: NextRequest, context: { params: Params }): Promise<Response> {
-  const user = getAuth(request);
-  if (user.userId === null) {
-    return new Response(null, { status: 401 });
+export async function GET(request: NextRequest, context: { params: VariableParams }): Promise<Response> {
+  const userAuth = getAuth(request);
+  if (userAuth.userId === null) {
+    return missingUserIdResponse();
   }
 
-  const authorizedResult = await isMember(user.userId, context.params.projectId)
+  const authorizedResult = await isMember(userAuth.userId, context.params.projectId)
 
   if (authorizedResult.isErr) {
     return new Response(null, { status: 500 });
@@ -27,7 +24,7 @@ export async function GET(request: NextRequest, context: { params: Params }): Pr
     return new Response(null, { status: 401 });
   }
 
-  const variableResult = await variables.read.specific(user.userId, context.params.variableId);
+  const variableResult = await variables.read.specific(userAuth.userId, context.params.variableId);
 
   if (variableResult.isErr) {
     return new Response(null, { status: 500 });
@@ -37,10 +34,10 @@ export async function GET(request: NextRequest, context: { params: Params }): Pr
   return new Response(JSON.stringify(variable), { status: 200 });
 }
 
-export async function PUT(request: NextRequest, context: { params: Params }): Promise<Response> {
+export async function PUT(request: NextRequest, context: { params: VariableParams }): Promise<Response> {
   const user = getAuth(request);
   if (user.userId === null) {
-    return new Response(null, { status: 401 });
+    return missingUserIdResponse();
   }
 
   // TODO: Swap for prisma model
@@ -55,17 +52,13 @@ export async function PUT(request: NextRequest, context: { params: Params }): Pr
     minimalAccessRole: undefined,
   });
 
-  if (result.isErr) {
-    return new Response(null, { status: 500 });
-  }
-
-  return new Response(JSON.stringify(result.unwrap()), { status: 204 });
+  return parseResult(result, 200);
 }
 
-export async function DELETE(request: NextRequest, context: { params: Params }): Promise<Response> {
+export async function DELETE(request: NextRequest, context: { params: VariableParams }): Promise<Response> {
   const user = getAuth(request);
   if (user.userId === null) {
-    return new Response(null, { status: 401 });
+    return missingUserIdResponse();
   }
 
   const authorizedResult = await isMember(user.userId, context.params.projectId)
@@ -80,11 +73,5 @@ export async function DELETE(request: NextRequest, context: { params: Params }):
   }
 
   const variableResult = await variables.remove(context.params.variableId);
-
-  if (variableResult.isErr) {
-    return new Response(null, { status: 500 });
-  }
-
-  const variable = variableResult.unwrap()
-  return new Response(JSON.stringify(variable), { status: 202 });
+  return parseResult(variableResult, 202);
 }
