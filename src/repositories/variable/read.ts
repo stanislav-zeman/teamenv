@@ -3,12 +3,12 @@ import {Variable} from "@prisma/client";
 import prisma from "@/repositories/client";
 
 
-async function specific(id: string): Promise<Result<Variable>> {
+async function specific(userId: string, variableId: string): Promise<Result<Variable>> {
   try {
     // TODO: Check permissions
     const variable = await prisma.variable.findUniqueOrThrow({
       where: {
-        id: id,
+        id: variableId,
       },
     });
     return Result.ok(variable);

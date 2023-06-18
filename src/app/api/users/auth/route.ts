@@ -1,23 +1,26 @@
-import { NextRequest } from 'next/server'
-import { getAuth } from '@clerk/nextjs/server'
-import { ensureUser } from '@/repositories/user/create'
+import {NextRequest} from "next/server";
+import {getAuth} from "@clerk/nextjs/server";
+import {ensureUser} from "@/repositories/user/create";
+import {clerkClient} from "@clerk/nextjs";
+
 
 export async function POST(request: NextRequest): Promise<Response> {
-  const user = getAuth(request)
-  if (!user.userId) {
-    console.log('no user id')
-    return new Response(null, { status: 401 })
+  const userAuth = getAuth(request);
+  if (!userAuth.userId) {
+    console.log("no user id");
+    return new Response(null, { status: 401 });
   }
 
-  const username = user.user?.username ?? ''
-  let email: string
-  if (user.user?.emailAddresses) {
-    email = user.user.emailAddresses[0].emailAddress
+  const user = await clerkClient.users.getUser(userAuth.userId);
+  const username = user.username ?? "";
+  let email: string;
+  if (user.emailAddresses.length > 0) {
+    email = user.emailAddresses[0].emailAddress;
   } else {
     email = ''
   }
 
-  const result = await ensureUser({ id: user.userId, email, username })
+  const result = await ensureUser({id: user.id, email, username});
   if (result.isErr) {
     console.log(result.unwrap())
     return new Response(null, { status: 500 })

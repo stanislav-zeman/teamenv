@@ -10,7 +10,7 @@ async function create(data: VariableCreateData): Promise<Result<Variable>> {
     const newVariable = await prisma.variable.create({
       data: {
         ...data,
-        minimalAccessRole: data.minimalAccessRole ?? "OBSERVER",
+        minimalAccessRole: data.minimalAccessRole ?? "GUEST",
       },
     });
     return Result.ok(newVariable);
@@ -18,3 +18,5 @@ async function create(data: VariableCreateData): Promise<Result<Variable>> {
     return Result.err(e as Error);
   }
 }
+
+export default create;

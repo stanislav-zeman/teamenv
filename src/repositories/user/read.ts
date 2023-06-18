@@ -1,7 +1,35 @@
-import {Role} from "@prisma/client";
+import {Role, User} from "@prisma/client";
 import prisma from "@/repositories/client";
 import {Result} from "@badrap/result";
+import {IFilter} from "@/signals/filteringSignal";
 
+
+export async function getAll(filters?: IFilter): Promise<Result<User[]>> {
+  try {
+    const users = await prisma.user.findMany({
+      where: {
+        deletedAt: null,
+        OR: [
+            {
+              username: {
+                contains: filters?.search ?? "",
+                mode: "insensitive",
+              },
+            },
+          {
+            email: {
+              contains: filters?.search ?? "",
+                mode: "insensitive",
+            },
+          },
+        ]
+      },
+    });
+    return Result.ok(users);
+  } catch (e) {
+    return Result.err(e as Error);
+  }
+}
 
 export async function getRole(userId: string, projectId: string): Promise<Result<Role>> {
   try {

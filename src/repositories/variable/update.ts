@@ -2,7 +2,7 @@ import {Result} from "@badrap/result";
 import {Variable} from "@prisma/client";
 import {VariableUpdateData} from "@/repositories/variable/types/data";
 import prisma from "@/repositories/client";
-
+import {isDeleted} from "@/repositories/commons";
 
 async function update(data: VariableUpdateData): Promise<Result<Variable>> {
   try {
@@ -13,7 +13,7 @@ async function update(data: VariableUpdateData): Promise<Result<Variable>> {
         // TODO: Check permissions
         const variable = await transaction.variable.findUniqueOrThrow({
           where: {
-            id: data.id,
+            id: data.variableId,
           },
         });
         if (isDeleted(variable)) {
@@ -26,7 +26,7 @@ async function update(data: VariableUpdateData): Promise<Result<Variable>> {
 
         return transaction.variable.update({
           where: {
-            id: data.id,
+            id: data.variableId,
           },
           data: {
             name: data.name,
@@ -41,3 +41,5 @@ async function update(data: VariableUpdateData): Promise<Result<Variable>> {
     return Result.err(e as Error);
   }
 }
+
+export default update;

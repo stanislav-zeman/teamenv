@@ -2,6 +2,7 @@ import {Result} from "@badrap/result";
 import {EnsureUserData} from "@/repositories/user/types/data";
 import prisma from "@/repositories/client";
 
+// TODO: handle changing email and username
 export async function ensureUser(data: EnsureUserData): Promise<Result<boolean>> {
   try {
     const user = await prisma.user.findFirst({

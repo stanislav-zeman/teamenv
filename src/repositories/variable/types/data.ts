@@ -8,7 +8,8 @@ export type VariableCreateData = {
 };
 
 export type VariableUpdateData = {
-  id: string;
+  userId: string,
+  variableId: string;
   name?: string;
   value?: string;
   minimalAccessRole?: Role;
