@@ -1,7 +1,7 @@
-import { profile, projects, settings } from '@/app/links'
-import { MyProject } from '@/models/Project'
-import Link from 'next/link'
-import { CurrentLinkHighlighter } from './CurrentLinkHighlighter'
+import { profile, projects, settings } from "@/app/links";
+import { MyProject } from "@/models/Project";
+import Link from "next/link";
+import { CurrentLinkHighlighter } from "./CurrentLinkHighlighter";
 
 export const NavigationLinks = () => {
   return (
@@ -10,17 +10,20 @@ export const NavigationLinks = () => {
         <Link className="text-white" href={projects.path}>
           {projects.label}
         </Link>
-        <CurrentLinkHighlighter pathname={projects.path} />{' '}
+        <CurrentLinkHighlighter pathname={projects.path} />{" "}
       </div>
       |
-      <Link className="text-white" href={profile.path}>
-        {profile.label}
-      </Link>{' '}
+      <div>
+        <Link className="text-white" href={profile.path}>
+          {profile.label}
+        </Link>
+        <CurrentLinkHighlighter pathname={profile.path} />{" "}
+      </div>
       |
       <Link className="text-white" href={settings.path}>
         {settings.label}
-      </Link>{' '}
+      </Link>{" "}
       |
     </div>
-  )
-}
+  );
+};
