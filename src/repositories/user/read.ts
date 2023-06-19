@@ -1,7 +1,7 @@
-import { Role, User } from '@prisma/client'
-import prisma from '@/repositories/client'
-import { Result } from '@badrap/result'
-import { IFilter } from '@/utils/filterUtils'
+import {Role, User} from "@prisma/client";
+import prisma from "@/repositories/client";
+import {Result} from "@badrap/result";
+import {IFilter} from "@/models/Filters";
 
 export async function getAll(filters?: IFilter): Promise<Result<User[]>> {
   try {

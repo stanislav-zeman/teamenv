@@ -1,7 +1,9 @@
-import { NextRequest } from 'next/server'
-import { getAll } from '@/repositories/user/read'
-import { ReadonlyURLSearchParams } from 'next/navigation'
-import { parseFiltersFromParams } from '@/utils/filterUtils'
+import {NextRequest} from "next/server";
+import {getAll} from "@/repositories/user/read";
+import {ReadonlyURLSearchParams} from "next/navigation";
+import {parseFiltersFromParams} from "@/models/Filters";
+import {parseResult} from "@/app/api/helpers";
+
 
 export async function GET(request: NextRequest): Promise<Response> {
   const searchParams = request.nextUrl.searchParams
@@ -10,10 +12,5 @@ export async function GET(request: NextRequest): Promise<Response> {
 
   const result = await getAll(filters)
 
-  if (result.isErr) {
-    return new Response(null, { status: 500 })
-  }
-
-  const response = result.unwrap()
-  return new Response(JSON.stringify(response), { status: 200 })
+  return parseResult(result, 200);
 }

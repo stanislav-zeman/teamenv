@@ -1,4 +1,4 @@
-import {Role} from "@prisma/client";
+import {ProjectUser, Role} from "@prisma/client";
 import {getRole} from "@/repositories/user/read";
 import {ModifyMemberData} from "@/repositories/user/types/data";
 
@@ -40,12 +40,8 @@ export function isDeleted(o: Deletable): boolean {
   return o.deletedAt !== null;
 }
 
-export async function hasAtLeastRole(userId: string, projectId: string, role: Role): Promise<boolean> {
-  const memberRole = await getRole(userId, projectId);
-  if (memberRole.isOk) {
-    return getRolePriority(memberRole.unwrap()) >= getRolePriority(role);
-  }
-  return false;
+export function hasAtLeastRole(userRole: Role, expectedRole: Role): boolean {
+  return getRolePriority(userRole) >= getRolePriority(expectedRole);
 }
 
 export async function canModify(data: ModifyMemberData): Promise<boolean> {

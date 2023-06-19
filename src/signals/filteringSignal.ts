@@ -1,7 +1,6 @@
-import { Role } from '@/models/Role'
-import { IFilter, getDefaultFilters } from '@/utils/filterUtils'
+'use client'
 import { signal } from '@preact/signals-react'
-import { ReadonlyURLSearchParams } from 'next/navigation'
+import { getDefaultFilters, IFilter } from '@/models/Filters'
 
 export const filteringSignalToSearchParams = (): URLSearchParams => {
   const params = new URLSearchParams()
