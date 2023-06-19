@@ -9,7 +9,7 @@ interface IOwnerRow {
 
 export const OwnerRow: FC<IOwnerRow> = ({ owner, createdAt }) => {
   return (
-    <div className="w-12/12 h-6/12 flex items-center justify-center gap-6">
+    <div className="w-12/12 h-6/12 flex items-center justify-center gap-6 mb-3">
       <Avatar name={owner.fullName} />
       <div className="flex items-start justify-center text-white flex-col">
         <Text textAlign="left" fontSize="1.5rem">

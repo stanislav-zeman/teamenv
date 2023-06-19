@@ -8,6 +8,7 @@ import { Role } from '@/models/Role'
 import { MoreButtonWithPopover } from './MoreButtonWithPopover'
 import { useRouter } from 'next/navigation'
 import { getProjectDefaultUrl } from '@/app/links'
+import MemberRole from '../members/MemberRole'
 
 interface IProjectCard {
   project: MyProject
@@ -58,6 +59,7 @@ export const ProjectCard: FC<IProjectCard> = ({ project }) => {
       </div>
       <div className="w-10/12 bg-slate-400 h-0.5 my-3" />
       <OwnerRow owner={project.owner} createdAt={project.createdAt} />
+      <MemberRole role={project.myRole} />
     </GridItem>
   )
 }
