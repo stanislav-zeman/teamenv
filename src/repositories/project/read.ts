@@ -25,7 +25,20 @@ const specific = async (id: string, userId: string): Promise<Result<ProjectData>
       },
       include: {
         variables: true,
-        users: true,
+        users: {
+          select: {
+            role: true,
+            user: {
+              select: {
+                id: true,
+                username: true,
+                email: true,
+                avatarUrl: true,
+                createdAt: true,
+              },
+            },
+          },
+        },
       }
     });
     return Result.ok(project);
