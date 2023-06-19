@@ -1,8 +1,7 @@
-import {Role, User} from "@prisma/client";
-import prisma from "@/repositories/client";
-import {Result} from "@badrap/result";
-import {IFilter} from "@/signals/filteringSignal";
-
+import { Role, User } from '@prisma/client'
+import prisma from '@/repositories/client'
+import { Result } from '@badrap/result'
+import { IFilter } from '@/utils/filterUtils'
 
 export async function getAll(filters?: IFilter): Promise<Result<User[]>> {
   try {
@@ -10,52 +9,59 @@ export async function getAll(filters?: IFilter): Promise<Result<User[]>> {
       where: {
         deletedAt: null,
         OR: [
-            {
-              username: {
-                contains: filters?.search ?? "",
-                mode: "insensitive",
-              },
-            },
           {
-            email: {
-              contains: filters?.search ?? "",
-                mode: "insensitive",
+            username: {
+              contains: filters?.search ?? '',
+              mode: 'insensitive',
             },
           },
-        ]
+          {
+            email: {
+              contains: filters?.search ?? '',
+              mode: 'insensitive',
+            },
+          },
+        ],
       },
-    });
-    return Result.ok(users);
+    })
+    return Result.ok(users)
   } catch (e) {
-    return Result.err(e as Error);
+    console.log(e)
+    return Result.err(e as Error)
   }
 }
 
-export async function getRole(userId: string, projectId: string): Promise<Result<Role>> {
+export async function getRole(
+  userId: string,
+  projectId: string
+): Promise<Result<Role>> {
   try {
     const member = await prisma.projectUser.findFirstOrThrow({
       where: {
         userId,
         projectId,
       },
-    });
-    return Result.ok(member.role);
+    })
+    return Result.ok(member.role)
   } catch (e) {
-    return Result.err(e as Error);
+    return Result.err(e as Error)
   }
 }
 
-export async function isMember(userId: string, projectId: string): Promise<Result<boolean>> {
+export async function isMember(
+  userId: string,
+  projectId: string
+): Promise<Result<boolean>> {
   try {
     const member = await prisma.projectUser.findFirst({
       where: {
         userId,
         projectId,
       },
-    });
+    })
 
-    return Result.ok(member !== null);
+    return Result.ok(member !== null)
   } catch (e) {
-    return Result.err(e as Error);
+    return Result.err(e as Error)
   }
 }

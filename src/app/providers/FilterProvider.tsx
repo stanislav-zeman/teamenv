@@ -1,5 +1,6 @@
 'use client'
-import { parseFiltersFromParams, setFilters } from '@/signals/filteringSignal'
+import { setFilters } from '@/signals/filteringSignal'
+import { parseFiltersFromParams } from '@/utils/filterUtils'
 import { usePathname, useSearchParams } from 'next/navigation'
 import { FC, ReactNode, useEffect } from 'react'
 
