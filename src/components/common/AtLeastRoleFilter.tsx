@@ -19,7 +19,7 @@ export const AtLeastRoleFilter = () => {
     <div className="flex items-center h-full gap-2">
       <Text>At least role:</Text>
       <select
-        className="h-[2.5rem]"
+        className="h-[2.5rem] rounded-md"
         value={getRoleStringFromValue(roleToIndex(filters.atLeastRole))}
         onChange={(e) =>
           pushFilters(

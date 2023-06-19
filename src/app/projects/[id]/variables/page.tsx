@@ -3,5 +3,5 @@ import ProjectContainer from "@/containers/ProjectContainer";
 
  
 export default function Page({ params }: PageProps) {
-  return <ProjectContainer id={params.id} members={false}/>;
+  return <ProjectContainer projectId={params.id} members={false}/>;
 }

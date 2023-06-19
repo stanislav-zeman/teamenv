@@ -21,11 +21,11 @@ const MemberItem: FC<MemberItemProps> = ({ member, color }) => {
       <Avatar
         color={color}
         backgroundColor="white"
-        name={member.fullName}
+        name={member.username}
         size="lg"
         fontWeight="600"
       />
-      <Text fontSize="xl">{member.fullName}</Text>
+      <Text fontSize="xl">{member.username}</Text>
       <MemberRole role={member.role} />
       <div className={iconsContainer}>
         <HamburgerIcon boxSize="15%" />
