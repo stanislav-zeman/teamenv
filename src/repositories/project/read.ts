@@ -19,9 +19,10 @@ const specific = async (id: string, userId: string): Promise<Result<ProjectData>
       return Result.err(new Error("User does not belong to the project!"));
     }
 
-    const project = await prisma.project.findUniqueOrThrow({
+    const project = await prisma.project.findFirstOrThrow({
       where: {
         id: id,
+        deletedAt: null,
       },
       include: {
         variables: true,
