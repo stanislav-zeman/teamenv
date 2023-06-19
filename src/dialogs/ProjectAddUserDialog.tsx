@@ -40,14 +40,16 @@ export const ProjectAddUserDialog: FC<IProjectAddUserDialog> = ({
 
   return (
     <Dialog maxWidth="md" fullWidth open onClose={closeDialog}>
-      <DialogContent sx={{ maxHeight: '80vh' }}>
-        <div className="flex flex-col p-3 items-center justify-center gap-3">
-          <Text size="2xl">Assign new member to project:</Text>
+      <DialogContent sx={{ minHeight: '33vh' }}>
+        <div className="flex flex-col p-3 items-center justify-between gap-5 h-auto">
+          <Text as="b" size="2xl">
+            Assign new member to project:
+          </Text>
           <DynamicUserAutocomplete
             onSelectItem={handleSelectUser}
             project={project}
           />
-          <div className="flex gap-4">
+          <div className="flex mt-12 gap-4">
             <Button
               color="primary"
               variant="contained"
