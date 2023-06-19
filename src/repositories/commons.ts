@@ -1,58 +1,58 @@
-import {ProjectUser, Role} from "@prisma/client";
-import {getRole} from "@/repositories/user/read";
-import {ModifyMemberData} from "@/repositories/user/types/data";
+import { ProjectUser, Role } from '@prisma/client'
+import { getRole } from '@/repositories/user/read'
+import { ModifyMemberData } from '@/repositories/user/types/data'
 
 type Deletable = {
-  deletedAt: Date | null;
+  deletedAt: Date | null
 }
 
-export function getPrismaRoles(role: number | undefined): Role[] {
+export function getPrismaRoles(role: Role): Role[] {
   switch (role) {
-    case 3:
+    case Role.OWNER:
       return [Role.OWNER]
-    case 2:
+    case Role.MAINTAINER:
       return [Role.MAINTAINER, Role.OWNER]
-    case 1:
+    case Role.DEVELOPER:
       return [Role.DEVELOPER, Role.MAINTAINER, Role.OWNER]
-    case 0:
+    case Role.GUEST:
       return [Role.GUEST, Role.DEVELOPER, Role.MAINTAINER, Role.OWNER]
     default:
-      throw new Error("Invalid role!")
+      throw new Error('Invalid role!')
   }
 }
 
 function getRolePriority(role: Role): number {
   switch (role) {
-    case "GUEST":
-      return 0;
-    case "DEVELOPER":
-      return 1;
-    case "MAINTAINER":
-      return 2;
-    case "OWNER":
-      return 3;
+    case 'GUEST':
+      return 0
+    case 'DEVELOPER':
+      return 1
+    case 'MAINTAINER':
+      return 2
+    case 'OWNER':
+      return 3
     default:
-      return -1;
+      return -1
   }
 }
 
 export function isDeleted(o: Deletable): boolean {
-  return o.deletedAt !== null;
+  return o.deletedAt !== null
 }
 
 export function hasAtLeastRole(userRole: Role, expectedRole: Role): boolean {
-  return getRolePriority(userRole) >= getRolePriority(expectedRole);
+  return getRolePriority(userRole) >= getRolePriority(expectedRole)
 }
 
 export async function canModify(data: ModifyMemberData): Promise<boolean> {
-  const userRole = await getRole(data.userId, data.projectId);
-  const memberRole = await getRole(data.memberId, data.projectId);
+  const userRole = await getRole(data.userId, data.projectId)
+  const memberRole = await getRole(data.memberId, data.projectId)
 
   if (userRole.isErr || memberRole.isErr) {
-    throw new Error("Failed to retrieve roles!");
+    throw new Error('Failed to retrieve roles!')
   }
 
-  const priorityDiff = getRolePriority(userRole.unwrap()) - getRolePriority(memberRole.unwrap());
-  return priorityDiff > 0;
+  const priorityDiff =
+    getRolePriority(userRole.unwrap()) - getRolePriority(memberRole.unwrap())
+  return priorityDiff > 0
 }
-

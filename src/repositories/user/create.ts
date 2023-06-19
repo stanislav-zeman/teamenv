@@ -65,7 +65,6 @@ export async function createProjectMember(
     })
     return Result.ok(newProjectUser)
   } catch (e) {
-    console.log(e)
     return Result.err(e as Error)
   }
 }

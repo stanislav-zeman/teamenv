@@ -7,8 +7,8 @@ generator client {
 
 datasource db {
   provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  url       = "postgres://EnsIaver:Sz6gQmCK9Dcq@ep-noisy-pine-411524-pooler.eu-central-1.aws.neon.tech/neondb?pgbouncer=true&connect_timeout=10"
+  directUrl = "postgres://EnsIaver:Sz6gQmCK9Dcq@ep-noisy-pine-411524.eu-central-1.aws.neon.tech/neondb?connect_timeout=10"
   // If you want to use Prisma Migrate, you will need to manually create a shadow database
   // https://neon.tech/docs/guides/prisma-migrate#configure-a-shadow-database-for-prisma-migrate
   // make sure to append ?connect_timeout=10 to the connection string

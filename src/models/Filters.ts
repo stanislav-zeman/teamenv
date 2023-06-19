@@ -1,5 +1,5 @@
-import {Role} from "@/models/Role";
-import {ReadonlyURLSearchParams} from "next/navigation";
+import { Role } from '@/models/Role'
+import { ReadonlyURLSearchParams } from 'next/navigation'
 
 export type DisplayOptions = 'all' | 'deleted' | 'non-deleted'
 
@@ -39,7 +39,7 @@ export const parseFiltersFromParams = (
       ? new Date(params.get('dateTo') || '')
       : defaultFilters.dateTo,
     atLeastRole: params.get('atLeastRole')
-      ? +(params.get('atLeastRole') || 0)
+      ? (params.get('atLeastRole') as Role) || Role.GUEST
       : defaultFilters.atLeastRole,
     page: +(params.get('page') ?? defaultFilters.page),
     display: (params.get('display') as DisplayOptions) ?? 'all',
