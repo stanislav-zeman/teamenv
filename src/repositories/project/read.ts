@@ -47,7 +47,7 @@ const all = async (filters?: ProjectFilters): Promise<Result<Project[]>> => {
           some: {
             AND: [
               {
-                id: filters?.userId
+                userId: filters?.userId
               },
               {
                 role: {

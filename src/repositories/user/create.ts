@@ -5,21 +5,36 @@ import {ProjectUser} from "@prisma/client";
 import {getRole} from "@/repositories/user/read";
 import {hasAtLeastRole} from "@/repositories/commons";
 
-// TODO: handle changing email and username
 export async function ensureUser(data: EnsureUserData): Promise<Result<boolean>> {
   try {
-    const user = await prisma.user.findFirst({
-      where: {
-        id: data.id,
-      },
-    });
+    return Result.ok(
+      await prisma.$transaction(async (transaction) => {
+        const user = await transaction.user.findFirst({
+          where: {
+            id: data.id,
+          },
+        });
 
-    if (!user) {
-      await prisma.user.create({data});
-      return Result.ok(true);
-    }
+        if (!user) {
+          await transaction.user.create({data});
+          return true;
+        }
 
-    return Result.ok(false);
+        if (data.username !== user.username || data.email !== user.email || data.avatarUrl !== user.avatarUrl) {
+          await transaction.user.update({
+            where: {
+              id: data.id,
+            },
+            data: {
+              ...data,
+            },
+          });
+          return true;
+        }
+
+        return false;
+      })
+    );
   } catch (e) {
     return Result.err(e as Error);
   }
