@@ -4,6 +4,7 @@ export type EnsureUserData = {
   id: string;
   username: string;
   email: string;
+  avatarUrl: string;
 };
 
 export type ModifyMemberData = {

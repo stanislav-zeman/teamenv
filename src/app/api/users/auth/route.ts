@@ -21,7 +21,7 @@ export async function POST(request: NextRequest): Promise<Response> {
     email = ''
   }
 
-  const result = await ensureUser({id: user.id, email, username});
+  const result = await ensureUser({id: user.id, email, username, avatarUrl: user.profileImageUrl});
   if (result.isErr) {
     console.log(result.unwrap())
     return internalServerErrorResponse();
