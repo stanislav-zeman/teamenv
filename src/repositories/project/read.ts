@@ -19,13 +19,27 @@ const specific = async (id: string, userId: string): Promise<Result<ProjectData>
       return Result.err(new Error("User does not belong to the project!"));
     }
 
-    const project = await prisma.project.findUniqueOrThrow({
+    const project = await prisma.project.findFirstOrThrow({
       where: {
         id: id,
+        deletedAt: null,
       },
       include: {
         variables: true,
-        users: true,
+        users: {
+          select: {
+            role: true,
+            user: {
+              select: {
+                id: true,
+                username: true,
+                email: true,
+                avatarUrl: true,
+                createdAt: true,
+              },
+            },
+          },
+        },
       }
     });
     return Result.ok(project);
@@ -47,7 +61,7 @@ const all = async (filters?: ProjectFilters): Promise<Result<Project[]>> => {
           some: {
             AND: [
               {
-                id: filters?.userId
+                userId: filters?.userId
               },
               {
                 role: {
