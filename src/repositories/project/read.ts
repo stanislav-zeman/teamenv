@@ -1,14 +1,15 @@
 import prisma from "../client";
-import type {
-  Project
-} from "@prisma/client";
-import {Result} from "@badrap/result";
-import {ProjectData} from "@/repositories/project/types/data";
-import {isMember} from "@/repositories/user/read";
-import {ProjectFilters} from "@/models/Filters";
-import {getPrismaRoles} from "@/repositories/commons";
+import type { Project } from "@prisma/client";
+import { Result } from "@badrap/result";
+import { ProjectData } from "@/repositories/project/types/data";
+import { getRole, isMember } from "@/repositories/user/read";
+import { ProjectFilters } from "@/models/Filters";
+import { getPrismaRoles } from "@/repositories/commons";
 
-const specific = async (id: string, userId: string): Promise<Result<ProjectData>> => {
+const specific = async (
+  id: string,
+  userId: string
+): Promise<Result<ProjectData>> => {
   try {
     const membership = await isMember(userId, id);
     if (membership.isErr) {
@@ -25,10 +26,20 @@ const specific = async (id: string, userId: string): Promise<Result<ProjectData>
       },
       include: {
         variables: true,
-        users: true,
-      }
+        users: {
+          include: {
+            user: {
+              select: {
+                username: true,
+              },
+            },
+          },
+          orderBy: { role: "asc" },
+        },
+      },
     });
-    return Result.ok(project);
+    const myRole = await getRole(userId, id);
+    return Result.ok({ myRole: myRole.unwrap(), ...project });
   } catch (e) {
     return Result.err(e as Error);
   }
@@ -37,6 +48,14 @@ const specific = async (id: string, userId: string): Promise<Result<ProjectData>
 const all = async (filters?: ProjectFilters): Promise<Result<Project[]>> => {
   try {
     const projects = await prisma.project.findMany({
+      include: {
+        users: {
+          select: { role: true },
+          where: {
+            userId: filters?.userId,
+          },
+        },
+      },
       where: {
         deletedAt: null,
         name: {
@@ -47,14 +66,14 @@ const all = async (filters?: ProjectFilters): Promise<Result<Project[]>> => {
           some: {
             AND: [
               {
-                id: filters?.userId
+                id: filters?.userId,
               },
               {
                 role: {
-                  in: getPrismaRoles(filters?.atLeastRole)
-                }
-              }
-            ]
+                  in: getPrismaRoles(filters?.atLeastRole),
+                },
+              },
+            ],
           },
         },
       },

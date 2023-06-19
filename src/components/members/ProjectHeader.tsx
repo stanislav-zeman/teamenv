@@ -22,9 +22,7 @@ import { MyProject } from '@/models/Project'
 
 interface ProjectHeaderProps {
   project: MyProject
-  name: string
   members: boolean
-  myRole: Role
 }
 
 type LinkStyles = {
@@ -48,44 +46,44 @@ const getLinkStyles = (active: boolean): LinkStyles => {
   }
 }
 
-const ProjectHeader: FC<ProjectHeaderProps> = (props) => {
+const ProjectHeader: FC<ProjectHeaderProps> = ({project, members}) => {
   const router = useRouter()
   return (
     <Stack divider={<StackDivider borderColor="gray.700" />}>
       <ProjectNameDisplay
-        projectName={props.name}
-        projectId={props.project.id}
-        myRole={props.myRole}
+        projectName={project.name}
+        projectId={project.id}
+        myRole={project.myRole}
       />
       <div className="flex justify-between">
         <div>
           <Button
             variant="link"
-            {...getLinkStyles(props.members)}
-            onClick={() => router.push(`/projects/${props.project.id}/members`)}
+            {...getLinkStyles(members)}
+            onClick={() => router.push(`/projects/${project.id}/members`)}
           >
             Members
           </Button>
           <Button
             variant="link"
-            {...getLinkStyles(!props.members)}
+            {...getLinkStyles(!members)}
             paddingLeft="2rem"
             onClick={() =>
-              router.push(`/projects/${props.project.id}/variables`)
+              router.push(`/projects/${project.id}/variables`)
             }
           >
             Variables
           </Button>
         </div>
         <div className="flex items-center gap-7 justify-self-end pr-11">
-          {props.members ? <AtLeastRoleFilter /> : <DisplayFilterSwitch />}
+          {members ? <AtLeastRoleFilter /> : <DisplayFilterSwitch />}
           <OrderFilteringButtons />
           <GenericLolInput />
-          {props.myRole > Role.DEVELOPER && (
+          {project.myRole > Role.DEVELOPER && (
             <IconButton
               onClick={() => {
-                if (props.members) {
-                  openDialog(<ProjectAddUserDialog project={props.project} />)
+                if (members) {
+                  openDialog(<ProjectAddUserDialog project={project} />)
                   return
                 }
               }}

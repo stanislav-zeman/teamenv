@@ -55,7 +55,7 @@ const PopoverSelect: FC<{
     data: users,
     isLoading,
     isError,
-  } = useGetAllUsers(search, project.members)
+  } = useGetAllUsers(search, project.users)
 
   if (isLoading) return <Skeleton />
 

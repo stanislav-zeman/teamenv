@@ -9,6 +9,7 @@ import { Role } from "@/models/Role";
 import GenericList from "../common/GenericList";
 import { getRandomColors } from "@/utils/randomColor";
 import MemberItem from "./MemberItem";
+import { ProjectUser } from "@prisma/client";
 
 interface MemberListProps {
   members: Member[];
