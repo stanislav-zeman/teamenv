@@ -14,9 +14,12 @@ import {
 import { Role } from '@/models/Role'
 import { MyProject } from '@/models/Project'
 import MuiThemeProvider from '@/app/providers/MuiThemeProvider'
+import { useAddUserToProject } from '@/hooks/mutations/useAddUserToProject'
+import { getRoleValueFromString } from '@/components/common/AtLeastRoleFilter'
+import { getRoleFromIndex, roleToIndex } from '@/utils/roleUtils'
 
 interface ISelectRoleDialog {
-  selectedUser: UserInfo | null
+  selectedUser: UserInfo
   project: MyProject
 }
 
@@ -25,18 +28,19 @@ export const SelectRoleDialog: FC<ISelectRoleDialog> = ({
   project,
 }) => {
   const [selectedRole, setSelectedRole] = useState(0)
+  const { mutate: add } = useAddUserToProject(project.id)
 
   const roles = Object.entries(Role).filter(
-    (_, index) => index < project.myRole
+    (_, index) => index < roleToIndex(project.myRole)
   )
 
   const getValueLabel = (value: number) => {
-    const role = roles.find((r) => r[1] === value)
+    const role = roles.find((r) => roleToIndex(r[1]) === value)
     return role ? role[0] : 'lol'
   }
 
   const handleApply = () => {
-    console.log('kokot')
+    add({ memberId: selectedUser.id, role: getRoleFromIndex(selectedRole)})
   }
 
   return (
