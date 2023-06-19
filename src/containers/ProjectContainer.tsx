@@ -18,7 +18,7 @@ const ProjectContainer = ({ id, members }: IProjectContainerProps) => {
   return (
     <div className="px-28 pt-7">
       <ProjectHeader
-        id={id}
+        project={project}
         name={project.name}
         members={members}
         myRole={project.myRole}

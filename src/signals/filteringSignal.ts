@@ -1,6 +1,6 @@
 'use client'
 import { signal } from '@preact/signals-react'
-import {getDefaultFilters, IFilter} from "@/models/Filters";
+import { getDefaultFilters, IFilter } from '@/models/Filters'
 
 export const filteringSignalToSearchParams = (): URLSearchParams => {
   const params = new URLSearchParams()
