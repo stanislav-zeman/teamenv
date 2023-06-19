@@ -13,5 +13,4 @@ export type VariableUpdateData = {
   name?: string;
   value?: string;
   minimalAccessRole?: Role;
-  editor: string;
 };
