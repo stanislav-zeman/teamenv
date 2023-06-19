@@ -22,5 +22,6 @@ export async function GET(request: NextRequest) : Promise<Response> {
     return new Response(null, {status: 500})
   }
 
-  return new Response(JSON.stringify(result), {status: 200});
+  const projects = result.unwrap
+  return new Response(JSON.stringify(projects), {status: 200});
 }
