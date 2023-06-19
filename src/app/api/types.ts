@@ -15,13 +15,19 @@ export type VariableCreateData = {
   value: string;
 }
 
+export type VariableUpdateData = {
+  name: string;
+  value: string;
+  hidden: boolean;
+}
+
 export type ProjectParams = {
   projectId: string;
 };
 
 export type MemberParams = {
   projectId: string;
-  memberId: string,
+  memberId: string;
 };
 
 export type VariableParams = {

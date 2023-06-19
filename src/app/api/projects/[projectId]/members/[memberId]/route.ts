@@ -1,17 +1,16 @@
 import {NextRequest} from "next/server";
 import {getAuth} from "@clerk/nextjs/server";
-import {missingUserIdResponse, parseResult} from "@/app/api/helpers";
+import {unauthorizedResponse, parseResult} from "@/app/api/helpers";
 import {deleteMember} from "@/repositories/user/delete";
 import {ModifyMemberData} from "@/repositories/user/types/data";
 import {changeRole} from "@/repositories/user/update";
 import {MemberParams, ProjectMemberUpdateData} from "@/app/api/types";
 
 
-
 export async function PUT(request: NextRequest, context: { params: MemberParams }): Promise<Response> {
   const userAuth = getAuth(request);
   if (userAuth.userId === null) {
-    return missingUserIdResponse();
+    return unauthorizedResponse();
   }
 
   const modifyMemberData: ModifyMemberData = {
@@ -27,7 +26,7 @@ export async function PUT(request: NextRequest, context: { params: MemberParams 
 export async function DELETE(request: NextRequest, context: { params: MemberParams }): Promise<Response> {
   const userAuth = getAuth(request);
   if (userAuth.userId === null) {
-    return missingUserIdResponse();
+    return unauthorizedResponse();
   }
 
   const result = await deleteMember({
