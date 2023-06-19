@@ -1,23 +1,24 @@
 import prisma from "../client";
-import type { Project } from "@prisma/client";
+import { Role, type Project } from "@prisma/client";
 import { Result } from "@badrap/result";
-import { ProjectData } from "@/repositories/project/types/data";
+import { OwnerInfo, ProjectData, ProjectSummary } from "@/repositories/project/types/data";
 import { getRole, isMember } from "@/repositories/user/read";
 import { ProjectFilters } from "@/models/Filters";
 import { getPrismaRoles } from "@/repositories/commons";
+
 
 const specific = async (
   id: string,
   userId: string
 ): Promise<Result<ProjectData>> => {
   try {
-    const membership = await isMember(userId, id);
+    const membership = await isMember(userId, id)
     if (membership.isErr) {
-      return Result.err(new Error("Failed to check user membership!"));
+      return Result.err(new Error('Failed to check user membership!'))
     }
 
     if (!membership.unwrap()) {
-      return Result.err(new Error("User does not belong to the project!"));
+      return Result.err(new Error('User does not belong to the project!'))
     }
 
     const project = await prisma.project.findFirstOrThrow({
@@ -40,66 +41,74 @@ const specific = async (
               },
             },
           },
+          orderBy: { role: "asc" }
         },
-        orderBy: { role: "asc" }
       },
     });
     const myRole = await getRole(userId, id);
     return Result.ok({ myRole: myRole.unwrap(), ...project });
   } catch (e) {
-    return Result.err(e as Error);
+    return Result.err(e as Error)
   }
-};
+}
 
-const all = async (filters?: ProjectFilters): Promise<Result<Project[]>> => {
+const all = async (filters?: ProjectFilters): Promise<Result<ProjectSummary[]>> => {
   try {
     const projects = await prisma.project.findMany({
-      include: {
-        users: {
-          select: { role: true },
-          where: {
-            userId: filters?.userId,
-          },
-        },
-      },
       where: {
         deletedAt: null,
         name: {
-          contains: filters?.search ?? "",
-          mode: "insensitive",
+          contains: filters?.search ?? '',
+          mode: 'insensitive',
         },
         users: {
           some: {
             AND: [
               {
-<<<<<<< HEAD
-                userId: filters?.userId
-=======
-                id: filters?.userId,
->>>>>>> origin/#9
+                userId: filters?.userId,
               },
               {
                 role: {
-                  in: getPrismaRoles(filters?.atLeastRole),
+                  in: getPrismaRoles(filters?.atLeastRole ?? Role.GUEST),
                 },
               },
             ],
           },
         },
       },
-      orderBy: {
-        name: filters?.order ?? "desc",
+      include: {
+        users: {
+          include: {user: {
+            select: {
+              username: true,
+              avatarUrl: true
+            }
+          }},
+          orderBy: {
+            role: "asc"
+          }
+        },
       },
-    });
-    return Result.ok(projects);
+      orderBy: {
+        name: filters?.order ?? 'desc',
+      },
+    })
+
+    const mapped: ProjectSummary[] = projects.map(({users, ...project}) => ({
+      ...project,
+      owner: users[0],
+      myRole: users.find(({userId}) => userId == filters?.userId)?.role
+    }))
+    return Result.ok(mapped)
   } catch (e) {
-    return Result.err(e as Error);
+    return Result.err(e as Error)
   }
-};
+}
+
 
 const read = {
   specific,
   all,
-};
+}
 
-export default read;
+export default read

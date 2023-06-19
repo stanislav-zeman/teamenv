@@ -1,27 +1,32 @@
 "use client";
-import { Role } from "@/models/Role";
 import { Badge } from "@chakra-ui/react";
+import { Role } from "@prisma/client";
 import { FC } from "react";
 
 interface IMemberRoleProps {
   role: Role;
 }
 
-const getRoleStyles = (role: Role): string[] => {
+type RoleStyles = {
+  label: string;
+  color: string;
+};
+
+const getRoleStyles = (role: Role): RoleStyles => {
   switch (role) {
     case Role.GUEST:
-      return ["Guest", "gray.200"];
+      return { label: "Guest", color: "gray.200" };
     case Role.DEVELOPER:
-      return ["Developer", "cyan.500"];
+      return { label: "Developer", color: "cyan.500" };
     case Role.MAINTAINER:
-      return ["Maintainer", "red.700"];
+      return { label: "Maintainer", color: "red.700" };
     case Role.OWNER:
-      return ["Owner", "darkkhaki"];
+      return { label: "Owner", color: "darkkhaki" };
   }
 };
 
 const MemberRole: FC<IMemberRoleProps> = (props) => {
-  const [label, color] = getRoleStyles(props.role);
+  const { label, color } = getRoleStyles(props.role);
   return (
     <Badge
       backgroundColor={color}

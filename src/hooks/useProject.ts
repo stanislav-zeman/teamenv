@@ -4,6 +4,7 @@ import { ProjectData } from "@/repositories/project/types/data";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
+
 export const getMyProjectKey = (projectId: string) => [projectId, "myProject"];
 
 export const useProjectMocked = (projectId: string) =>
@@ -17,3 +18,11 @@ export const useProject = (projectId: string) =>
     queryFn: async () => 
       (await axios.get(`http://localhost:3000/api/projects/${projectId}/`)).data
   });
+/*export const useProject = (projectId: string) =>
+  useQuery<MyProject | undefined>(
+    getMyProjectKey(projectId),
+    async () =>
+      await axios
+        .get(`ttp://localhost:3000/api/projects/${projectId}`)
+        .then((res) => res.data as MyProject)
+  )*/

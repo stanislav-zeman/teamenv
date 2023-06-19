@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import type {Project, Role, Variable} from "@prisma/client"
-=======
-import type {Project, ProjectUser, Role, Variable} from "@prisma/client"
->>>>>>> origin/#9
+import type { Project, ProjectUser, Role, Variable } from "@prisma/client";
 
 export type ProjectCreateData = {
   name: string;
@@ -15,7 +11,6 @@ export type ProjectUpdateData = {
   description?: string;
 };
 
-<<<<<<< HEAD
 export type ProjectUserData = {
   role: Role;
   user: {
@@ -24,10 +19,20 @@ export type ProjectUserData = {
     email: string;
     avatarUrl: string;
     createdAt: Date;
-  }
-}
+  };
+};
 
-export type ProjectData = Project & { variables: Variable[], users: ProjectUserData[]};
-=======
-export type ProjectData = Project & { myRole: Role, variables: Variable[], users: ProjectUser[]};
->>>>>>> origin/#9
+export type OwnerInfo = ProjectUser & {
+  user: { username: string; avatarUrl: string };
+};
+
+export type ProjectSummary = Project & {
+  owner: OwnerInfo;
+  myRole: Role | undefined;
+};
+
+export type ProjectData = Project & {
+  myRole: Role;
+  variables: Variable[];
+  users: ProjectUserData[];
+};

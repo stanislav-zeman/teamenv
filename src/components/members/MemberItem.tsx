@@ -1,25 +1,24 @@
-import { Member } from "@/models/Member";
-import { FC } from "react";
-import GenericCard from "../common/GenericCard";
-import { Avatar, Text } from "@chakra-ui/react";
-import MemberRole from "./MemberRole";
-import { Role } from "@/models/Role";
-import { DeleteIcon, HamburgerIcon } from "@chakra-ui/icons";
+import { Member } from '@/models/Member'
+import { FC } from 'react'
+import GenericCard from '../common/GenericCard'
+import { Avatar, Text } from '@chakra-ui/react'
+import MemberRole from './MemberRole'
+import { Role } from '@/models/Role'
+import { DeleteIcon, HamburgerIcon } from '@chakra-ui/icons'
 
 interface MemberItemProps {
-  member: Member;
-  color: string;
+  member: Member
+  color: string
 }
 
 const MemberItem: FC<MemberItemProps> = ({ member, color }) => {
   const iconsContainer =
-    member.role == Role.OWNER
-      ? "hidden"
-      : "flex justify-end gap-3 items-center";
+    member.role == Role.OWNER ? 'hidden' : 'flex justify-end gap-3 items-center'
   return (
     <GenericCard>
       <Avatar
         color={color}
+        src={member.avatarUrl}
         backgroundColor="white"
         name={member.username}
         size="lg"
@@ -32,7 +31,7 @@ const MemberItem: FC<MemberItemProps> = ({ member, color }) => {
         <DeleteIcon boxSize="15%" />
       </div>
     </GenericCard>
-  );
-};
+  )
+}
 
-export default MemberItem;
+export default MemberItem

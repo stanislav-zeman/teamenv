@@ -1,36 +1,35 @@
-import {Role} from "@prisma/client";
-
+import { Role } from '@prisma/client'
 
 export type ProjectMemberData = {
-  memberId: string;
-  role: Role;
-};
+  memberId: string
+  role: 'GUEST' | 'DEVELOPER' | 'MAINTAINER' | 'OWNER'
+}
 
 export type ProjectMemberUpdateData = {
-  role: Role;
-};
+  role: Role
+}
 
 export type VariableCreateData = {
-  name: string;
-  value: string;
+  name: string
+  value: string
 }
 
 export type VariableUpdateData = {
-  name: string;
-  value: string;
-  hidden: boolean;
+  name: string
+  value: string
+  hidden: boolean
 }
 
 export type ProjectParams = {
-  projectId: string;
-};
+  projectId: string
+}
 
 export type MemberParams = {
-  projectId: string;
-  memberId: string;
-};
+  projectId: string
+  memberId: string
+}
 
 export type VariableParams = {
-  projectId: string;
-  variableId: string;
-};
+  projectId: string
+  variableId: string
+}

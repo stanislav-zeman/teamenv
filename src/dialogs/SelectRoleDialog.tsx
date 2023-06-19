@@ -17,6 +17,8 @@ import MuiThemeProvider from '@/app/providers/MuiThemeProvider'
 import { useAddUserToProject } from '@/hooks/mutations/useAddUserToProject'
 import { getRoleValueFromString } from '@/components/common/AtLeastRoleFilter'
 import { getRoleFromIndex, roleToIndex } from '@/utils/roleUtils'
+import { queryClient } from '@/app/providers/ReactQueryProvider'
+import { getMyProjectKey } from '@/hooks/useProject'
 
 interface ISelectRoleDialog {
   selectedUser: UserInfo
@@ -40,7 +42,15 @@ export const SelectRoleDialog: FC<ISelectRoleDialog> = ({
   }
 
   const handleApply = () => {
-    add({ memberId: selectedUser.id, role: getRoleFromIndex(selectedRole)})
+    add(
+      { memberId: selectedUser.id, role: getRoleFromIndex(selectedRole) },
+      {
+        onSuccess: () => {
+          closeDialog()
+          queryClient.invalidateQueries(getMyProjectKey(project.id))
+        },
+      }
+    )
   }
 
   return (

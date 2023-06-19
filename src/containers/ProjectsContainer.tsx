@@ -15,14 +15,14 @@ const ProjectsContainer = () => {
     data: pageable,
     isLoading,
     isError,
-  } = useMyProjects(user?.id || '-1', {})
+  } = useMyProjects()
 
   if (isLoading) return <h3>Loading...</h3>
   if (isError || !pageable) return <h3>Error during fetching projects</h3>
 
   return (
     <div className="w-full h-full flex flex-col justify-between items-center align-middle">
-      <div className="flex flex-col items-center">
+      <div className="flex w-full flex-col items-center">
         <ProjectsSearchBar />
         <ProjectsList projects={pageable.docs} />
       </div>
