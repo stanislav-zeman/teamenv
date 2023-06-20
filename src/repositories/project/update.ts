@@ -4,23 +4,31 @@ import type {
 } from "@prisma/client";
 import {Result} from "@badrap/result";
 import {ProjectUpdateData} from "@/repositories/project/types/data";
-import {isDeleted} from "@/repositories/commons";
+import {getRole} from "@/repositories/user/read";
 
-const update = async (data: ProjectUpdateData): Promise<Result<Project>> => {
+export const update = async (data: ProjectUpdateData): Promise<Result<Project>> => {
   try {
     const updateTime = new Date();
     return Result.ok(
       await prisma.$transaction(async (transaction)  => {
-        const project = await transaction.project.findUniqueOrThrow({
+        const project = await transaction.project.findFirstOrThrow({
           where: {
             id: data.id,
+            deletedAt: null,
           },
         });
-        if (isDeleted(project)) {
-          throw new Error("Project has been deleted!");
-        }
+
         if (data.name === undefined && data.description === undefined) {
           throw new Error("No data provided for update!");
+        }
+
+        const role = await getRole(data.userId, data.id)
+        if (role.isErr) {
+          throw role.unwrap();
+        }
+
+        if (role.unwrap() !== "OWNER") {
+          throw new Error("Only owners can update projects!");
         }
 
         return transaction.project.update({
