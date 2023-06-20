@@ -12,5 +12,5 @@ export async function GET(request: NextRequest, context: { params: ProjectParams
 
   const result = await read.specific(context.params.projectId, user.userId);
 
-  return parseResult(result, 200) ;
+  return parseResult(result, 200);
 }

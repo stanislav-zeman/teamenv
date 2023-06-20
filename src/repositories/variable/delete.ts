@@ -1,25 +1,33 @@
 import {Result} from "@badrap/result";
 import {Variable} from "@prisma/client";
 import prisma from "@/repositories/client";
-import {isDeleted} from "@/repositories/commons";
+import {getRole} from "@/repositories/user/read";
+import {VariableDeleteData} from "@/app/api/types";
 
-async function remove(id: string): Promise<Result<Variable>> {
+async function remove(data: VariableDeleteData): Promise<Result<Variable>> {
   try {
     const deleteTime = new Date();
     return Result.ok(
       await prisma.$transaction(async (transaction) => {
-        const variable = await transaction.variable.findUniqueOrThrow({
+        const variable = await transaction.variable.findFirstOrThrow({
           where: {
-            id,
+            id: data.id,
+            deletedAt: null,
           },
         });
-        // TODO: Check role for permissions
-        if (isDeleted(variable)) {
-          throw new Error("Variable has been deleted!");
+
+        const role = await getRole(data.userId, variable.projectId);
+        if (role.isErr) {
+          throw role.unwrap();
         }
+
+        if (role.unwrap() === "GUEST") {
+          throw new Error("Guests cannot delete variables");
+        }
+
         return transaction.variable.update({
           where: {
-            id,
+            id: data.id,
           },
           data: {
             deletedAt: deleteTime,

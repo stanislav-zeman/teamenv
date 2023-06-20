@@ -1,7 +1,7 @@
 import prisma from "../client";
-import { Role, type Project } from "@prisma/client";
+import { Role } from "@prisma/client";
 import { Result } from "@badrap/result";
-import { OwnerInfo, ProjectData, ProjectSummary } from "@/repositories/project/types/data";
+import {  ProjectData, ProjectSummary } from "@/repositories/project/types/data";
 import { getRole, isMember } from "@/repositories/user/read";
 import { ProjectFilters } from "@/models/Filters";
 import { getPrismaRoles } from "@/repositories/commons";
@@ -27,7 +27,18 @@ const specific = async (
         deletedAt: null,
       },
       include: {
-        variables: true,
+        variables: {
+          where: {
+            deletedAt: null,
+          },
+          include: {
+            hiddenVariable: {
+              select: {
+                hidden: true,
+              },
+            },
+          },
+        },
         users: {
           select: {
             role: true,

@@ -20,6 +20,11 @@ export type VariableUpdateData = {
   hidden: boolean
 }
 
+export type VariableDeleteData = {
+  id: string
+  userId: string
+}
+
 export type ProjectParams = {
   projectId: string
 }
