@@ -3,7 +3,7 @@ import prisma from '@/repositories/client'
 import { Result } from '@badrap/result'
 import { IFilter } from '@/models/Filters'
 
-export async function specific(id: string): Promise<Result<User>> {
+async function specific(id: string): Promise<Result<User>> {
   try {
     const user = await prisma.user.findFirstOrThrow({
       where: {
@@ -18,7 +18,7 @@ export async function specific(id: string): Promise<Result<User>> {
   }
 }
 
-export async function all(filters?: IFilter): Promise<Result<User[]>> {
+async function all(filters?: IFilter): Promise<Result<User[]>> {
   try {
     const users = await prisma.user.findMany({
       take: 5,
@@ -47,7 +47,7 @@ export async function all(filters?: IFilter): Promise<Result<User[]>> {
   }
 }
 
-export async function getRole(
+async function getRole(
   userId: string,
   projectId: string
 ): Promise<Result<Role>> {
@@ -64,7 +64,7 @@ export async function getRole(
   }
 }
 
-export async function isMember(
+async function isMember(
   userId: string,
   projectId: string
 ): Promise<Result<boolean>> {
@@ -81,3 +81,12 @@ export async function isMember(
     return Result.err(e as Error)
   }
 }
+
+const read = {
+  specific,
+  all,
+  isMember,
+  getRole,
+};
+
+export default read;

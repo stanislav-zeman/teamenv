@@ -2,7 +2,7 @@ import prisma from "../client";
 import {Prisma, Role} from "@prisma/client";
 import { Result } from "@badrap/result";
 import {Pageable, ProjectData, ProjectSummary} from "@/repositories/project/types/data";
-import { getRole, isMember } from "@/repositories/user/read";
+import userRepository from "@/repositories/user/index";
 import { ProjectFilters } from "@/models/Filters";
 import { getPrismaRoles } from "@/repositories/commons";
 
@@ -11,7 +11,7 @@ const specific = async (
   userId: string
 ): Promise<Result<ProjectData>> => {
   try {
-    const membership = await isMember(userId, id);
+    const membership = await userRepository.read.isMember(userId, id);
     if (membership.isErr) {
       return Result.err(new Error("Failed to check user membership!"));
     }
@@ -57,7 +57,7 @@ const specific = async (
         },
       },
     });
-    const myRole = await getRole(userId, id);
+    const myRole = await userRepository.read.getRole(userId, id);
     return Result.ok({ myRole: myRole.unwrap(), ...project });
   } catch (e) {
     return Result.err(e as Error);

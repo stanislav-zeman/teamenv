@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server'
 import {unauthorizedResponse, parseResult, badRequestResponse} from '@/app/api/helpers'
 import { getAuth } from '@clerk/nextjs/server'
 import { ProjectParams } from '@/app/api/types'
-import { createProjectMember } from '@/repositories/user/create'
+import userRepository from '@/repositories/user/index'
 import {z} from "zod";
 import validation from "@/app/api/validation";
 
@@ -24,10 +24,8 @@ export async function POST(request: NextRequest, context: { params: ProjectParam
     return badRequestResponse();
   }
 
-
-
   const data = validationResult.data;
-  const result = await createProjectMember({
+  const result = await userRepository.create.createProjectMember({
     userId: userAuth.userId,
     projectId: context.params.projectId,
     ...data,

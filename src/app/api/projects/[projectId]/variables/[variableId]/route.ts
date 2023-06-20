@@ -1,7 +1,7 @@
 import {NextRequest} from "next/server";
 import {getAuth} from "@clerk/nextjs/server";
 import variables from "@/repositories/variable/index"
-import {isMember} from "@/repositories/user/read";
+import userRepository from "@/repositories/user/index";
 import {VariableParams} from "@/app/api/types";
 import {unauthorizedResponse, parseResult, internalServerErrorResponse, badRequestResponse} from "@/app/api/helpers";
 import {z} from "zod";
@@ -13,7 +13,7 @@ export async function GET(request: NextRequest, context: { params: VariableParam
     return unauthorizedResponse();
   }
 
-  const authorizedResult = await isMember(userAuth.userId, context.params.projectId)
+  const authorizedResult = await userRepository.read.isMember(userAuth.userId, context.params.projectId)
 
   if (authorizedResult.isErr) {
     return internalServerErrorResponse();

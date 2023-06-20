@@ -4,7 +4,7 @@ import type {
 } from "@prisma/client";
 import {Result} from "@badrap/result";
 import {ProjectUpdateData} from "@/repositories/project/types/data";
-import {getRole} from "@/repositories/user/read";
+import userRepository from "@/repositories/user/index";
 
 export const update = async (data: ProjectUpdateData): Promise<Result<Project>> => {
   try {
@@ -22,7 +22,7 @@ export const update = async (data: ProjectUpdateData): Promise<Result<Project>> 
           throw new Error("No data provided for update!");
         }
 
-        const role = await getRole(data.userId, data.id)
+        const role = await userRepository.read.getRole(data.userId, data.id)
         if (role.isErr) {
           throw role.unwrap();
         }

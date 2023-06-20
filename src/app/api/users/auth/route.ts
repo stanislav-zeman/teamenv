@@ -1,6 +1,6 @@
 import {NextRequest} from "next/server";
 import {getAuth} from "@clerk/nextjs/server";
-import {ensureUser} from "@/repositories/user/create";
+import userRepository from "@/repositories/user/index";
 import {clerkClient} from "@clerk/nextjs";
 import {internalServerErrorResponse, unauthorizedResponse} from "@/app/api/helpers";
 
@@ -21,7 +21,7 @@ export async function POST(request: NextRequest): Promise<Response> {
     email = ''
   }
 
-  const result = await ensureUser({id: user.id, email, username, avatarUrl: user.profileImageUrl});
+  const result = await userRepository.create.ensureUser({id: user.id, email, username, avatarUrl: user.profileImageUrl});
   if (result.isErr) {
     console.log(result.unwrap())
     return internalServerErrorResponse();

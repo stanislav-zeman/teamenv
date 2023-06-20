@@ -4,7 +4,7 @@ import {ProjectUser, Role} from "@prisma/client";
 import prisma from "@/repositories/client";
 
 
-export async function changeRole(data: ModifyMemberData, newRole: Role): Promise<Result<ProjectUser>> {
+async function update(data: ModifyMemberData, newRole: Role): Promise<Result<ProjectUser>> {
   try {
     const editedAt = new Date();
     return Result.ok(
@@ -53,3 +53,5 @@ export async function changeRole(data: ModifyMemberData, newRole: Role): Promise
     return Result.err(e as Error);
   }
 }
+
+export default update;
