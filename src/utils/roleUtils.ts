@@ -16,9 +16,9 @@ export const getRoleFromIndex = (index: number) => {
 
 export const roleToIndex = (role: Role) => {
   switch (role) {
-    case Role.DEVELOPER:
-      return 0
     case Role.GUEST:
+      return 0
+    case Role.DEVELOPER:
       return 1
     case Role.MAINTAINER:
       return 2
