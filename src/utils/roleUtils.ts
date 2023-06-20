@@ -4,9 +4,9 @@ import { Role } from '@/models/Role'
 export const getRoleFromIndex = (index: number) => {
   switch (index) {
     case 0:
-      return Role.DEVELOPER
-    case 1:
       return Role.GUEST
+    case 1:
+      return Role.DEVELOPER
     case 2:
       return Role.MAINTAINER
     default:

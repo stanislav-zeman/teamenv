@@ -7,7 +7,7 @@ export const useAddUserToProject = (projectId: string) => {
     async (data: ProjectMemberData) =>
       await axios
         .post(`http://localhost:3000/api/projects/${projectId}/members`, {
-          ...data,
+          ...data
         })
         .then((res) => res.data)
   )

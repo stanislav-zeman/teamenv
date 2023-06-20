@@ -2,7 +2,7 @@ import { Role } from '@prisma/client'
 
 export type ProjectMemberData = {
   memberId: string
-  role: 'GUEST' | 'DEVELOPER' | 'MAINTAINER' | 'OWNER'
+  role: Role
 }
 
 export type ProjectMemberUpdateData = {

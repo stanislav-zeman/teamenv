@@ -18,7 +18,8 @@ export const transformProjectData = (data: ProjectData): MyProject => {
     id: members[0].user.id,
     username: members[0].user.username,
   };
-  const users: Member[] = members.map(({ user, role }) => ({
+  const users: Member[] = members.map(({ id, user, role }) => ({
+    memberId: id,
     id: user.id,
     username: user.username,
     role: role,
