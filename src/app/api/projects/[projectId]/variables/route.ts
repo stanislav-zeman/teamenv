@@ -14,10 +14,10 @@ export async function POST(request: NextRequest, context: { params: Params }): P
   const data: VariableCreateData = JSON.parse(await request.json())
 
   const result = await variables.create({
+    userId: user.userId,
     projectId: context.params.projectId,
     name: data.name,
     value: data.value,
-    minimalAccessRole: undefined,
   });
 
   return parseResult(result, 201);
