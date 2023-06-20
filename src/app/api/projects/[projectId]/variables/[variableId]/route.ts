@@ -2,8 +2,9 @@ import {NextRequest} from "next/server";
 import {getAuth} from "@clerk/nextjs/server";
 import variables from "@/repositories/variable/index"
 import {isMember} from "@/repositories/user/read";
-import {VariableParams, VariableUpdateData} from "@/app/api/types";
-import {unauthorizedResponse, parseResult, internalServerErrorResponse} from "@/app/api/helpers";
+import {VariableParams} from "@/app/api/types";
+import {unauthorizedResponse, parseResult, internalServerErrorResponse, badRequestResponse} from "@/app/api/helpers";
+import {z} from "zod";
 
 
 export async function GET(request: NextRequest, context: { params: VariableParams }): Promise<Response> {
@@ -32,19 +33,31 @@ export async function GET(request: NextRequest, context: { params: VariableParam
   return parseResult(variableResult, 200);
 }
 
+const putValidator = z.object({
+  name: z.string().optional(),
+  value: z.string().optional(),
+  hidden: z.boolean().optional(),
+}).strict()
+
 export async function PUT(request: NextRequest, context: { params: VariableParams }): Promise<Response> {
   const user = getAuth(request);
   if (user.userId === null) {
     return unauthorizedResponse();
   }
 
-  const data: VariableUpdateData = JSON.parse(await request.json())
+  const payload = await request.json();
+  const validationResult = putValidator.safeParse(payload);
+
+  if (!validationResult.success) {
+    return badRequestResponse();
+  }
+
+  const data = validationResult.data;
 
   const variableResult = await variables.update({
     userId: user.userId,
     variableId: context.params.variableId,
-    name: data.name,
-    value: data.value,
+    ...data,
   });
 
   return parseResult(variableResult, 200);
@@ -56,7 +69,7 @@ export async function DELETE(request: NextRequest, context: { params: VariablePa
     return unauthorizedResponse();
   }
 
-
   const variableResult = await variables.remove({id: context.params.variableId, userId: user.userId});
+
   return parseResult(variableResult, 202);
 }
