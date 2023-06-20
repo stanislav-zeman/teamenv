@@ -1,4 +1,5 @@
-import { MemberParams, ProjectMemberData } from "@/app/api/types";
+import { MemberParams } from "@/app/api/types";
+import environment from "@/utils/envMetadata";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 
@@ -10,7 +11,7 @@ export const useRemoveUserFromProject = ({
     async () =>
       await axios
         .delete(
-          `http://localhost:3000/api/projects/${projectId}/members/${memberId}`
+          `${environment.HOST}/api/projects/${projectId}/members/${memberId}`
         )
         .then((res) => res.data)
   );

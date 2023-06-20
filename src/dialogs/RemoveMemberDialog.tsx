@@ -1,4 +1,6 @@
+import { queryClient } from "@/app/providers/ReactQueryProvider";
 import { useRemoveUserFromProject } from "@/hooks/mutations/useRemoveUserFromProject";
+import { getMyProjectKey } from "@/hooks/useProject";
 import { closeDialog } from "@/signals/dialogSignal";
 import { Button, Dialog } from "@mui/material";
 import { FC } from "react";
@@ -15,6 +17,15 @@ const RemoveMemberDialog: FC<RemoveMemberProps> = ({
   projectId,
 }) => {
   const { mutate: remove } = useRemoveUserFromProject({ memberId, projectId });
+
+  const handleContinue = () => {
+    remove(undefined, {
+      onSuccess: () => {
+        closeDialog();
+        queryClient.invalidateQueries(getMyProjectKey(projectId));
+      },
+    });
+  };
   return (
     <Dialog
       maxWidth="sm"
@@ -28,7 +39,7 @@ const RemoveMemberDialog: FC<RemoveMemberProps> = ({
       </h2>
       <h2>Do you wish to continue?</h2>
       <div className="flex gap-4 my-4 justify-center">
-        <Button color="primary" variant="contained" onClick={() => remove()}>
+        <Button color="primary" variant="contained" onClick={handleContinue}>
           CONTINUE
         </Button>
         <Button color="secondary" variant="contained" onClick={closeDialog}>

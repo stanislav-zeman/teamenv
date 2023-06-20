@@ -1,10 +1,10 @@
-import {Role} from "@prisma/client";
+import {Variable} from "@prisma/client";
 
 export type VariableCreateData = {
+  userId: string
   projectId: string;
   name: string;
   value: string;
-  minimalAccessRole?: Role;
 };
 
 export type VariableUpdateData = {
@@ -12,5 +12,11 @@ export type VariableUpdateData = {
   variableId: string;
   name?: string;
   value?: string;
-  minimalAccessRole?: Role;
+  hidden?: boolean,
+};
+
+export type VariableInfoData = Variable & {
+  hiddenVariable: {
+    hidden: boolean
+  }[]
 };

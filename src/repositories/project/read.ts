@@ -1,11 +1,15 @@
 import prisma from "../client";
-import { Role, type Project } from "@prisma/client";
+import { Role } from "@prisma/client";
 import { Result } from "@badrap/result";
+<<<<<<< HEAD
 import {
   OwnerInfo,
   ProjectData,
   ProjectSummary,
 } from "@/repositories/project/types/data";
+=======
+import {  ProjectData, ProjectSummary } from "@/repositories/project/types/data";
+>>>>>>> 65d7a8c75a3fb178c5cd7b047d6ce394bb5c1f05
 import { getRole, isMember } from "@/repositories/user/read";
 import { ProjectFilters } from "@/models/Filters";
 import { getPrismaRoles } from "@/repositories/commons";
@@ -34,6 +38,16 @@ const specific = async (
           where: {
             deletedAt: null,
           },
+<<<<<<< HEAD
+=======
+          include: {
+            hiddenVariable: {
+              select: {
+                hidden: true,
+              },
+            },
+          },
+>>>>>>> 65d7a8c75a3fb178c5cd7b047d6ce394bb5c1f05
         },
         users: {
           select: {
@@ -61,15 +75,9 @@ const specific = async (
   }
 };
 
-<<<<<<< HEAD
-const all = async (
-  filters?: ProjectFilters
-): Promise<Result<ProjectSummary[]>> => {
-=======
 const pageSize = 9;
 
 const all = async (filters?: ProjectFilters): Promise<Result<ProjectSummary[]>> => {
->>>>>>> 28d04abb9266744813fbba64217216ebcf7b899e
   try {
     const projects = await prisma.project.findMany({
       skip: pageSize * (filters?.page ?? 0),
