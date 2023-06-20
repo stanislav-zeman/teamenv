@@ -45,7 +45,6 @@ export async function PUT(request: NextRequest, context: { params: VariableParam
     variableId: context.params.variableId,
     name: data.name,
     value: data.value,
-    minimalAccessRole: undefined,
   });
 
   return parseResult(variableResult, 200);
