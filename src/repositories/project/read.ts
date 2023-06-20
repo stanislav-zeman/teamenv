@@ -120,7 +120,7 @@ const all = async (filters: ProjectFilters): Promise<Result<Pageable<ProjectSumm
     });
 
 
-    let pageCount = count / pageSize;
+    let pageCount = Math.round(count / pageSize);
     if (count % pageSize === 0) {
       pageCount += 1;
     }

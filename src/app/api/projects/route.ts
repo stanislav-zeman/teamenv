@@ -36,10 +36,6 @@ export async function POST(request: NextRequest): Promise<Response> {
     return unauthorizedResponse();
   }
 
-<<<<<<< HEAD
-  const data: ProjectCreateData = await request.json();
-  const result = await projects.create({ userId: user.userId, ...data });
-=======
   const payload = await request.json();
   const validationResult = postValidator.safeParse(payload);
 
@@ -52,7 +48,5 @@ export async function POST(request: NextRequest): Promise<Response> {
     userId: user.userId,
     ...data
   });
-
->>>>>>> fc0450809db905fd23fc2b7c340a3ce53b868c2d
   return parseResult(result, 201);
 }
