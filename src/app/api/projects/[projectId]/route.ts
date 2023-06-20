@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import { getAuth } from "@clerk/nextjs/server";
 import read from "@/repositories/project/read";
-import deleteProject from "@/repositories/project/delete";
+import { remove } from "@/repositories/project/delete";
 import { parseResult, unauthorizedResponse } from "@/app/api/helpers";
 import { ProjectParams } from "@/app/api/types";
 
@@ -28,7 +28,7 @@ export async function DELETE(
     return unauthorizedResponse();
   }
 
-  const result = await deleteProject(context.params.projectId, user.userId);
+  const result = await remove(context.params.projectId, user.userId);
 
   return parseResult(result, 200);
 }

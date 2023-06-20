@@ -10,7 +10,7 @@ async function create(data: VariableCreateData): Promise<Result<Variable>> {
     const projectUser = await prisma.projectUser.findFirstOrThrow({
       where: {
         projectId: data.projectId,
-        userId: data.projectId,
+        userId: data.userId,
       },
     });
 

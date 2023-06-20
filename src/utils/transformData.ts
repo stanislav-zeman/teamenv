@@ -25,10 +25,11 @@ export const transformProjectData = (data: ProjectData): MyProject => {
     role: role,
     avatarUrl: user.avatarUrl
   }));
-  const variables: Variable[] = vars.map(({ id, name, value }) => ({
+  const variables: Variable[] = vars.map(({ id, name, value, hiddenVariable }) => ({
     id,
     name,
     value,
+    hidden: hiddenVariable[0].hidden
   }));
   return { id, name, description, owner, createdAt, myRole, users, variables };
 };

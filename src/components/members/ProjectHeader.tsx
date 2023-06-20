@@ -21,6 +21,7 @@ import { ProjectAddUserDialog } from "@/dialogs/ProjectAddUserDialog";
 import { MyProject } from "@/models/Project";
 import { generateEnvFile } from "@/utils/generateFileUtils";
 import { ExportDialog } from "@/dialogs/ExportDialog";
+import { ProjectAddVariableDialog } from "@/dialogs/ProjectAddVariableDialog";
 
 interface ProjectHeaderProps {
   project: MyProject;
@@ -99,6 +100,7 @@ const ProjectHeader: FC<ProjectHeaderProps> = ({ project, members }) => {
                   openDialog(<ProjectAddUserDialog project={project} />);
                   return;
                 }
+                openDialog(<ProjectAddVariableDialog projectId={project.id} />)
               }}
               icon={<AddIcon />}
               aria-label="perform add action"

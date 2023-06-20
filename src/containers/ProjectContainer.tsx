@@ -33,7 +33,7 @@ const ProjectContainer = ({ projectId, members }: IProjectContainerProps) => {
       {members ? (
         <MemberList members={project.users} projectId={projectId} />
       ) : (
-        <VariableList variables={project.variables} />
+        <VariableList variables={project.variables} projectId={projectId} />
       )}
     </div>
   );

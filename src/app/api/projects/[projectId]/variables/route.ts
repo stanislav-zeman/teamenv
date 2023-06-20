@@ -11,7 +11,7 @@ export async function POST(request: NextRequest, context: { params: Params }): P
     return unauthorizedResponse();
   }
 
-  const data: VariableCreateData = JSON.parse(await request.json())
+  const data: VariableCreateData = JSON.parse(await request.text())
 
   const result = await variables.create({
     userId: user.userId,

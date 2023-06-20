@@ -24,7 +24,9 @@ export async function POST(request: NextRequest, context: { params: ProjectParam
     return badRequestResponse();
   }
 
-  const data = payload.data;
+
+
+  const data = validationResult.data;
   const result = await createProjectMember({
     userId: userAuth.userId,
     projectId: context.params.projectId,

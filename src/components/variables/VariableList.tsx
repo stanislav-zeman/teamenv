@@ -10,9 +10,10 @@ import { getRandomSchemes } from "@/utils/randomScheme";
 
 interface VariableListProps {
   variables: Variable[];
+  projectId: string;
 }
 
-const VariableList: FC<VariableListProps> = ({ variables }) => {
+const VariableList: FC<VariableListProps> = ({ variables, projectId }) => {
   const schemes = useMemo(
     () => getRandomSchemes(variables.length),
     [variables]
@@ -22,6 +23,7 @@ const VariableList: FC<VariableListProps> = ({ variables }) => {
       key={variable.id}
       variable={variable}
       scheme={schemes[index]}
+      projectId={projectId}
     />
   ));
   return <GenericList>{rows}</GenericList>;
