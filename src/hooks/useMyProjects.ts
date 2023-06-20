@@ -7,6 +7,7 @@ import { Project } from '@prisma/client'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import BaseFilter from 'next/dist/shared/lib/bloom-filter/base-filter'
+import environment from "@/utils/envMetadata";
 
 export const getMyProjectsKey = () => ['myProjects']
 
@@ -26,7 +27,7 @@ export const useMyProjects = () => {
 
   return useQuery<Pageable<MyProject>>(getMyProjectsKey(), async () =>
     axios
-      .get(`http://localhost:3000/api/projects?${filters}`)
+      .get(`${environment.HOST}/api/projects?${filters}`)
       .then((res) => listToMockPagable(res.data))
   )
 }

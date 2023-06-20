@@ -4,6 +4,7 @@ import { UserInfo } from '@/models/User'
 import { getFilters } from '@/signals/filteringSignal'
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
+import environment from "@/utils/envMetadata";
 
 const filterAlreadyAssigned = (
   ignoreUsers: UserInfo[],
@@ -28,7 +29,7 @@ export const useGetAllUsers = (
     getAllUsersKey(search),
     async () =>
       await axios
-        .get(`http://localhost:3000/api/users?search=${search}`)
+        .get(`${environment.HOST}/api/users?search=${search}`)
         .then((response) =>
           filterAlreadyAssigned(ignoreUsers, response.data as UserInfo[])
         )
