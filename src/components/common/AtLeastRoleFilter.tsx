@@ -9,7 +9,7 @@ export const getRoleStringFromValue = (role: number) => {
 }
 
 export const getRoleValueFromString = (str: string) => {
-  return Object.entries(Role).filter(([k, v]) => k === str)[0][1]
+  return Object.entries(Role).filter(([k, v]) => k === str)[0][0]
 }
 
 export const AtLeastRoleFilter = () => {
