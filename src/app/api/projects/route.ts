@@ -31,7 +31,7 @@ export async function POST(request: NextRequest): Promise<Response> {
     return unauthorizedResponse();
   }
 
-  const data: ProjectCreateData = JSON.parse(await request.json());
+  const data: ProjectCreateData = await request.json();
   const result = await projects.create({ userId: user.userId, ...data });
   return parseResult(result, 201);
 }
