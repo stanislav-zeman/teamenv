@@ -1,12 +1,12 @@
 import prisma from "../client";
-import { Role, type Project } from "@prisma/client";
-import { Result } from "@badrap/result";
-import { getRole } from "@/repositories/user/read";
+import type {
+  Project
+} from "@prisma/client";
+import {Result} from "@badrap/result";
+import {getRole} from "@/repositories/user/read";
+import {Role} from "@prisma/client";
 
-export const remove = async (
-  id: string,
-  userId: string
-): Promise<Result<Project>> => {
+export const remove = async (id: string, userId: string): Promise<Result<Project>> => {
   try {
     const deleteTime = new Date();
     return Result.ok(

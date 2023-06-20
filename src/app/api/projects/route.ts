@@ -6,6 +6,7 @@ import { parseResult, unauthorizedResponse } from "@/app/api/helpers";
 import { parseFiltersFromParams } from "@/models/Filters";
 import { ProjectCreateData } from "@/app/api/types";
 
+
 export async function GET(request: NextRequest): Promise<Response> {
   const user = getAuth(request);
   if (!user.userId) {
