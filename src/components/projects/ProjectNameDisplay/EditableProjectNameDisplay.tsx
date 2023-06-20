@@ -1,46 +1,41 @@
-import { FC, useState } from 'react'
-import { ReadonlyProjectNameDisplay } from './ReadonlyProjectNameDisplay'
-import { IconButton, Input } from '@chakra-ui/react'
-import { EditIcon } from '@chakra-ui/icons'
-import useFilters from '@/app/hooks/useFilters'
+import { FC, useState } from "react";
+import { ReadonlyProjectNameDisplay } from "./ReadonlyProjectNameDisplay";
+import { IconButton, Input } from "@chakra-ui/react";
+import { EditIcon } from "@chakra-ui/icons";
+import useFilters from "@/app/hooks/useFilters";
+import { openDialog } from "@/signals/dialogSignal";
+import { WriteProjectDialog } from "@/dialogs/WriteProjectDialog";
+import { MyProject } from "@/models/Project";
+import { useUpdateProject } from "@/hooks/mutations/useUpdateProject";
 
 interface IEditableProjectName {
-  projectName: string
-  projectId: string
+  project: MyProject;
 }
 
 export const EditableProjectNameDisplay: FC<IEditableProjectName> = ({
-  projectId,
-  projectName,
+  project,
 }) => {
-  const [editMode, setEditMode] = useState(false)
-  const [inputProjectName, setInputProjectName] = useState(projectName)
-
-  // TODO add mutate
-  const handleInputChange = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key == 'Enter') {
-      setEditMode(false)
-    }
-  }
+  const { mutate } = useUpdateProject(project.id);
 
   return (
     <div className="flex gap-3 items-center min-w-md max-w-md">
-      {editMode ? (
-        <Input
-          className="min-w-md"
-          value={inputProjectName}
-          onChange={(e) => setInputProjectName(e.target.value)}
-          onKeyDown={handleInputChange}
-        />
-      ) : (
-        <ReadonlyProjectNameDisplay projectName={projectName} />
-      )}
+      <ReadonlyProjectNameDisplay projectName={project.name} />
       <IconButton
         variant="ghost"
         aria-label="toggle edit"
         icon={<EditIcon />}
-        onClick={() => setEditMode(!editMode)}
+        onClick={() =>
+          openDialog(
+            <WriteProjectDialog
+              initialData={{
+                name: project.name,
+                description: project.description,
+              }}
+              submit={(data) => mutate(data)}
+            />
+          )
+        }
       />
     </div>
-  )
-}
+  );
+};

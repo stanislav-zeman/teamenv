@@ -48,3 +48,5 @@ export const remove = async (id: string, userId: string): Promise<Result<Project
     return Result.err(e as Error);
   }
 };
+
+export default remove;

@@ -1,28 +1,17 @@
-
-import { FC } from 'react'
-import { ReadonlyProjectNameDisplay } from './ReadonlyProjectNameDisplay'
-import { EditableProjectNameDisplay } from './EditableProjectNameDisplay'
-import { Role } from '@/models/Role'
+import { FC } from "react";
+import { ReadonlyProjectNameDisplay } from "./ReadonlyProjectNameDisplay";
+import { EditableProjectNameDisplay } from "./EditableProjectNameDisplay";
+import { Role } from "@/models/Role";
+import { MyProject } from "@/models/Project";
 
 interface IProjectNameDisplay {
-  projectName: string
-  projectId: string
-  myRole: Role
+  project: MyProject;
 }
 
-export const ProjectNameDisplay: FC<IProjectNameDisplay> = ({
-  projectId,
-  projectName,
-  myRole,
-}) => {
-  if (myRole < Role.MAINTAINER) {
-    return <ReadonlyProjectNameDisplay projectName={projectName} />
+export const ProjectNameDisplay: FC<IProjectNameDisplay> = ({ project }) => {
+  if (project.myRole < Role.MAINTAINER) {
+    return <ReadonlyProjectNameDisplay projectName={project.name} />;
   }
 
-  return (
-    <EditableProjectNameDisplay
-      projectName={projectName}
-      projectId={projectId}
-    />
-  )
-}
+  return <EditableProjectNameDisplay project={project} />;
+};

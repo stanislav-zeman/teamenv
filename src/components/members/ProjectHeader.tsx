@@ -53,11 +53,7 @@ const ProjectHeader: FC<ProjectHeaderProps> = ({ project, members }) => {
   const router = useRouter();
   return (
     <Stack divider={<StackDivider borderColor="gray.700" />}>
-      <ProjectNameDisplay
-        projectName={project.name}
-        projectId={project.id}
-        myRole={project.myRole}
-      />
+      <ProjectNameDisplay project={project} />
       <div className="flex justify-between">
         <div>
           <Button

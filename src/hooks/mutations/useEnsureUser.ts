@@ -1,5 +1,5 @@
-import { useMutation } from '@tanstack/react-query'
-import axios from 'axios'
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 import environment from "@/utils/envMetadata";
 
 export function useEnsureUser() {
@@ -7,10 +7,10 @@ export function useEnsureUser() {
     await axios
       .post(`${environment.HOST}/api/users/auth`)
       .then((res) => {
-        console.log('success')
+        console.log("success");
       })
       .catch((res) => {
-        console.log(res)
-      })
-  })
+        console.log(res);
+      });
+  });
 }

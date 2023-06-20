@@ -5,6 +5,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { closeDialog } from "@/signals/dialogSignal";
 import { useCreateProject } from "@/hooks/mutations/useCreateProject";
+import { FC } from "react";
+import { ProjectCreateData } from "@/app/api/types";
 
 const schema = yup
   .object()
@@ -14,15 +16,25 @@ const schema = yup
   })
   .required();
 
-export const CreateProjectDialog = () => {
-  const { mutate: create } = useCreateProject();
+interface IWriteProjectDialog {
+  initialData?: Partial<ProjectCreateData>;
+  submit: (data: ProjectCreateData) => void;
+}
 
+export const WriteProjectDialog: FC<IWriteProjectDialog> = ({
+  initialData,
+  submit,
+}) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
+    defaultValues: {
+      description: initialData?.description,
+      name: initialData?.name ?? "",
+    },
   });
 
   return (
@@ -35,7 +47,7 @@ export const CreateProjectDialog = () => {
       >
         <form
           onSubmit={handleSubmit((data) => {
-            create({ ...data, description: data.description ?? "" });
+            submit({ ...data, description: data.description ?? "" });
             closeDialog();
           })}
         >
