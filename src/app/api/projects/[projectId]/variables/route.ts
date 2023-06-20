@@ -1,6 +1,6 @@
 import {NextRequest} from "next/server";
 import {getAuth} from "@clerk/nextjs/server";
-import variables from "@/repositories/variable";
+import variableRepository from "@/repositories/variable/index";
 import {unauthorizedResponse, Params, parseResult, badRequestResponse} from "@/app/api/helpers";
 import {z} from "zod";
 
@@ -24,7 +24,7 @@ export async function POST(request: NextRequest, context: { params: Params }): P
 
   const data = validationResult.data
 
-  const result = await variables.create({
+  const result = await variableRepository.create({
     userId: user.userId,
     projectId: context.params.projectId,
     ...data

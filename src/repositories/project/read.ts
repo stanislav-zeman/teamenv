@@ -6,10 +6,7 @@ import userRepository from "@/repositories/user/index";
 import { ProjectFilters } from "@/models/Filters";
 import { getPrismaRoles } from "@/repositories/commons";
 
-const specific = async (
-  id: string,
-  userId: string
-): Promise<Result<ProjectData>> => {
+async function specific(id: string, userId: string): Promise<Result<ProjectData>> {
   try {
     const membership = await userRepository.read.isMember(userId, id);
     if (membership.isErr) {
@@ -62,11 +59,11 @@ const specific = async (
   } catch (e) {
     return Result.err(e as Error);
   }
-};
+}
 
 const pageSize = 9;
 
-const all = async (filters: ProjectFilters): Promise<Result<Pageable<ProjectSummary>>> => {
+async function all(filters: ProjectFilters): Promise<Result<Pageable<ProjectSummary>>> {
   try {
     const skip = filters.page - 1;
     const whereFilter: Prisma.ProjectWhereInput = {
@@ -142,7 +139,7 @@ const all = async (filters: ProjectFilters): Promise<Result<Pageable<ProjectSumm
   } catch (e) {
     return Result.err(e as Error);
   }
-};
+}
 
 const read = {
   specific,

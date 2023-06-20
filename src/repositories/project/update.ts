@@ -6,7 +6,7 @@ import {Result} from "@badrap/result";
 import {ProjectUpdateData} from "@/repositories/project/types/data";
 import userRepository from "@/repositories/user/index";
 
-export const update = async (data: ProjectUpdateData): Promise<Result<Project>> => {
+async function update(data: ProjectUpdateData): Promise<Result<Project>> {
   try {
     const updateTime = new Date();
     return Result.ok(
@@ -47,3 +47,5 @@ export const update = async (data: ProjectUpdateData): Promise<Result<Project>> 
       return Result.err(e as Error);
   }
 }
+
+export default update;

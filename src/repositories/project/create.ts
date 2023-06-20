@@ -3,7 +3,7 @@ import type { Project } from "@prisma/client";
 import { ProjectCreateData } from "@/repositories/project/types/data";
 import { Result } from "@badrap/result";
 
-export const create = async (data: ProjectCreateData): Promise<Result<Project>> => {
+async function create(data: ProjectCreateData): Promise<Result<Project>> {
   try {
     const newProject = await prisma.project.create({
       data: {
@@ -21,6 +21,6 @@ export const create = async (data: ProjectCreateData): Promise<Result<Project>> 
   } catch (e) {
     return Result.err(e as Error);
   }
-};
+}
 
 export default create;

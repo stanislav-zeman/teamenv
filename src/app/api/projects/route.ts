@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import projects from "@/repositories/project";
+import projectRepository from "@/repositories/project/index";
 import { getAuth } from "@clerk/nextjs/server";
 import { ReadonlyURLSearchParams } from "next/navigation";
 import {
@@ -23,7 +23,7 @@ export async function GET(request: NextRequest): Promise<Response> {
     ...parseFiltersFromParams(readonlySearchParams),
   };
 
-  const result = await projects.read.all(filters);
+  const result = await projectRepository.read.all(filters);
 
   return parseResult(result, 200);
 }
@@ -49,7 +49,7 @@ export async function POST(request: NextRequest): Promise<Response> {
   }
 
   const data = validationResult.data;
-  const result = await projects.create({
+  const result = await projectRepository.create({
     userId: user.userId,
     ...data,
   });

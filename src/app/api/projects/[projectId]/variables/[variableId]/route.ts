@@ -1,6 +1,6 @@
 import {NextRequest} from "next/server";
 import {getAuth} from "@clerk/nextjs/server";
-import variables from "@/repositories/variable/index"
+import variableRepository from "@/repositories/variable/index"
 import userRepository from "@/repositories/user/index";
 import {VariableParams} from "@/app/api/types";
 import {unauthorizedResponse, parseResult, internalServerErrorResponse, badRequestResponse} from "@/app/api/helpers";
@@ -24,7 +24,7 @@ export async function GET(request: NextRequest, context: { params: VariableParam
     return unauthorizedResponse();
   }
 
-  const variableResult = await variables.read.specific(userAuth.userId, context.params.variableId);
+  const variableResult = await variableRepository.read.specific(userAuth.userId, context.params.variableId);
 
   if (variableResult.isErr) {
     return internalServerErrorResponse();
@@ -54,7 +54,7 @@ export async function PUT(request: NextRequest, context: { params: VariableParam
 
   const data = validationResult.data;
 
-  const variableResult = await variables.update({
+  const variableResult = await variableRepository.update({
     userId: user.userId,
     variableId: context.params.variableId,
     ...data,
@@ -69,7 +69,7 @@ export async function DELETE(request: NextRequest, context: { params: VariablePa
     return unauthorizedResponse();
   }
 
-  const variableResult = await variables.remove({id: context.params.variableId, userId: user.userId});
+  const variableResult = await variableRepository.remove({id: context.params.variableId, userId: user.userId});
 
   return parseResult(variableResult, 202);
 }
