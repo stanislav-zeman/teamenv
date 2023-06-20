@@ -1,12 +1,14 @@
 import type { Project, ProjectUser, Role, Variable } from "@prisma/client";
 
 export type ProjectCreateData = {
+  userId: string;
   name: string;
   description: string;
 };
 
 export type ProjectUpdateData = {
   id: string;
+  userId: string;
   name?: string;
   description?: string;
 };

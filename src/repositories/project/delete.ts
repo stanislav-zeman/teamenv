@@ -1,23 +1,39 @@
 import prisma from "../client";
-import type {
-  Project
-} from "@prisma/client";
-import {Result} from "@badrap/result";
-import {isDeleted} from "@/repositories/commons";
+import { Role, type Project } from "@prisma/client";
+import { Result } from "@badrap/result";
+import { getRole } from "@/repositories/user/read";
 
-const deleteProject = async (id: string): Promise<Result<Project>> => {
+export const remove = async (
+  id: string,
+  userId: string
+): Promise<Result<Project>> => {
   try {
     const deleteTime = new Date();
     return Result.ok(
       await prisma.$transaction(async (transaction) => {
-        const project = await transaction.project.findUniqueOrThrow({
+        const project = await transaction.project.findFirstOrThrow({
           where: {
             id,
+            deletedAt: null,
+          },
+          include: {
+            users: {
+              where: {
+                role: Role.OWNER,
+              },
+            },
           },
         });
-        if (isDeleted(project)) {
-          throw new Error("Project has been deleted!");
+
+        const role = await getRole(userId, id);
+        if (role.isErr) {
+          throw role.unwrap();
         }
+
+        if (role.unwrap() !== "OWNER") {
+          throw new Error("Only owners can delete projects!");
+        }
+
         return transaction.project.update({
           where: {
             id,
@@ -31,4 +47,4 @@ const deleteProject = async (id: string): Promise<Result<Project>> => {
   } catch (e) {
     return Result.err(e as Error);
   }
-}
+};
