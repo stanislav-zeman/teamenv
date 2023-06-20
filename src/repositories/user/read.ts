@@ -3,7 +3,22 @@ import prisma from '@/repositories/client'
 import { Result } from '@badrap/result'
 import { IFilter } from '@/models/Filters'
 
-export async function getAll(filters?: IFilter): Promise<Result<User[]>> {
+export async function specific(id: string): Promise<Result<User>> {
+  try {
+    const user = await prisma.user.findFirstOrThrow({
+      where: {
+        id,
+        deletedAt: null,
+      },
+    });
+
+    return Result.ok(user);
+  } catch (e) {
+    return Result.err(e as Error)
+  }
+}
+
+export async function all(filters?: IFilter): Promise<Result<User[]>> {
   try {
     const users = await prisma.user.findMany({
       take: 5,

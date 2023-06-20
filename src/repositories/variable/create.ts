@@ -7,6 +7,13 @@ import {Result} from "@badrap/result";
 
 async function create(data: VariableCreateData): Promise<Result<Variable>> {
   try {
+    const projectUser = await prisma.projectUser.findFirstOrThrow({
+      where: {
+        projectId: data.projectId,
+        userId: data.projectId,
+      },
+    });
+
     const newVariable = await prisma.variable.create({
       data: {
         projectId: data.projectId,
@@ -14,7 +21,7 @@ async function create(data: VariableCreateData): Promise<Result<Variable>> {
         value: data.value,
         hiddenVariable: {
           create: {
-            projectUserId: data.userId,
+            projectUserId: projectUser.id,
             hidden: false,
           },
         },

@@ -25,6 +25,8 @@ async function remove(data: VariableDeleteData): Promise<Result<Variable>> {
           throw new Error("Guests cannot delete variables");
         }
 
+
+
         return transaction.variable.update({
           where: {
             id: data.id,

@@ -1,5 +1,4 @@
 import {NextRequest} from "next/server";
-import read from "../../../repositories/project/read";
 import projects from "@/repositories/project";
 import {getAuth} from "@clerk/nextjs/server";
 import {ReadonlyURLSearchParams} from "next/navigation";
