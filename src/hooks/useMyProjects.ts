@@ -11,23 +11,12 @@ import environment from "@/utils/envMetadata";
 
 export const getMyProjectsKey = () => ['myProjects']
 
-const listToMockPagable = (list: MyProject[]): Pageable<MyProject> => {
-  return {
-    docs: [...list],
-    page: 1,
-    pages: 4,
-    limit: 6,
-    total: 8,
-  }
-}
-
 // TODO Wire to proper logic
 export const useMyProjects = () => {
   const filters = filteringSignalToSearchParams()
-
   return useQuery<Pageable<MyProject>>(getMyProjectsKey(), async () =>
     axios
       .get(`${environment.HOST}/api/projects?${filters}`)
-      .then((res) => listToMockPagable(res.data))
+      .then((res) => res.data)
   )
 }
