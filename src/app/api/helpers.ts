@@ -4,6 +4,10 @@ export type Params = {
   projectId: string;
 };
 
+export function badRequestResponse(): Response {
+  return new Response(null, { status: 400 });
+}
+
 export function unauthorizedResponse(): Response {
   return new Response(null, { status: 401 });
 }

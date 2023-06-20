@@ -38,7 +38,7 @@ export const SelectRoleDialog: FC<ISelectRoleDialog> = ({
 
   const getValueLabel = (value: number) => {
     const role = roles.find((r) => roleToIndex(r[1]) === value)
-    return role ? role[0] : 'lol'
+    return role ? role[0] : Role.GUEST
   }
 
   const handleApply = () => {

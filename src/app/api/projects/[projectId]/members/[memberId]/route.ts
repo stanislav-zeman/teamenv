@@ -1,16 +1,28 @@
 import {NextRequest} from "next/server";
 import {getAuth} from "@clerk/nextjs/server";
-import {unauthorizedResponse, parseResult} from "@/app/api/helpers";
+import {unauthorizedResponse, parseResult, badRequestResponse} from "@/app/api/helpers";
 import {deleteMember} from "@/repositories/user/delete";
 import {ModifyMemberData} from "@/repositories/user/types/data";
 import {changeRole} from "@/repositories/user/update";
-import {MemberParams, ProjectMemberUpdateData} from "@/app/api/types";
+import {MemberParams} from "@/app/api/types";
+import { z } from 'zod'
+import validation from "@/app/api/validation";
 
+const putValidator = z.object({
+  role: validation.role,
+}).strict()
 
 export async function PUT(request: NextRequest, context: { params: MemberParams }): Promise<Response> {
   const userAuth = getAuth(request);
   if (userAuth.userId === null) {
     return unauthorizedResponse();
+  }
+
+  const payload = await request.json();
+  const validationResult = putValidator.safeParse(payload);
+
+  if (!validationResult.success) {
+    return badRequestResponse();
   }
 
   const modifyMemberData: ModifyMemberData = {
@@ -19,10 +31,11 @@ export async function PUT(request: NextRequest, context: { params: MemberParams 
     memberId: context.params.memberId,
   };
 
-  const data: ProjectMemberUpdateData = JSON.parse(await request.json());
+  const data = validationResult.data
   const result =  await changeRole(modifyMemberData, data.role);
   return parseResult(result, 200);
 }
+
 export async function DELETE(request: NextRequest, context: { params: MemberParams }): Promise<Response> {
   const userAuth = getAuth(request);
   if (userAuth.userId === null) {

@@ -14,6 +14,7 @@ export type ProjectUpdateData = {
 };
 
 export type ProjectUserData = {
+  id: string;
   role: Role;
   user: {
     id: string;

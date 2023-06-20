@@ -13,12 +13,13 @@ import { ProjectUser } from "@prisma/client";
 
 interface MemberListProps {
   members: Member[];
+  projectId: string;
 }
 
-const MemberList: FC<MemberListProps> = ({ members }) => {
+const MemberList: FC<MemberListProps> = ({ members, projectId }) => {
   const colors = useMemo(() => getRandomColors(members.length), [members]);
   const rows = members.map((member, index) => (
-    <MemberItem key={member.id} member={member} color={colors[index]} />
+    <MemberItem key={member.id} member={member} color={colors[index]} projectId={projectId} />
   ));
   return <GenericList>{rows}</GenericList>;
 };

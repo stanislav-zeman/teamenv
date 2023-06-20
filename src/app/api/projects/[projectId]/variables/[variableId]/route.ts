@@ -57,17 +57,7 @@ export async function DELETE(request: NextRequest, context: { params: VariablePa
     return unauthorizedResponse();
   }
 
-  const authorizedResult = await isMember(user.userId, context.params.projectId)
 
-  if (authorizedResult.isErr) {
-    return internalServerErrorResponse();
-  }
-
-  const unauthorized = !authorizedResult.unwrap()
-  if (unauthorized) {
-    return unauthorizedResponse();
-  }
-
-  const variableResult = await variables.remove(context.params.variableId);
+  const variableResult = await variables.remove({id: context.params.variableId, userId: user.userId});
   return parseResult(variableResult, 202);
 }

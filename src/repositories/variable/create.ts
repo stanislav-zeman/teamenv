@@ -9,8 +9,15 @@ async function create(data: VariableCreateData): Promise<Result<Variable>> {
   try {
     const newVariable = await prisma.variable.create({
       data: {
-        ...data,
-        minimalAccessRole: data.minimalAccessRole ?? "GUEST",
+        projectId: data.projectId,
+        name: data.name,
+        value: data.value,
+        hiddenVariable: {
+          create: {
+            projectUserId: data.userId,
+            hidden: false,
+          },
+        },
       },
     });
     return Result.ok(newVariable);
