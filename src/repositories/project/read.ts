@@ -52,7 +52,7 @@ const specific = async (
   }
 }
 
-const pageSize = 6;
+const pageSize = 9;
 
 const all = async (filters?: ProjectFilters): Promise<Result<ProjectSummary[]>> => {
   try {
