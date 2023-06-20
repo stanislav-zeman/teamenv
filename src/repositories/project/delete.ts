@@ -1,11 +1,12 @@
 import prisma from "../client";
-import type {
-  Project
-} from "@prisma/client";
-import {Result} from "@badrap/result";
-import {isDeleted} from "@/repositories/commons";
+import { Role, type Project } from "@prisma/client";
+import { Result } from "@badrap/result";
+import { isDeleted } from "@/repositories/commons";
 
-const deleteProject = async (id: string): Promise<Result<Project>> => {
+const deleteProject = async (
+  id: string,
+  userId: string
+): Promise<Result<Project>> => {
   try {
     const deleteTime = new Date();
     return Result.ok(
@@ -14,7 +15,17 @@ const deleteProject = async (id: string): Promise<Result<Project>> => {
           where: {
             id,
           },
+          include: {
+            users: {
+              where: {
+                role: Role.OWNER,
+              },
+            },
+          },
         });
+        if (project.users[0].userId !== userId) {
+          throw new Error("User is not owner of project!");
+        }
         if (isDeleted(project)) {
           throw new Error("Project has been deleted!");
         }
@@ -31,4 +42,6 @@ const deleteProject = async (id: string): Promise<Result<Project>> => {
   } catch (e) {
     return Result.err(e as Error);
   }
-}
+};
+
+export default deleteProject;

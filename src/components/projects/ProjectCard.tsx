@@ -1,21 +1,22 @@
-import { MyProject } from '@/models/Project'
-import { FC } from 'react'
-import { Text, Grid, GridItem, IconButton } from '@chakra-ui/react'
-import { InfoOutlineIcon } from '@chakra-ui/icons'
+import { MyProject } from "@/models/Project";
+import { FC } from "react";
+import { Text, Grid, GridItem, IconButton } from "@chakra-ui/react";
+import { DeleteIcon, InfoOutlineIcon } from "@chakra-ui/icons";
 
-import { OwnerRow } from './OwnerRow'
-import { Role } from '@/models/Role'
-import { MoreButtonWithPopover } from './MoreButtonWithPopover'
-import { useRouter } from 'next/navigation'
-import { getProjectDefaultUrl } from '@/app/links'
-import MemberRole from '../members/MemberRole'
+import { OwnerRow } from "./OwnerRow";
+import { Role } from "@/models/Role";
+import { useRouter } from "next/navigation";
+import { getProjectDefaultUrl } from "@/app/links";
+import MemberRole from "../members/MemberRole";
+import { openDialog } from "@/signals/dialogSignal";
+import { ProjectDeleteDialog } from "@/dialogs/ProjectDeleteDialog";
 
 interface IProjectCard {
-  project: MyProject
+  project: MyProject;
 }
 
 export const ProjectCard: FC<IProjectCard> = ({ project }) => {
-  const router = useRouter()
+  const router = useRouter();
 
   return (
     <GridItem
@@ -41,8 +42,21 @@ export const ProjectCard: FC<IProjectCard> = ({ project }) => {
             onClick={() => router.push(getProjectDefaultUrl(project.id))}
             icon={<InfoOutlineIcon fontSize="1.5rem" />}
           />
-          {project.myRole > Role.DEVELOPER && (
-            <MoreButtonWithPopover project={project} />
+          {project.myRole === Role.OWNER && (
+            <IconButton
+              onClick={() =>
+                openDialog(
+                  <ProjectDeleteDialog
+                    projectId={project.id}
+                    projectName={project.name}
+                  />
+                )
+              }
+              variant="ghost"
+              colorScheme="whiteAlpha"
+              aria-label="delete project"
+              icon={<DeleteIcon fontSize="1.5rem" />}
+            />
           )}
         </div>
       </div>
@@ -61,5 +75,5 @@ export const ProjectCard: FC<IProjectCard> = ({ project }) => {
       <OwnerRow owner={project.owner} createdAt={project.createdAt} />
       <MemberRole role={project.myRole} />
     </GridItem>
-  )
-}
+  );
+};
