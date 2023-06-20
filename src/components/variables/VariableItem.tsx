@@ -12,7 +12,7 @@ interface VariableItemProps {
 }
 
 const VariableItem: FC<VariableItemProps> = ({ variable, scheme }) => {
-  const [checked, setChecked] = useState(variable.checked);
+  const [checked, setChecked] = useState(false);
   return (
     <GenericCard>
       <Switch

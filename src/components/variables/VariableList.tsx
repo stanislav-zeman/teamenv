@@ -13,7 +13,10 @@ interface VariableListProps {
 }
 
 const VariableList: FC<VariableListProps> = ({ variables }) => {
-  const schemes = useMemo(() => getRandomSchemes(variables.length), [variables]);
+  const schemes = useMemo(
+    () => getRandomSchemes(variables.length),
+    [variables]
+  );
   const rows = variables.map((variable, index) => (
     <VariableItem
       key={variable.id}
