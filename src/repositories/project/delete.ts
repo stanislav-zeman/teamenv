@@ -1,9 +1,9 @@
 import prisma from "../client";
 import { Role, type Project } from "@prisma/client";
 import { Result } from "@badrap/result";
-import { isDeleted } from "@/repositories/commons";
+import { getRole } from "@/repositories/user/read";
 
-const deleteProject = async (
+export const remove = async (
   id: string,
   userId: string
 ): Promise<Result<Project>> => {
@@ -11,9 +11,10 @@ const deleteProject = async (
     const deleteTime = new Date();
     return Result.ok(
       await prisma.$transaction(async (transaction) => {
-        const project = await transaction.project.findUniqueOrThrow({
+        const project = await transaction.project.findFirstOrThrow({
           where: {
             id,
+            deletedAt: null,
           },
           include: {
             users: {
@@ -23,12 +24,16 @@ const deleteProject = async (
             },
           },
         });
-        if (project.users[0].userId !== userId) {
-          throw new Error("User is not owner of project!");
+
+        const role = await getRole(userId, id);
+        if (role.isErr) {
+          throw role.unwrap();
         }
-        if (isDeleted(project)) {
-          throw new Error("Project has been deleted!");
+
+        if (role.unwrap() !== "OWNER") {
+          throw new Error("Only owners can delete projects!");
         }
+
         return transaction.project.update({
           where: {
             id,
@@ -43,5 +48,3 @@ const deleteProject = async (
     return Result.err(e as Error);
   }
 };
-
-export default deleteProject;

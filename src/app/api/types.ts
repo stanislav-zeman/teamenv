@@ -9,6 +9,11 @@ export type ProjectMemberUpdateData = {
   role: Role
 }
 
+export type ProjectCreateData = {
+  name: string
+  description: string
+}
+
 export type VariableCreateData = {
   name: string
   value: string
