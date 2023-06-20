@@ -1,10 +1,11 @@
 import { useMutation } from '@tanstack/react-query'
 import axios from 'axios'
+import environment from "@/utils/envMetadata";
 
 export function useEnsureUser() {
   return useMutation(async () => {
     await axios
-      .post('http://localhost:3000/api/users/auth')
+      .post(`${environment}/api/users/auth`)
       .then((res) => {
         console.log('success')
       })

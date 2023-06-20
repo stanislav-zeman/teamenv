@@ -61,11 +61,19 @@ const specific = async (
   }
 };
 
+<<<<<<< HEAD
 const all = async (
   filters?: ProjectFilters
 ): Promise<Result<ProjectSummary[]>> => {
+=======
+const pageSize = 9;
+
+const all = async (filters?: ProjectFilters): Promise<Result<ProjectSummary[]>> => {
+>>>>>>> 28d04abb9266744813fbba64217216ebcf7b899e
   try {
     const projects = await prisma.project.findMany({
+      skip: pageSize * (filters?.page ?? 0),
+      take: pageSize,
       where: {
         deletedAt: null,
         name: {
