@@ -6,6 +6,13 @@ import {VariableInfoData} from "@/repositories/variable/types/data";
 
 async function specific(userId: string, variableId: string): Promise<Result<VariableInfoData>> {
   try {
+    const projectUser = await prisma.projectUser.findFirstOrThrow({
+      where: {
+        userId: userId,
+        deletedAt: null,
+      },
+    });
+
     const variable = await prisma.variable.findFirstOrThrow({
       where: {
         id: variableId,
@@ -14,7 +21,7 @@ async function specific(userId: string, variableId: string): Promise<Result<Vari
       include: {
         hiddenVariable: {
           where: {
-            projectUserId: userId,
+            projectUserId: projectUser.id,
           },
           select: {
             hidden: true,

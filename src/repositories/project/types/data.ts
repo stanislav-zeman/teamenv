@@ -40,3 +40,11 @@ export type ProjectData = Project & {
   variables: VariableInfoData[];
   users: ProjectUserData[];
 };
+
+export type Pageable<T> = {
+  docs: T[]
+  page: number
+  pages: number
+  limit: number
+  total: number
+};

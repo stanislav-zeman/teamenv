@@ -1,7 +1,7 @@
 import prisma from "../client";
-import { Role } from "@prisma/client";
+import {Prisma, Role} from "@prisma/client";
 import { Result } from "@badrap/result";
-import {  ProjectData, ProjectSummary } from "@/repositories/project/types/data";
+import {Pageable, ProjectData, ProjectSummary} from "@/repositories/project/types/data";
 import { getRole, isMember } from "@/repositories/user/read";
 import { ProjectFilters } from "@/models/Filters";
 import { getPrismaRoles } from "@/repositories/commons";
@@ -66,34 +66,39 @@ const specific = async (
 
 const pageSize = 9;
 
-const all = async (filters?: ProjectFilters): Promise<Result<ProjectSummary[]>> => {
+const all = async (filters: ProjectFilters): Promise<Result<Pageable<ProjectSummary>>> => {
   try {
-    const skip = filters?.page === undefined ? 0 : filters.page - 1;
+    const skip = filters.page - 1;
+    const whereFilter: Prisma.ProjectWhereInput = {
+      deletedAt: null,
+      name: {
+        contains: filters?.search ?? "",
+        mode: "insensitive",
+      },
+        users: {
+          some: {
+            AND: [
+            {
+              userId: filters?.userId,
+            },
+            {
+              role: {
+                in: getPrismaRoles(filters?.atLeastRole ?? Role.GUEST),
+              },
+            },
+          ],
+        },
+      },
+    }
+
+    const count = await prisma.project.count({
+      where: whereFilter,
+    });
 
     const projects = await prisma.project.findMany({
       skip,
       take: pageSize,
-      where: {
-        deletedAt: null,
-        name: {
-          contains: filters?.search ?? "",
-          mode: "insensitive",
-        },
-        users: {
-          some: {
-            AND: [
-              {
-                userId: filters?.userId,
-              },
-              {
-                role: {
-                  in: getPrismaRoles(filters?.atLeastRole ?? Role.GUEST),
-                },
-              },
-            ],
-          },
-        },
-      },
+      where: whereFilter,
       include: {
         users: {
           include: {
@@ -114,12 +119,26 @@ const all = async (filters?: ProjectFilters): Promise<Result<ProjectSummary[]>> 
       },
     });
 
+
+    let pageCount = count / pageSize;
+    if (count % pageSize === 0) {
+      pageCount += 1;
+    }
+
     const mapped: ProjectSummary[] = projects.map(({ users, ...project }) => ({
       ...project,
       owner: users[0],
       myRole: users.find(({ userId }) => userId == filters?.userId)?.role,
     }));
-    return Result.ok(mapped);
+
+
+    return Result.ok({
+      docs: mapped,
+      page: filters.page,
+      pages: pageCount,
+      limit: pageSize,
+      total: count,
+    });
   } catch (e) {
     return Result.err(e as Error);
   }

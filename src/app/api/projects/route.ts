@@ -2,9 +2,9 @@ import { NextRequest } from "next/server";
 import projects from "@/repositories/project";
 import { getAuth } from "@clerk/nextjs/server";
 import { ReadonlyURLSearchParams } from "next/navigation";
-import { parseResult, unauthorizedResponse } from "@/app/api/helpers";
+import {badRequestResponse, parseResult, unauthorizedResponse} from "@/app/api/helpers";
 import { parseFiltersFromParams } from "@/models/Filters";
-import { ProjectCreateData } from "@/app/api/types";
+import {z} from "zod";
 
 
 export async function GET(request: NextRequest): Promise<Response> {
@@ -25,13 +25,34 @@ export async function GET(request: NextRequest): Promise<Response> {
   return parseResult(result, 200);
 }
 
+const postValidator = z.object({
+  name: z.string(),
+  description: z.string(),
+}).strict()
+
 export async function POST(request: NextRequest): Promise<Response> {
   const user = getAuth(request);
   if (!user.userId) {
     return unauthorizedResponse();
   }
 
+<<<<<<< HEAD
   const data: ProjectCreateData = await request.json();
   const result = await projects.create({ userId: user.userId, ...data });
+=======
+  const payload = await request.json();
+  const validationResult = postValidator.safeParse(payload);
+
+  if (!validationResult.success) {
+    return badRequestResponse();
+  }
+
+  const data = validationResult.data;
+  const result = await projects.create({
+    userId: user.userId,
+    ...data
+  });
+
+>>>>>>> fc0450809db905fd23fc2b7c340a3ce53b868c2d
   return parseResult(result, 201);
 }

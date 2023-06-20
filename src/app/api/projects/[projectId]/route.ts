@@ -23,7 +23,7 @@ export async function GET(
 
 export async function DELETE(
   request: NextRequest,
-  context: { params: { projectId: string } }
+  context: { params: ProjectParams }
 ): Promise<Response> {
   const user = getAuth(request);
   if (user.userId === null) {
