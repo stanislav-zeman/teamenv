@@ -1,11 +1,11 @@
 import { NextRequest } from "next/server";
 import { getAuth } from "@clerk/nextjs/server";
 import read from "@/repositories/project/read";
-import { parseResult, unauthorizedResponse } from "@/app/api/helpers";
+import {badRequestResponse, parseResult, unauthorizedResponse} from "@/app/api/helpers";
 import { ProjectParams } from "@/app/api/types";
 import { remove } from "@/repositories/project/delete";
-import { ProjectCreateData } from "@/repositories/project/types/data";
 import { update } from "@/repositories/project/update";
+import {z} from "zod";
 
 export async function GET(
   request: NextRequest,
@@ -35,6 +35,13 @@ export async function DELETE(
   return parseResult(result, 200);
 }
 
+const putValidator = z
+  .object({
+    name: z.string().optional(),
+    description: z.string().optional(),
+  })
+  .strict();
+
 export async function PUT(
   request: NextRequest,
   context: { params: { projectId: string } }
@@ -44,11 +51,19 @@ export async function PUT(
     return unauthorizedResponse();
   }
 
-  const data: ProjectCreateData = await request.json();
+  const payload = await request.json();
+  const validationResult = putValidator.safeParse(payload);
+
+  if (!validationResult.success) {
+    return badRequestResponse();
+  }
+
+  const data = validationResult.data
   const result = await update({
-    ...data,
-    userId: user.userId,
     id: context.params.projectId,
+    userId: user.userId,
+    ...data,
   });
+
   return parseResult(result, 201);
 }
