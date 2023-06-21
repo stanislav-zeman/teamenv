@@ -14,6 +14,12 @@ async function update(data: VariableUpdateData): Promise<Result<Variable>> {
           },
         });
 
+        const projectUser = await transaction.projectUser.findFirstOrThrow({
+          where: {
+            userId: data.userId,
+            projectId: variable.projectId,
+          },
+        });
 
         if (data.name === undefined && data.value === undefined) {
           throw new Error("No data provided for update!");
@@ -26,6 +32,16 @@ async function update(data: VariableUpdateData): Promise<Result<Variable>> {
           data: {
             name: data.name,
             value: data.value,
+            hiddenVariable: {
+              updateMany: {
+                where: {
+                  projectUserId: projectUser.id,
+                },
+                data: {
+                  hidden: data.hidden,
+                },
+              },
+            },
           },
         });
       })
