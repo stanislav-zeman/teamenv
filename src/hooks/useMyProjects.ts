@@ -7,13 +7,13 @@ import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import BaseFilter from 'next/dist/shared/lib/bloom-filter/base-filter'
 import environment from "@/utils/envMetadata";
+import { ProjectSummary } from '@/repositories/project/types/data'
 
 export const getMyProjectsKey = () => ['myProjects']
 
-// TODO Wire to proper logic
 export const useMyProjects = () => {
   const filters = filteringSignalToSearchParams()
-  return useQuery<Pageable<MyProject>>(getMyProjectsKey(), async () =>
+  return useQuery<Pageable<ProjectSummary>>(getMyProjectsKey(), async () =>
     axios
       .get(`${environment.HOST}/api/projects?${filters}`)
       .then((res) => res.data)

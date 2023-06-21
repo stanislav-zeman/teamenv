@@ -1,9 +1,10 @@
 import { UserInfo } from '@/models/User'
 import { FC } from 'react'
 import { Avatar, Text } from '@chakra-ui/react'
+import { OwnerInfo } from '@/repositories/project/types/data'
 
 interface IOwnerRow {
-  owner: any
+  owner: OwnerInfo
   createdAt: Date
 }
 

@@ -11,6 +11,6 @@ export interface MyProject extends BaseModel {
   owner: UserInfo
   myRole: Role
   createdAt: Date
-  users: Member[]
+  users?: Member[]
   variables: Variable[]
 }

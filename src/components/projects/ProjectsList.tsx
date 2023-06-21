@@ -9,9 +9,10 @@ import { usePathname, useRouter } from 'next/navigation'
 import { PaginationComponent } from '../common/PaginationComponent'
 import { MyProject } from '@/models/Project'
 import { FC } from 'react'
+import { ProjectSummary } from '@/repositories/project/types/data'
 
 interface IProjectList {
-  projects: MyProject[]
+  projects: ProjectSummary[]
 }
 
 export const ProjectsList: FC<IProjectList> = ({ projects }) => {

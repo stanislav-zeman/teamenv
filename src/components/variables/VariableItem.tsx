@@ -25,7 +25,6 @@ import { useUpdateVariable } from "@/hooks/mutations/useUpdateVariable";
 
 interface VariableItemProps {
   variable: Variable;
-  scheme: string;
   projectId: string;
 }
 
@@ -38,15 +37,11 @@ const dataSchema = object().shape({
         .min(3, "Name must be atleast three characters long!");
     return string().optional();
   }),
-  value: lazy((value) => {
-    if (value) return string().required();
-    return string().optional();
-  }),
-});
+  value: string().optional(),
+}).required();
 
 const VariableItem: FC<VariableItemProps> = ({
   variable,
-  scheme,
   projectId,
 }) => {
   const {
@@ -61,7 +56,7 @@ const VariableItem: FC<VariableItemProps> = ({
       value: variable.value,
       hidden: variable.hidden,
     },
-    resolver: yupResolver(dataSchema),
+    resolver: yupResolver<VariableUpdateData>(dataSchema),
   });
 
   const {mutate: update} = useUpdateVariable({projectId, variableId: variable.id})
@@ -71,6 +66,7 @@ const VariableItem: FC<VariableItemProps> = ({
   const { onChange: hiddenChange, ...hidden } = register("hidden");
   const onSubmit: SubmitHandler<VariableUpdateData> = (data) => {
     update(data);
+    setChange(false);
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -82,7 +78,7 @@ const VariableItem: FC<VariableItemProps> = ({
             setChange(getValues("hidden") !== variable.hidden);
           }}
           {...hidden}
-          colorScheme={scheme}
+          colorScheme="orange"
         />
         <div className=" border-r border-white">
           <Input
