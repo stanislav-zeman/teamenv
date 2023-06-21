@@ -16,13 +16,15 @@ const RemoveVariableDialog: FC<RemoveMemberProps> = ({
   name,
   projectId,
 }) => {
-  const { mutate: remove } = useRemoveVariableFromProject({ variableId, projectId });
+  const { mutate: remove } = useRemoveVariableFromProject({
+    variableId,
+    projectId,
+  });
 
   const handleContinue = () => {
     remove(undefined, {
       onSuccess: () => {
         closeDialog();
-        queryClient.invalidateQueries(getMyProjectKey(projectId));
       },
     });
   };

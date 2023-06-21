@@ -1,24 +1,33 @@
 "use client";
 import { FC, useMemo, useState } from "react";
 import GenericCard from "../common/GenericCard";
-import { Input, Switch, Text } from "@chakra-ui/react";
+import { Input, Skeleton, Switch, Text } from "@chakra-ui/react";
 import { DeleteIcon, HamburgerIcon } from "@chakra-ui/icons";
 import GenericList from "../common/GenericList";
 import { Variable } from "@/models/Variable";
 import VariableItem from "./VariableItem";
 import { getRandomSchemes } from "@/utils/randomScheme";
 import { NewVariableItem } from "./NewVariableItem";
+import { useProjectVariables } from "@/hooks/queries/useProjectVariables";
+import { filteringSignal } from "@/signals/filteringSignal";
 
 interface VariableListProps {
-  variables: Variable[];
   projectId: string;
 }
 
-const VariableList: FC<VariableListProps> = ({ variables, projectId }) => {
-  const schemes = useMemo(
-    () => getRandomSchemes(variables.length),
-    [variables]
-  );
+const VariableList: FC<VariableListProps> = ({ projectId }) => {
+  const {
+    data: variables,
+    isLoading,
+    isError,
+  } = useProjectVariables(projectId, filteringSignal.value);
+
+  if (isLoading) return <Skeleton />;
+
+  if (!variables || isError) return <h3>Error during data fetch</h3>;
+
+  const schemes = getRandomSchemes(variables.length);
+
   return (
     <GenericList>
       {variables.map((variable, index) => (

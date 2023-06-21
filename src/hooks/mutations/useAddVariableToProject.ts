@@ -2,8 +2,7 @@ import { VariableCreateData } from "@/app/api/types";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import environment from "@/utils/envMetadata";
-import { queryClient } from "@/app/providers/ReactQueryProvider";
-import { getMyProjectKey } from "../useProject";
+import { invalidateVariables } from "../queries/useProjectVariables";
 
 export const useAddVariableToProject = (projectId: string) => {
   return useMutation(
@@ -14,8 +13,7 @@ export const useAddVariableToProject = (projectId: string) => {
         })
         .then((res) => res.data),
     {
-      onSuccess: () =>
-        queryClient.invalidateQueries(getMyProjectKey(projectId)),
+      onSuccess: () => invalidateVariables(projectId),
     }
   );
 };

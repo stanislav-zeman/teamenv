@@ -1,4 +1,5 @@
 "use client";
+import { queryClient } from "@/app/providers/ReactQueryProvider";
 import { IFilter } from "@/models/Filters";
 import { Member } from "@/models/Member";
 import { getFilters } from "@/signals/filteringSignal";
@@ -8,8 +9,15 @@ import axios from "axios";
 
 const membersKey = "members";
 
+export const invalidateMembers = (projectId: string) => {
+  queryClient.invalidateQueries({
+    queryKey: [projectId, membersKey],
+    exact: false,
+  });
+};
+
 export const getMembersKey = (projectId: string, filterString: string) => {
-  return [projectId, filterString, membersKey];
+  return [projectId, membersKey, filterString];
 };
 
 export const useProjectMembers = (projectId: string, filters: IFilter) => {
