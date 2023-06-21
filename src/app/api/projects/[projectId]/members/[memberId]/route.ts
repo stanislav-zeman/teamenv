@@ -3,7 +3,7 @@ import {getAuth} from "@clerk/nextjs/server";
 import {unauthorizedResponse, parseResult, badRequestResponse} from "@/app/api/helpers";
 import {deleteMember} from "@/repositories/user/delete";
 import {ModifyMemberData} from "@/repositories/user/types/data";
-import {changeRole} from "@/repositories/user/update";
+import userRepository from "@/repositories/user/index";
 import {MemberParams} from "@/app/api/types";
 import { z } from 'zod'
 import validation from "@/app/api/validation";
@@ -32,7 +32,7 @@ export async function PUT(request: NextRequest, context: { params: MemberParams 
   };
 
   const data = validationResult.data
-  const result =  await changeRole(modifyMemberData, data.role);
+  const result =  await userRepository.update(modifyMemberData, data.role);
   return parseResult(result, 200);
 }
 

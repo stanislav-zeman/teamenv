@@ -5,10 +5,10 @@ import {
 } from '@/repositories/user/types/data'
 import prisma from '@/repositories/client'
 import { ProjectUser } from '@prisma/client'
-import { getRole } from '@/repositories/user/read'
+import userRepository from '@/repositories/user/index'
 import { hasAtLeastRole } from '@/repositories/commons'
 
-export async function ensureUser(data: EnsureUserData): Promise<Result<boolean>> {
+async function ensureUser(data: EnsureUserData): Promise<Result<boolean>> {
   try {
     return Result.ok(
       await prisma.$transaction(async (transaction) => {
@@ -43,11 +43,11 @@ export async function ensureUser(data: EnsureUserData): Promise<Result<boolean>>
   }
 }
 
-export async function createProjectMember(
+async function createProjectMember(
   data: CreateProjectMemberData
 ): Promise<Result<ProjectUser>> {
   try {
-    const userRole = await getRole(data.userId, data.projectId)
+    const userRole = await userRepository.read.getRole(data.userId, data.projectId)
     if (userRole.isErr) {
       return Result.err(new Error('Failed to retrieve logged in user role!'))
     }
@@ -81,3 +81,10 @@ export async function createProjectMember(
     return Result.err(e as Error)
   }
 }
+
+const create = {
+  ensureUser,
+  createProjectMember,
+};
+
+export default create;

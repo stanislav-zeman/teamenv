@@ -1,7 +1,7 @@
 import {Result} from "@badrap/result";
 import {Variable} from "@prisma/client";
 import prisma from "@/repositories/client";
-import {getRole} from "@/repositories/user/read";
+import userRepository from "@/repositories/user/index";
 import {VariableDeleteData} from "@/app/api/types";
 
 async function remove(data: VariableDeleteData): Promise<Result<Variable>> {
@@ -16,7 +16,7 @@ async function remove(data: VariableDeleteData): Promise<Result<Variable>> {
           },
         });
 
-        const role = await getRole(data.userId, variable.projectId);
+        const role = await userRepository.read.getRole(data.userId, variable.projectId);
         if (role.isErr) {
           throw role.unwrap();
         }

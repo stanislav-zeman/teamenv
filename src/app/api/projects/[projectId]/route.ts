@@ -1,10 +1,8 @@
 import { NextRequest } from "next/server";
 import { getAuth } from "@clerk/nextjs/server";
-import read from "@/repositories/project/read";
 import {badRequestResponse, parseResult, unauthorizedResponse} from "@/app/api/helpers";
 import { ProjectParams } from "@/app/api/types";
-import { remove } from "@/repositories/project/delete";
-import { update } from "@/repositories/project/update";
+import projectRepository  from "@/repositories/project/index";
 import {z} from "zod";
 
 export async function GET(
@@ -16,7 +14,7 @@ export async function GET(
     return unauthorizedResponse();
   }
 
-  const result = await read.specific(context.params.projectId, user.userId);
+  const result = await projectRepository.read.specific(context.params.projectId, user.userId);
 
   return parseResult(result, 200);
 }
@@ -30,7 +28,7 @@ export async function DELETE(
     return unauthorizedResponse();
   }
 
-  const result = await remove(context.params.projectId, user.userId);
+  const result = await projectRepository.remove(context.params.projectId, user.userId);
 
   return parseResult(result, 200);
 }
@@ -59,7 +57,7 @@ export async function PUT(
   }
 
   const data = validationResult.data
-  const result = await update({
+  const result = await projectRepository.update({
     id: context.params.projectId,
     userId: user.userId,
     ...data,

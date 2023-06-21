@@ -3,10 +3,10 @@ import type {
   Project
 } from "@prisma/client";
 import {Result} from "@badrap/result";
-import {getRole} from "@/repositories/user/read";
+import userRepository from "@/repositories/user/index";
 import {Role} from "@prisma/client";
 
-export const remove = async (id: string, userId: string): Promise<Result<Project>> => {
+async function remove(id: string, userId: string): Promise<Result<Project>> {
   try {
     const deleteTime = new Date();
     return Result.ok(
@@ -25,7 +25,7 @@ export const remove = async (id: string, userId: string): Promise<Result<Project
           },
         });
 
-        const role = await getRole(userId, id);
+        const role = await userRepository.read.getRole(userId, id);
         if (role.isErr) {
           throw role.unwrap();
         }
@@ -47,6 +47,6 @@ export const remove = async (id: string, userId: string): Promise<Result<Project
   } catch (e) {
     return Result.err(e as Error);
   }
-};
+}
 
 export default remove;

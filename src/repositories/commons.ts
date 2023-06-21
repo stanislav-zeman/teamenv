@@ -1,5 +1,5 @@
-import { ProjectUser, Role } from '@prisma/client'
-import { getRole } from '@/repositories/user/read'
+import { Role } from '@prisma/client'
+import userRepository from '@/repositories/user/index'
 import { ModifyMemberData } from '@/repositories/user/types/data'
 
 type Deletable = {
@@ -45,8 +45,8 @@ export function hasAtLeastRole(userRole: Role, expectedRole: Role): boolean {
 }
 
 export async function canModify(data: ModifyMemberData): Promise<boolean> {
-  const userRole = await getRole(data.userId, data.projectId)
-  const memberRole = await getRole(data.memberId, data.projectId)
+  const userRole = await userRepository.read.getRole(data.userId, data.projectId)
+  const memberRole = await userRepository.read.getRole(data.memberId, data.projectId)
 
   if (userRole.isErr || memberRole.isErr) {
     throw new Error('Failed to retrieve roles!')

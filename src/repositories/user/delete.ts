@@ -1,7 +1,7 @@
 import {ModifyMemberData} from "@/repositories/user/types/data";
 import {Result} from "@badrap/result";
 import prisma from "../client";
-import {getRole} from "@/repositories/user/read";
+import userRepository from "@/repositories/user/index";
 import {Role} from "@prisma/client";
 
 function checkRoles(userRole: Role, memberRole: Role) {
@@ -27,7 +27,7 @@ export async function deleteMember(data: ModifyMemberData): Promise<Result<boole
             userId: data.memberId,
           },
         });
-        const userRole = await getRole(data.userId, data.projectId);
+        const userRole = await userRepository.read.getRole(data.userId, data.projectId);
         if (userRole.isErr) {
           throw new Error("Failed to retrieve logged in user role!");
         }
@@ -50,3 +50,5 @@ export async function deleteMember(data: ModifyMemberData): Promise<Result<boole
     return Result.err(e as Error);
   }
 }
+
+export default deleteMember;
