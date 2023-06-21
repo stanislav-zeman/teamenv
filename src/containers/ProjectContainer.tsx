@@ -2,11 +2,7 @@
 import MemberList from "@/components/members/MemberList";
 import ProjectHeader from "@/components/members/ProjectHeader";
 import VariableList from "@/components/variables/VariableList";
-import { useProject, useProjectMocked } from "@/hooks/useProject";
-import { Member } from "@/models/Member";
-import { MyProject } from "@/models/Project";
-import { Role } from "@/models/Role";
-import { Variable } from "@/models/Variable";
+import { useProject } from "@/hooks/useProject";
 import { transformProjectData } from "@/utils/transformData";
 
 interface IProjectContainerProps {
@@ -21,15 +17,12 @@ const ProjectContainer = ({ projectId, members }: IProjectContainerProps) => {
 
   if (!data || isError) return <h1>Not found..</h1>;
 
-  const project = transformProjectData(data)
+  const project = transformProjectData(data);
 
-  console.log(project)
+  console.log(project);
   return (
     <div className="px-28 pt-7">
-      <ProjectHeader
-        project={project}
-        members={members}
-      />
+      <ProjectHeader project={project} members={members} />
       {members ? (
         <MemberList projectId={projectId} myRole={project.myRole} />
       ) : (

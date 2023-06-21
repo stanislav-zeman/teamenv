@@ -1,7 +1,7 @@
-import { Role, User } from '@prisma/client'
-import prisma from '@/repositories/client'
-import { Result } from '@badrap/result'
-import { IFilter } from '@/models/Filters'
+import { Role, User } from "@prisma/client";
+import prisma from "@/repositories/client";
+import { Result } from "@badrap/result";
+import { IFilter } from "@/models/Filters";
 
 async function specific(id: string): Promise<Result<User>> {
   try {
@@ -14,36 +14,45 @@ async function specific(id: string): Promise<Result<User>> {
 
     return Result.ok(user);
   } catch (e) {
-    return Result.err(e as Error)
+    return Result.err(e as Error);
   }
 }
 
-async function all(filters?: IFilter): Promise<Result<User[]>> {
+async function all(filters: IFilter): Promise<Result<User[]>> {
   try {
     const users = await prisma.user.findMany({
       take: 5,
       where: {
         deletedAt: null,
+        projects: {
+          none: {
+            deletedAt: null,
+            project: {
+              id: filters.ignoreProject ?? "",
+            },
+          },
+        },
         OR: [
           {
             username: {
-              contains: filters?.search ?? '',
-              mode: 'insensitive',
+              contains: filters.search,
+              mode: "insensitive",
             },
           },
           {
             email: {
-              contains: filters?.search ?? '',
-              mode: 'insensitive',
+              contains: filters.search,
+              mode: "insensitive",
             },
           },
         ],
       },
-    })
-    return Result.ok(users)
+    });
+
+    return Result.ok(users);
   } catch (e) {
-    console.log(e)
-    return Result.err(e as Error)
+    console.log(e);
+    return Result.err(e as Error);
   }
 }
 
@@ -57,10 +66,10 @@ async function getRole(
         userId,
         projectId,
       },
-    })
-    return Result.ok(member.role)
+    });
+    return Result.ok(member.role);
   } catch (e) {
-    return Result.err(e as Error)
+    return Result.err(e as Error);
   }
 }
 
@@ -74,11 +83,11 @@ async function isMember(
         userId,
         projectId,
       },
-    })
+    });
 
-    return Result.ok(member !== null)
+    return Result.ok(member !== null);
   } catch (e) {
-    return Result.err(e as Error)
+    return Result.err(e as Error);
   }
 }
 

@@ -11,6 +11,7 @@ export interface IFilter {
   atLeastRole: Role
   display: DisplayOptions
   page: number
+  ignoreProject?: string
 }
 
 export interface UrlFilters {
@@ -23,6 +24,11 @@ export interface BaseFilters extends UrlFilters {
 
 export interface ProjectFilters extends IFilter {
   userId: string
+}
+
+export interface VariableFilters extends IFilter {
+  userId: string
+  projectId: string
 }
 
 export const parseFiltersFromParams = (
@@ -43,6 +49,7 @@ export const parseFiltersFromParams = (
       : defaultFilters.atLeastRole,
     page: +(params.get('page') ?? defaultFilters.page),
     display: (params.get('display') as DisplayOptions) ?? 'all',
+    ignoreProject: params.get("ignoreProject") ?? defaultFilters.ignoreProject,
   }
 }
 
@@ -54,4 +61,5 @@ export const getDefaultFilters = (): IFilter => ({
   atLeastRole: Role.GUEST,
   page: 1,
   display: 'all',
+  ignoreProject: undefined
 })

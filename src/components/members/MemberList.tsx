@@ -5,6 +5,7 @@ import GenericList from "../common/GenericList";
 import { getRandomColors } from "@/utils/randomColor";
 import MemberItem from "./MemberItem";
 import { useProjectMembers } from "@/hooks/queries/useProjectMembers";
+import { filteringSignal, getFilters } from "@/signals/filteringSignal";
 import { Role } from "@prisma/client";
 
 interface MemberListProps {
@@ -12,8 +13,12 @@ interface MemberListProps {
   projectId: string;
 }
 
-const MemberList: FC<MemberListProps> = ({ myRole, projectId }) => {
-  const { data: members, isLoading, isError } = useProjectMembers(projectId);
+const MemberList: FC<MemberListProps> = ({ projectId, myRole }) => {
+  const {
+    data: members,
+    isLoading,
+    isError,
+  } = useProjectMembers(projectId, filteringSignal.value);
 
   if (isLoading) return <Skeleton />;
 

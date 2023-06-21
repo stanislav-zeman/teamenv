@@ -24,6 +24,7 @@ export async function deleteMember(data: ModifyMemberData): Promise<Result<boole
         const member = await transaction.projectUser.findFirstOrThrow({
           where: {
             deletedAt: null,
+            projectId: data.projectId,
             userId: data.memberId,
           },
         });
