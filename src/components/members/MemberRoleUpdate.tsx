@@ -8,6 +8,7 @@ import { openDialog } from "@/signals/dialogSignal";
 import { SelectRoleDialog } from "@/dialogs/SelectRoleDialog";
 import { UpdateRoleDialog } from "@/dialogs/UpdateRoleDialog";
 import { Member } from "@/models/Member";
+import { ThreeDotsIcon } from "@/icons/ThreeDotsIcon";
 
 interface IMemberRoleProps {
   member: Member;
@@ -36,7 +37,7 @@ const MemberRole: FC<IMemberRoleProps> = ({ member, projectId, myRole }) => {
         variant="ghost"
         colorScheme="black"
         aria-label="user-update"
-        icon={<MoreVertIcon />}
+        icon={<ThreeDotsIcon />}
         onClick={() =>
           openDialog(
             <UpdateRoleDialog
