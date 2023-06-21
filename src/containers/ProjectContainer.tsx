@@ -24,7 +24,7 @@ const ProjectContainer = ({ projectId, members }: IProjectContainerProps) => {
     <div className="px-28 pt-7">
       <ProjectHeader project={project} members={members} />
       {members ? (
-        <MemberList projectId={projectId} />
+        <MemberList projectId={projectId} myRole={project.myRole} />
       ) : (
         <VariableList variables={project.variables} projectId={projectId} />
       )}

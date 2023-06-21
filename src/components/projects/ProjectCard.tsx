@@ -1,8 +1,6 @@
-import { MyProject } from "@/models/Project";
 import { FC } from "react";
-import { Text, Grid, GridItem, IconButton } from "@chakra-ui/react";
+import { Text, GridItem, IconButton } from "@chakra-ui/react";
 import { DeleteIcon, InfoOutlineIcon } from "@chakra-ui/icons";
-
 import { OwnerRow } from "./OwnerRow";
 import { Role } from "@/models/Role";
 import { useRouter } from "next/navigation";
@@ -10,14 +8,15 @@ import { getProjectDefaultUrl } from "@/app/links";
 import MemberRole from "../members/MemberRole";
 import { openDialog } from "@/signals/dialogSignal";
 import { ProjectDeleteDialog } from "@/dialogs/ProjectDeleteDialog";
+import { ProjectSummary } from "@/repositories/project/types/data";
 
 interface IProjectCard {
-  project: MyProject;
+  project: ProjectSummary;
 }
 
 export const ProjectCard: FC<IProjectCard> = ({ project }) => {
   const router = useRouter();
-
+  if (!project.myRole) return <></>
   return (
     <GridItem
       colSpan={2}

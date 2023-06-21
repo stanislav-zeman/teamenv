@@ -12,7 +12,7 @@ type RoleStyles = {
   color: string;
 };
 
-const getRoleStyles = (role: Role): RoleStyles => {
+export const getRoleStyles = (role: Role): RoleStyles => {
   switch (role) {
     case Role.GUEST:
       return { label: "Guest", color: "gray.200" };
@@ -32,11 +32,11 @@ const MemberRole: FC<IMemberRoleProps> = (props) => {
       backgroundColor={color}
       color="gray.700"
       display="flex"
-      justifySelf="flex-end"
+      justifySelf="center"
       alignItems="center"
       justifyContent="center"
       height="10"
-      width="36"
+      width="10em"
       borderRadius="lg"
       fontSize="lg"
     >

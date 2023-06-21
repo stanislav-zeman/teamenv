@@ -12,13 +12,14 @@ async function update(data: ModifyMemberData, newRole: Role): Promise<Result<Pro
         const member = await transaction.projectUser.findFirstOrThrow({
           where: {
             deletedAt: null,
-            userId: data.memberId,
+            id: data.memberId,
           },
         });
         const user = await transaction.projectUser.findFirstOrThrow({
           where: {
             deletedAt: null,
             userId: data.userId,
+            projectId: data.projectId
           },
         });
 
@@ -40,7 +41,7 @@ async function update(data: ModifyMemberData, newRole: Role): Promise<Result<Pro
 
         return transaction.projectUser.update({
           where: {
-            id: member.id,
+            id: member.id
           },
           data: {
             role: newRole,
