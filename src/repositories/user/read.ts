@@ -18,29 +18,36 @@ async function specific(id: string): Promise<Result<User>> {
   }
 }
 
-async function all(filters?: IFilter): Promise<Result<User[]>> {
+async function all(filters: IFilter): Promise<Result<User[]>> {
   try {
     const users = await prisma.user.findMany({
       take: 5,
       where: {
         deletedAt: null,
+        projects: {
+          none: {
+            deletedAt: null,
+            projectId: filters.ignoreProject,
+          },
+        },
         OR: [
           {
             username: {
-              contains: filters?.search ?? '',
+              contains: filters.search,
               mode: 'insensitive',
             },
           },
           {
             email: {
-              contains: filters?.search ?? '',
+              contains: filters.search,
               mode: 'insensitive',
             },
           },
         ],
-      },
-    })
-    return Result.ok(users)
+      }
+    });
+
+    return Result.ok(users);
   } catch (e) {
     console.log(e)
     return Result.err(e as Error)
