@@ -1,11 +1,13 @@
-import {Result} from "@badrap/result";
-import {Variable} from "@prisma/client";
+import { Result } from "@badrap/result";
+import { Variable } from "@prisma/client";
 import prisma from "@/repositories/client";
-import {VariableInfoData} from "@/repositories/variable/types/data";
-import {VariableFilters} from "@/models/Filters";
+import { VariableInfoData } from "@/repositories/variable/types/data";
+import { VariableFilters } from "@/models/Filters";
 
-
-async function specific(userId: string, variableId: string): Promise<Result<VariableInfoData>> {
+async function specific(
+  userId: string,
+  variableId: string
+): Promise<Result<VariableInfoData>> {
   try {
     const projectUser = await prisma.projectUser.findFirstOrThrow({
       where: {
@@ -58,13 +60,20 @@ async function all(filters: VariableFilters): Promise<Result<Variable[]>> {
         hiddenVariable: {
           some: {
             projectUserId: projectUser.id,
-            hidden: filters.display === "all" ? undefined : false
-          }
-        }
+            hidden: filters.display === "all" ? undefined : false,
+          },
+        },
       },
       orderBy: {
         name: filters.order,
-      }
+      },
+      include: {
+        hiddenVariable: {
+          select: {
+            hidden: true,
+          },
+        },
+      },
     });
     return Result.ok(variables);
   } catch (e) {
