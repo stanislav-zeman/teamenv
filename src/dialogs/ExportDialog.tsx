@@ -3,11 +3,11 @@ import { closeDialog } from "@/signals/dialogSignal";
 import { Button, Dialog, DialogContent, Input } from "@mui/material";
 import { FC, useState } from "react";
 import { Text } from "@chakra-ui/react";
-import { ProjectVariableView, Variable } from "@/models/Variable";
+import { Variable } from "@/models/Variable";
 import { generateEnvFile } from "@/utils/generateFileUtils";
 
 interface IExportDialog {
-  variables: ProjectVariableView[] | Variable[];
+  variables: Variable[];
 }
 
 export const ExportDialog: FC<IExportDialog> = ({ variables }) => {

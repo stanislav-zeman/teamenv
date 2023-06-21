@@ -2,7 +2,7 @@ import { Role } from "./Role";
 import { BaseModel } from "./BaseModel";
 import { Member } from "./Member";
 import { UserInfo } from "./User";
-import { ProjectVariableView, Variable } from "./Variable";
+import { Variable } from "./Variable";
 
 export interface MyProject extends BaseModel {
   name: string;
@@ -11,5 +11,5 @@ export interface MyProject extends BaseModel {
   myRole: Role;
   createdAt: Date;
   users?: Member[];
-  variables: ProjectVariableView[];
+  variables: Variable[];
 }

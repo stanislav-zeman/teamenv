@@ -8,8 +8,3 @@ export interface Variable extends BaseModel {
   }[];
 }
 
-export interface ProjectVariableView extends BaseModel {
-  name: string;
-  value: string;
-  hidden: boolean;
-}

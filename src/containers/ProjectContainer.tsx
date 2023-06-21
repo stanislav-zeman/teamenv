@@ -3,7 +3,6 @@ import MemberList from "@/components/members/MemberList";
 import ProjectHeader from "@/components/members/ProjectHeader";
 import VariableList from "@/components/variables/VariableList";
 import { useProject } from "@/hooks/useProject";
-import { transformProjectData } from "@/utils/transformData";
 
 interface IProjectContainerProps {
   projectId: string;
@@ -11,15 +10,12 @@ interface IProjectContainerProps {
 }
 
 const ProjectContainer = ({ projectId, members }: IProjectContainerProps) => {
-  const { data, isError, isLoading } = useProject(projectId);
+  const { data: project, isError, isLoading } = useProject(projectId);
 
   if (isLoading) return <h1>Loading..</h1>;
 
-  if (!data || isError) return <h1>Not found..</h1>;
+  if (!project || isError) return <h1>Not found..</h1>;
 
-  const project = transformProjectData(data);
-
-  console.log(project);
   return (
     <div className="px-28 pt-7">
       <ProjectHeader project={project} members={members} />

@@ -1,14 +1,11 @@
 "use client";
 import { saveAs } from "file-saver";
-import { ProjectVariableView, Variable } from "@/models/Variable";
+import { Variable } from "@/models/Variable";
 
-const filterHidden = (variables: ProjectVariableView[]) =>
-  variables.filter((variable) => !variable.hidden);
+const filterHidden = (variables: Variable[]) =>
+  variables.filter((variable) => !variable.hiddenVariable[0].hidden);
 
-export const generateEnvFile = (
-  variables: ProjectVariableView[],
-  fileName = ".env"
-) => {
+export const generateEnvFile = (variables: Variable[], fileName = ".env") => {
   console.log(variables);
   let content = "";
   const filtered = filterHidden(variables);
