@@ -89,7 +89,7 @@ const ProjectHeader: FC<ProjectHeaderProps> = ({ project, members }) => {
           )}
           <OrderFilteringButtons />
           <GenericLolInput />
-          {members && project.myRole > Role.MAINTAINER && (
+          {members && project.myRole >= Role.MAINTAINER && (
             <IconButton
               onClick={() => {
                 openDialog(<ProjectAddUserDialog project={project} />);
