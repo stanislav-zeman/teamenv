@@ -1,4 +1,4 @@
-import { profile, projects, settings } from "@/app/links";
+import { profile, projects } from "@/app/links";
 import { MyProject } from "@/models/Project";
 import Link from "next/link";
 import { CurrentLinkHighlighter } from "./CurrentLinkHighlighter";

@@ -37,11 +37,8 @@ const dataSchema = object().shape({
         .min(3, "Name must be atleast three characters long!");
     return string().optional();
   }),
-  value: lazy((value) => {
-    if (value) return string().required();
-    return string().optional();
-  }),
-});
+  value: string().optional(),
+}).required();
 
 const VariableItem: FC<VariableItemProps> = ({
   variable,
@@ -59,7 +56,7 @@ const VariableItem: FC<VariableItemProps> = ({
       value: variable.value,
       hidden: variable.hidden,
     },
-    resolver: yupResolver(dataSchema),
+    resolver: yupResolver<VariableUpdateData>(dataSchema),
   });
 
   const {mutate: update} = useUpdateVariable({projectId, variableId: variable.id})

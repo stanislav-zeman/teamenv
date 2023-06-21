@@ -20,9 +20,9 @@ export type VariableCreateData = {
 }
 
 export type VariableUpdateData = {
-  name: string
-  value: string
-  hidden: boolean
+  name?: string
+  value?: string
+  hidden?: boolean
 }
 
 export type VariableDeleteData = {
