@@ -8,15 +8,13 @@ import axios from "axios";
 
 const membersKey = "members";
 
-export const getMembersKey = (projectId: string, filters: IFilter) => {
-  const filterString = filters.toString();
+export const getMembersKey = (projectId: string, filterString: string) => {
   return [projectId, filterString, membersKey];
 };
 
-export const useProjectMembers = (projectId: string) => {
-  const filters = getFilters();
+export const useProjectMembers = (projectId: string, filters: IFilter) => {
   return useQuery<Member[]>(
-    getMembersKey(projectId, filters),
+    getMembersKey(projectId, JSON.stringify(filters)),
     async () =>
       await axios
         .get(`${environment.HOST}/api/projects/${projectId}/members`)

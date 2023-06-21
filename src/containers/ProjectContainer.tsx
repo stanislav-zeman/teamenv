@@ -21,17 +21,14 @@ const ProjectContainer = ({ projectId, members }: IProjectContainerProps) => {
 
   if (!data || isError) return <h1>Not found..</h1>;
 
-  const project = transformProjectData(data)
+  const project = transformProjectData(data);
 
-  console.log(project)
+  console.log(project);
   return (
     <div className="px-28 pt-7">
-      <ProjectHeader
-        project={project}
-        members={members}
-      />
+      <ProjectHeader project={project} members={members} />
       {members ? (
-        <MemberList members={project.users} projectId={projectId} />
+        <MemberList projectId={projectId} />
       ) : (
         <VariableList variables={project.variables} projectId={projectId} />
       )}

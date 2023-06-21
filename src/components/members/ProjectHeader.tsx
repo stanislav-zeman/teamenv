@@ -89,14 +89,10 @@ const ProjectHeader: FC<ProjectHeaderProps> = ({ project, members }) => {
           )}
           <OrderFilteringButtons />
           <GenericLolInput />
-          {project.myRole > Role.DEVELOPER && (
+          {members && project.myRole > Role.MAINTAINER && (
             <IconButton
               onClick={() => {
-                if (members) {
-                  openDialog(<ProjectAddUserDialog project={project} />);
-                  return;
-                }
-                openDialog(<ProjectAddVariableDialog projectId={project.id} />)
+                openDialog(<ProjectAddUserDialog project={project} />);
               }}
               icon={<AddIcon />}
               aria-label="perform add action"

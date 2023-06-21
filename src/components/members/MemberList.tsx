@@ -11,13 +11,18 @@ import { getRandomColors } from "@/utils/randomColor";
 import MemberItem from "./MemberItem";
 import { ProjectUser } from "@prisma/client";
 import { useProjectMembers } from "@/hooks/queries/useProjectMembers";
+import { filteringSignal, getFilters } from "@/signals/filteringSignal";
 
 interface MemberListProps {
   projectId: string;
 }
 
 const MemberList: FC<MemberListProps> = ({ projectId }) => {
-  const { data: members, isLoading, isError } = useProjectMembers(projectId);
+  const {
+    data: members,
+    isLoading,
+    isError,
+  } = useProjectMembers(projectId, filteringSignal.value);
 
   if (isLoading) return <Skeleton />;
 

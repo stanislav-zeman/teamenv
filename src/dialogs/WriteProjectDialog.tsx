@@ -53,7 +53,7 @@ export const WriteProjectDialog: FC<IWriteProjectDialog> = ({
         >
           <div className="p-6 flex flex-col gap-4 w-full h-full justify-center">
             <Text fontSize="1.5rem" as="b">
-              Create Project:
+              Project:
             </Text>
             <Input
               {...register("name")}
