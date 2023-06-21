@@ -23,13 +23,13 @@ const MemberItem: FC<MemberItemProps> = ({ member, color, projectId }) => {
     <GenericCard>
       <Avatar
         color={color}
-        src={member.avatarUrl}
+        src={member.user.avatarUrl}
         backgroundColor="white"
-        name={member.username}
+        name={member.user.username}
         size="lg"
         fontWeight="600"
       />
-      <Text fontSize="xl">{member.username}</Text>
+      <Text fontSize="xl">{member.user.username}</Text>
       <MemberRole role={member.role} />
       <div className={iconsContainer}>
         <HamburgerIcon boxSize="15%" />
@@ -41,8 +41,8 @@ const MemberItem: FC<MemberItemProps> = ({ member, color, projectId }) => {
           onClick={() =>
             openDialog(
               <RemoveMemberDialog
-                memberId={member.id}
-                username={member.username}
+                memberId={member.user.id}
+                username={member.user.username}
                 projectId={projectId}
               />
             )

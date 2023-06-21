@@ -1,12 +1,20 @@
 import prisma from "../client";
-import {Prisma, Role} from "@prisma/client";
+import { Prisma, ProjectUser, Role } from "@prisma/client";
 import { Result } from "@badrap/result";
-import {Pageable, ProjectData, ProjectSummary} from "@/repositories/project/types/data";
+import {
+  Pageable,
+  ProjectData,
+  ProjectSummary,
+} from "@/repositories/project/types/data";
 import userRepository from "@/repositories/user/index";
 import { ProjectFilters } from "@/models/Filters";
 import { getPrismaRoles } from "@/repositories/commons";
+import { Member } from "@/models/Member";
 
-async function specific(id: string, userId: string): Promise<Result<ProjectData>> {
+async function specific(
+  id: string,
+  userId: string
+): Promise<Result<ProjectData>> {
   try {
     const membership = await userRepository.read.isMember(userId, id);
     if (membership.isErr) {
@@ -63,7 +71,9 @@ async function specific(id: string, userId: string): Promise<Result<ProjectData>
 
 const pageSize = 9;
 
-async function all(filters: ProjectFilters): Promise<Result<Pageable<ProjectSummary>>> {
+async function all(
+  filters: ProjectFilters
+): Promise<Result<Pageable<ProjectSummary>>> {
   try {
     const skip = filters.page - 1;
     const whereFilter: Prisma.ProjectWhereInput = {
@@ -72,9 +82,9 @@ async function all(filters: ProjectFilters): Promise<Result<Pageable<ProjectSumm
         contains: filters?.search ?? "",
         mode: "insensitive",
       },
-        users: {
-          some: {
-            AND: [
+      users: {
+        some: {
+          AND: [
             {
               userId: filters?.userId,
             },
@@ -86,7 +96,7 @@ async function all(filters: ProjectFilters): Promise<Result<Pageable<ProjectSumm
           ],
         },
       },
-    }
+    };
 
     const count = await prisma.project.count({
       where: whereFilter,
@@ -116,7 +126,6 @@ async function all(filters: ProjectFilters): Promise<Result<Pageable<ProjectSumm
       },
     });
 
-
     let pageCount = Math.round(count / pageSize);
     if (count % pageSize === 0) {
       pageCount += 1;
@@ -127,7 +136,6 @@ async function all(filters: ProjectFilters): Promise<Result<Pageable<ProjectSumm
       owner: users[0],
       myRole: users.find(({ userId }) => userId == filters?.userId)?.role,
     }));
-
 
     return Result.ok({
       docs: mapped,
@@ -141,9 +149,46 @@ async function all(filters: ProjectFilters): Promise<Result<Pageable<ProjectSumm
   }
 }
 
+async function projectMembers(
+  projectId: string,
+  filters: ProjectFilters
+): Promise<Result<ProjectUser[]>> {
+  try {
+    const res = await prisma.project.findFirst({
+      select: {
+        users: {
+          orderBy: {
+            user: {
+              username: filters.order,
+            },
+          },
+          include: {
+            user: true,
+          },
+          where: {
+            role: { in: getPrismaRoles(filters.atLeastRole) },
+          },
+        },
+      },
+      where: {
+        id: projectId,
+      },
+    });
+
+    if (!res) {
+      throw new Error("Error during getting users");
+    }
+
+    return Result.ok(res.users);
+  } catch (e) {
+    return Result.err(e as Error);
+  }
+}
+
 const read = {
   specific,
   all,
+  projectMembers,
 };
 
 export default read;
