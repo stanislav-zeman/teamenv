@@ -2,11 +2,7 @@
 import MemberList from "@/components/members/MemberList";
 import ProjectHeader from "@/components/members/ProjectHeader";
 import VariableList from "@/components/variables/VariableList";
-import { useProject, useProjectMocked } from "@/hooks/useProject";
-import { Member } from "@/models/Member";
-import { MyProject } from "@/models/Project";
-import { Role } from "@/models/Role";
-import { Variable } from "@/models/Variable";
+import { useProject } from "@/hooks/useProject";
 import { transformProjectData } from "@/utils/transformData";
 
 interface IProjectContainerProps {

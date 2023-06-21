@@ -19,11 +19,14 @@ export const transformProjectData = (data: ProjectData): MyProject => {
     username: members[0].user.username,
   };
   const users: Member[] = members.map(({ id, user, role }) => ({
-    memberId: id,
     id: user.id,
-    username: user.username,
     role: role,
-    avatarUrl: user.avatarUrl
+    avatarUrl: user.avatarUrl,
+    user: {
+      id: user.id,
+      username: user.username,
+      avatarUrl: user.avatarUrl,
+    },
   }));
   const variables: Variable[] = vars.map(({ id, name, value, hiddenVariable }) => ({
     id,
