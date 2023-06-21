@@ -2,6 +2,7 @@ import {Result} from "@badrap/result";
 import {Variable} from "@prisma/client";
 import prisma from "@/repositories/client";
 import {VariableInfoData} from "@/repositories/variable/types/data";
+import {VariableFilters} from "@/models/Filters";
 
 
 async function specific(userId: string, variableId: string): Promise<Result<VariableInfoData>> {
@@ -36,12 +37,34 @@ async function specific(userId: string, variableId: string): Promise<Result<Vari
   }
 }
 
-async function all(): Promise<Result<Variable[]>> {
+async function all(filters: VariableFilters): Promise<Result<Variable[]>> {
   try {
-    const variables = await prisma.variable.findMany({
+    const projectUser = await prisma.projectUser.findFirstOrThrow({
       where: {
+        userId: filters.userId,
+        projectId: filters.projectId,
         deletedAt: null,
       },
+    });
+
+    const variables = await prisma.variable.findMany({
+      where: {
+        projectId: filters.projectId,
+        deletedAt: null,
+        name: {
+          contains: filters?.search ?? "",
+          mode: "insensitive",
+        },
+        hiddenVariable: {
+          some: {
+            projectUserId: projectUser.id,
+            hidden: filters.display === "all" ? undefined : false
+          }
+        }
+      },
+      orderBy: {
+        name: filters.order,
+      }
     });
     return Result.ok(variables);
   } catch (e) {
