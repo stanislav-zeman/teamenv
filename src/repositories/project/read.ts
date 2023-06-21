@@ -154,32 +154,26 @@ async function projectMembers(
   filters: ProjectFilters
 ): Promise<Result<ProjectUser[]>> {
   try {
-    const res = await prisma.project.findFirst({
-      select: {
-        users: {
-          orderBy: {
-            user: {
-              username: filters.order,
-            },
-          },
-          include: {
-            user: true,
-          },
-          where: {
-            role: { in: getPrismaRoles(filters.atLeastRole) },
-          },
+    const members = await prisma.projectUser.findMany({
+      where: {
+        deletedAt: null,
+        projectId: projectId,
+        role: {
+          in: getPrismaRoles(filters.atLeastRole),
         },
       },
-      where: {
-        id: projectId,
+      include: {
+        user: {
+          select: {
+            id: true,
+            avatarUrl: true,
+            username: true,
+          }
+        },
       },
     });
 
-    if (!res) {
-      throw new Error("Error during getting users");
-    }
-
-    return Result.ok(res.users);
+    return Result.ok(members);
   } catch (e) {
     return Result.err(e as Error);
   }
