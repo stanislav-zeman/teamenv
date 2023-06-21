@@ -21,6 +21,7 @@ export async function deleteMember(data: ModifyMemberData): Promise<Result<boole
     const deletedAt = new Date();
     return Result.ok(
       await prisma.$transaction(async (transaction) => {
+        console.log(`data: ${JSON.stringify(data)}`)
         const member = await transaction.projectUser.findFirstOrThrow({
           where: {
             deletedAt: null,
