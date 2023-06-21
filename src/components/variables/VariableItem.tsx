@@ -10,11 +10,7 @@ import {
   Input,
   Switch,
 } from "@chakra-ui/react";
-import {
-  CheckIcon,
-  CloseIcon,
-  DeleteIcon,
-} from "@chakra-ui/icons";
+import { CheckIcon, CloseIcon, DeleteIcon } from "@chakra-ui/icons";
 import { openDialog } from "@/signals/dialogSignal";
 import RemoveVariableDialog from "@/dialogs/RemoveVariableDialog";
 import { boolean, lazy, object, string } from "yup";
@@ -28,22 +24,21 @@ interface VariableItemProps {
   projectId: string;
 }
 
-const dataSchema = object().shape({
-  hidden: boolean().optional(),
-  name: lazy((value) => {
-    if (value)
-      return string()
-        .required()
-        .min(3, "Name must be atleast three characters long!");
-    return string().optional();
-  }),
-  value: string().optional(),
-}).required();
+const dataSchema = object()
+  .shape({
+    hidden: boolean().optional(),
+    name: lazy((value) => {
+      if (value)
+        return string()
+          .required()
+          .min(3, "Name must be atleast three characters long!");
+      return string().optional();
+    }),
+    value: string().optional(),
+  })
+  .required();
 
-const VariableItem: FC<VariableItemProps> = ({
-  variable,
-  projectId,
-}) => {
+const VariableItem: FC<VariableItemProps> = ({ variable, projectId }) => {
   const {
     register,
     getValues,
@@ -54,18 +49,21 @@ const VariableItem: FC<VariableItemProps> = ({
     defaultValues: {
       name: variable.name,
       value: variable.value,
-      hidden: variable.hidden,
+      hidden: !variable.hiddenVariable[0].hidden,
     },
     resolver: yupResolver<VariableUpdateData>(dataSchema),
   });
 
-  const {mutate: update} = useUpdateVariable({projectId, variableId: variable.id})
+  const { mutate: update } = useUpdateVariable({
+    projectId,
+    variableId: variable.id,
+  });
   const [changed, setChange] = useState(false);
   const { onChange: nameChange, ...name } = register("name");
   const { onChange: valueChange, ...value } = register("value");
   const { onChange: hiddenChange, ...hidden } = register("hidden");
   const onSubmit: SubmitHandler<VariableUpdateData> = (data) => {
-    update(data);
+    update({ ...data, hidden: !data.hidden });
     setChange(false);
   };
   return (
@@ -75,7 +73,9 @@ const VariableItem: FC<VariableItemProps> = ({
           size="lg"
           onChange={(e) => {
             hiddenChange(e);
-            setChange(getValues("hidden") !== variable.hidden);
+            setChange(
+              getValues("hidden") !== !variable.hiddenVariable[0].hidden
+            );
           }}
           {...hidden}
           colorScheme="orange"

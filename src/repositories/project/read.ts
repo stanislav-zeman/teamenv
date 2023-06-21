@@ -87,7 +87,7 @@ async function all(
           AND: [
             {
               userId: filters?.userId,
-              deletedAt: null
+              deletedAt: null,
             },
             {
               role: {
@@ -162,6 +162,16 @@ async function projectMembers(
         role: {
           in: getPrismaRoles(filters.atLeastRole),
         },
+        user: {
+          OR: {
+            username: {
+              contains: filters.search,
+            },
+            email: {
+              contains: filters.search
+            }
+          },
+        },
       },
       include: {
         user: {
@@ -169,7 +179,12 @@ async function projectMembers(
             id: true,
             avatarUrl: true,
             username: true,
-          }
+          },
+        },
+      },
+      orderBy: {
+        user: {
+          username: filters.order,
         },
       },
     });

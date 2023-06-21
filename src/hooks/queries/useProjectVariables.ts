@@ -2,7 +2,10 @@
 import { queryClient } from "@/app/providers/ReactQueryProvider";
 import { IFilter } from "@/models/Filters";
 import { Member } from "@/models/Member";
-import { getFilters } from "@/signals/filteringSignal";
+import {
+  filteringSignalToSearchParams,
+  getFilters,
+} from "@/signals/filteringSignal";
 import environment from "@/utils/envMetadata";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -26,7 +29,11 @@ export const useProjectVariables = (projectId: string, filters: IFilter) => {
     getVariablesKey(projectId, JSON.stringify(filters)),
     async () =>
       await axios
-        .get(`${environment.HOST}/api/projects/${projectId}/variables`)
+        .get(
+          `${
+            environment.HOST
+          }/api/projects/${projectId}/variables?${filteringSignalToSearchParams()}`
+        )
         .then((res) => res.data)
   );
 };

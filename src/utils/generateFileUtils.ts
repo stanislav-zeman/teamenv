@@ -2,10 +2,11 @@
 import { saveAs } from "file-saver";
 import { Variable } from "@/models/Variable";
 
-const filterHidden = (variables: Variable[]) =>
-  variables.filter((variable) => !variable.hidden);
+const filterHidden = (variables: any[]) =>
+  variables.filter((variable) => !variable?.hidden);
 
 export const generateEnvFile = (variables: Variable[], fileName = ".env") => {
+  console.log(variables);
   let content = "";
   const filtered = filterHidden(variables);
   filtered.forEach(

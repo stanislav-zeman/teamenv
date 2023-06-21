@@ -2,7 +2,10 @@
 import { queryClient } from "@/app/providers/ReactQueryProvider";
 import { IFilter } from "@/models/Filters";
 import { Member } from "@/models/Member";
-import { getFilters } from "@/signals/filteringSignal";
+import {
+  filteringSignalToSearchParams,
+  getFilters,
+} from "@/signals/filteringSignal";
 import environment from "@/utils/envMetadata";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -25,7 +28,11 @@ export const useProjectMembers = (projectId: string, filters: IFilter) => {
     getMembersKey(projectId, JSON.stringify(filters)),
     async () =>
       await axios
-        .get(`${environment.HOST}/api/projects/${projectId}/members`)
+        .get(
+          `${
+            environment.HOST
+          }/api/projects/${projectId}/members?${filteringSignalToSearchParams()}`
+        )
         .then((res) => res.data)
   );
 };
