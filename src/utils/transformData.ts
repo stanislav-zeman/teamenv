@@ -1,8 +1,10 @@
 import { Member } from "@/models/Member";
 import { MyProject } from "@/models/Project";
 import { Variable } from "@/models/Variable";
-import { ProjectData } from "@/repositories/project/types/data";
+import { ProjectData, ProjectSummary } from "@/repositories/project/types/data";
 import { UserInfo } from "@/models/User";
+import { ProjectUser, Role, User } from "@prisma/client";
+import { others } from "@chakra-ui/react";
 
 export const transformProjectData = (data: ProjectData): MyProject => {
   const {
@@ -17,19 +19,13 @@ export const transformProjectData = (data: ProjectData): MyProject => {
   const owner: UserInfo = {
     id: members[0].user.id,
     username: members[0].user.username,
+    avatarUrl: members[0].user.avatarUrl
   };
-  const users: Member[] = members.map(({ id, user, role }) => ({
-    memberId: id,
-    id: user.id,
-    username: user.username,
-    role: role,
-    avatarUrl: user.avatarUrl
-  }));
   const variables: Variable[] = vars.map(({ id, name, value, hiddenVariable }) => ({
     id,
     name,
     value,
     hidden: hiddenVariable[0].hidden
   }));
-  return { id, name, description, owner, createdAt, myRole, users, variables };
+  return { id, name, description, owner, createdAt, myRole, variables };
 };

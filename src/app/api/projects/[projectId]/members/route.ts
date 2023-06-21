@@ -11,7 +11,7 @@ import { z } from "zod";
 import validation from "@/app/api/validation";
 import projectRepository from "@/repositories/project/index";
 import { ReadonlyURLSearchParams } from "next/navigation";
-import { parseFiltersFromParams } from "@/utils/filterUtils";
+import { parseFiltersFromParams } from "@/models/Filters";
 
 const postValidator = z
   .object({

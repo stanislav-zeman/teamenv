@@ -10,7 +10,6 @@ import { closeDialog, openDialog } from '@/signals/dialogSignal'
 import { Button, Dialog, DialogContent } from '@mui/material'
 
 const ProjectsContainer = () => {
-  const { user } = useUser()
   const {
     data: pageable,
     isLoading,

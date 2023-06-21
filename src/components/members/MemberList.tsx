@@ -1,22 +1,18 @@
 "use client";
-import { FC, useMemo } from "react";
-import { Member } from "@/models/Member";
-import GenericCard from "../common/GenericCard";
-import { Avatar, Skeleton, Text } from "@chakra-ui/react";
-import MemberRole from "./MemberRole";
-import { DeleteIcon, HamburgerIcon } from "@chakra-ui/icons";
-import { Role } from "@/models/Role";
+import { FC } from "react";
+import { Skeleton } from "@chakra-ui/react";
 import GenericList from "../common/GenericList";
 import { getRandomColors } from "@/utils/randomColor";
 import MemberItem from "./MemberItem";
-import { ProjectUser } from "@prisma/client";
 import { useProjectMembers } from "@/hooks/queries/useProjectMembers";
+import { Role } from "@prisma/client";
 
 interface MemberListProps {
+  myRole: Role;
   projectId: string;
 }
 
-const MemberList: FC<MemberListProps> = ({ projectId }) => {
+const MemberList: FC<MemberListProps> = ({ myRole, projectId }) => {
   const { data: members, isLoading, isError } = useProjectMembers(projectId);
 
   if (isLoading) return <Skeleton />;
@@ -30,6 +26,7 @@ const MemberList: FC<MemberListProps> = ({ projectId }) => {
       member={member}
       color={colors[index]}
       projectId={projectId}
+      myRole={myRole}
     />
   ));
   return <GenericList>{rows}</GenericList>;

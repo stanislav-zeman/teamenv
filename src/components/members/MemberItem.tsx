@@ -4,21 +4,25 @@ import GenericCard from "../common/GenericCard";
 import { Avatar, IconButton, Text } from "@chakra-ui/react";
 import MemberRole from "./MemberRole";
 import { Role } from "@/models/Role";
-import { DeleteIcon, HamburgerIcon } from "@chakra-ui/icons";
+import { DeleteIcon } from "@chakra-ui/icons";
 import { openDialog } from "@/signals/dialogSignal";
 import RemoveMemberDialog from "@/dialogs/RemoveMemberDialog";
+import MemberRoleUpdate from "./MemberRoleUpdate";
+import { roleToIndex } from "@/utils/roleUtils";
 
 interface MemberItemProps {
   member: Member;
   color: string;
   projectId: string;
+  myRole: Role
 }
 
-const MemberItem: FC<MemberItemProps> = ({ member, color, projectId }) => {
+const MemberItem: FC<MemberItemProps> = ({ member, color, projectId, myRole }) => {
   const iconsContainer =
     member.role == Role.OWNER
       ? "hidden"
       : "flex justify-end gap-3 items-center";
+
   return (
     <GenericCard>
       <Avatar
@@ -30,9 +34,8 @@ const MemberItem: FC<MemberItemProps> = ({ member, color, projectId }) => {
         fontWeight="600"
       />
       <Text fontSize="xl">{member.user.username}</Text>
-      <MemberRole role={member.role} />
+      {roleToIndex(myRole) > roleToIndex(member.role) ? <MemberRoleUpdate myRole={myRole} member={member} projectId={projectId}/> : <MemberRole role={member.role} />}
       <div className={iconsContainer}>
-        <HamburgerIcon boxSize="15%" />
         <IconButton
           aria-label="delete-member"
           icon={<DeleteIcon color="white" boxSize="80%" />}

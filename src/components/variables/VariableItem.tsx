@@ -25,7 +25,6 @@ import { useUpdateVariable } from "@/hooks/mutations/useUpdateVariable";
 
 interface VariableItemProps {
   variable: Variable;
-  scheme: string;
   projectId: string;
 }
 
@@ -46,7 +45,6 @@ const dataSchema = object().shape({
 
 const VariableItem: FC<VariableItemProps> = ({
   variable,
-  scheme,
   projectId,
 }) => {
   const {
@@ -71,6 +69,7 @@ const VariableItem: FC<VariableItemProps> = ({
   const { onChange: hiddenChange, ...hidden } = register("hidden");
   const onSubmit: SubmitHandler<VariableUpdateData> = (data) => {
     update(data);
+    setChange(false);
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -82,7 +81,7 @@ const VariableItem: FC<VariableItemProps> = ({
             setChange(getValues("hidden") !== variable.hidden);
           }}
           {...hidden}
-          colorScheme={scheme}
+          colorScheme="orange"
         />
         <div className=" border-r border-white">
           <Input

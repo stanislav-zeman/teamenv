@@ -31,7 +31,7 @@ const ProjectContainer = ({ projectId, members }: IProjectContainerProps) => {
         members={members}
       />
       {members ? (
-        <MemberList members={project.users} projectId={projectId} />
+        <MemberList projectId={projectId} myRole={project.myRole} />
       ) : (
         <VariableList variables={project.variables} projectId={projectId} />
       )}
