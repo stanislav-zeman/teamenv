@@ -87,6 +87,7 @@ async function all(
           AND: [
             {
               userId: filters?.userId,
+              deletedAt: null
             },
             {
               role: {
