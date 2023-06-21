@@ -14,10 +14,15 @@ interface MemberItemProps {
   member: Member;
   color: string;
   projectId: string;
-  myRole: Role
+  myRole: Role;
 }
 
-const MemberItem: FC<MemberItemProps> = ({ member, color, projectId, myRole }) => {
+const MemberItem: FC<MemberItemProps> = ({
+  member,
+  color,
+  projectId,
+  myRole,
+}) => {
   const iconsContainer =
     member.role == Role.OWNER
       ? "hidden"
@@ -34,24 +39,34 @@ const MemberItem: FC<MemberItemProps> = ({ member, color, projectId, myRole }) =
         fontWeight="600"
       />
       <Text fontSize="xl">{member.user.username}</Text>
-      {roleToIndex(myRole) > roleToIndex(member.role) ? <MemberRoleUpdate myRole={myRole} member={member} projectId={projectId}/> : <MemberRole role={member.role} />}
-      <div className={iconsContainer}>
-        <IconButton
-          aria-label="delete-member"
-          icon={<DeleteIcon color="white" boxSize="80%" />}
-          variant="ghost"
-          colorScheme="whiteAlpha"
-          onClick={() =>
-            openDialog(
-              <RemoveMemberDialog
-                memberId={member.user.id}
-                username={member.user.username}
-                projectId={projectId}
-              />
-            )
-          }
+      {roleToIndex(myRole) > roleToIndex(member.role) ? (
+        <MemberRoleUpdate
+          myRole={myRole}
+          member={member}
+          projectId={projectId}
         />
-      </div>
+      ) : (
+        <MemberRole role={member.role} />
+      )}
+      {myRole >= Role.MAINTAINER && myRole > member.role && (
+        <div className={iconsContainer}>
+          <IconButton
+            aria-label="delete-member"
+            icon={<DeleteIcon color="white" boxSize="80%" />}
+            variant="ghost"
+            colorScheme="whiteAlpha"
+            onClick={() =>
+              openDialog(
+                <RemoveMemberDialog
+                  memberId={member.user.id}
+                  username={member.user.username}
+                  projectId={projectId}
+                />
+              )
+            }
+          />
+        </div>
+      )}
     </GenericCard>
   );
 };
