@@ -26,6 +26,11 @@ export interface ProjectFilters extends IFilter {
   userId: string
 }
 
+export interface VariableFilters extends IFilter {
+  userId: string
+  projectId: string
+}
+
 export const parseFiltersFromParams = (
   params: ReadonlyURLSearchParams
 ): IFilter => {
