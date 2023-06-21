@@ -17,6 +17,7 @@ const Header: FC<{ children?: ReactNode }> = ({ children }) => {
             <UserButton
               appearance={{
                 elements: {
+                  rootBox: "pl-4",
                   userButtonPopoverActionButton__manageAccount: "hidden",
                 },
               }}

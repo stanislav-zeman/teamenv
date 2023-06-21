@@ -27,7 +27,7 @@ const VariableList: FC<VariableListProps> = ({ projectId }) => {
 
   return (
     <GenericList>
-      {variables.map((variable, index) => (
+      {variables.map((variable) => (
         <VariableItem
           key={variable.id}
           variable={variable}
