@@ -1,6 +1,6 @@
 'use client'
 import { useRouter } from 'next/navigation'
-import { PageProps } from '../../../../.next/types/app/layout'
+import { PageProps } from '@/app/projects/types'
 import { getProjectDefaultUrl } from '@/app/links'
 
 export default function Page({ params }: PageProps) {

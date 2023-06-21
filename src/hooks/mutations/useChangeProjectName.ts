@@ -5,7 +5,7 @@ import { getMyProjectsKey } from '../useMyProjects'
 import { getMyProjectKey } from '../useProject'
 
 export const useChangeProjectName = (projectId: string) => {
-  return useMutation((projectName: string) => {
+  return useMutation(async (projectName: string) => {
     const project = mockedMyProjects.docs.filter((p) => p.id === projectId)[0]
     if (!project) return
     project.name = projectName

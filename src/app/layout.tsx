@@ -1,9 +1,6 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
 import AuthProvider from '@/app/providers/AuthProvider'
-import ThemeProvider, {
-  getPaletteFromLS,
-} from '@/app/providers/MuiThemeProvider'
 import AdaptiveBackground from '@/components/AdaptiveBackground'
 import StylableClerkProvider from '@/app/providers/StylableClerkProvider'
 import Header from '@/components/header'
