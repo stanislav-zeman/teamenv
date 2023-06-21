@@ -20,10 +20,6 @@ export const NavigationLinks = () => {
         <CurrentLinkHighlighter pathname={profile.path} />{" "}
       </div>
       |
-      <Link className="text-white" href={settings.path}>
-        {settings.label}
-      </Link>{" "}
-      |
     </div>
   );
 };
