@@ -1,4 +1,4 @@
-import { PageProps } from "../../../../../.next/types/app/layout";
+import { PageProps } from '@/app/projects/types'
 import ProjectContainer from "@/containers/ProjectContainer";
 
  

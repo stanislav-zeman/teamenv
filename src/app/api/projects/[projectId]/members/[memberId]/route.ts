@@ -1,7 +1,6 @@
 import {NextRequest} from "next/server";
 import {getAuth} from "@clerk/nextjs/server";
 import {unauthorizedResponse, parseResult, badRequestResponse} from "@/app/api/helpers";
-import {deleteMember} from "@/repositories/user/delete";
 import {ModifyMemberData} from "@/repositories/user/types/data";
 import userRepository from "@/repositories/user/index";
 import {MemberParams} from "@/app/api/types";
@@ -42,7 +41,7 @@ export async function DELETE(request: NextRequest, context: { params: MemberPara
     return unauthorizedResponse();
   }
 
-  const result = await deleteMember({
+  const result = await userRepository.remove({
     userId: userAuth.userId,
     projectId: context.params.projectId,
     memberId: context.params.memberId

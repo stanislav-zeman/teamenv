@@ -1,12 +1,14 @@
 import { FC, useState } from "react";
 import { ReadonlyProjectNameDisplay } from "./ReadonlyProjectNameDisplay";
-import { IconButton, Input } from "@chakra-ui/react";
-import { EditIcon } from "@chakra-ui/icons";
+import { IconButton, Text } from "@chakra-ui/react";
+import { EditIcon, InfoIcon } from "@chakra-ui/icons";
 import useFilters from "@/app/hooks/useFilters";
 import { openDialog } from "@/signals/dialogSignal";
 import { WriteProjectDialog } from "@/dialogs/WriteProjectDialog";
 import { MyProject } from "@/models/Project";
 import { useUpdateProject } from "@/hooks/mutations/useUpdateProject";
+import { Dialog } from "@mui/material";
+import ProjectInfoDialog from "@/dialogs/ProjectInfoDialog";
 
 interface IEditableProjectName {
   project: MyProject;
@@ -33,6 +35,16 @@ export const EditableProjectNameDisplay: FC<IEditableProjectName> = ({
               }}
               submit={(data) => mutate(data)}
             />
+          )
+        }
+      />
+      <IconButton
+        variant="ghost"
+        aria-label="project-info"
+        icon={<InfoIcon />}
+        onClick={() =>
+          openDialog(
+            <ProjectInfoDialog description={project.description ?? ""} />
           )
         }
       />

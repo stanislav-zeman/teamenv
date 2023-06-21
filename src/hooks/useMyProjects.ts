@@ -1,4 +1,3 @@
-import { mockedMyProjects } from '@/mocks/myProjectsMock'
 import { BaseFilters } from '@/models/Filters'
 import { Pageable } from '@/models/Pageable'
 import { MyProject } from '@/models/Project'
