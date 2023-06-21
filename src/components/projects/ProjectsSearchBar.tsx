@@ -5,7 +5,7 @@ import { AtLeastRoleFilter } from "../common/AtLeastRoleFilter";
 import { IconButton } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import { openDialog } from "@/signals/dialogSignal";
-import { CreateProjectDialog } from "@/dialogs/WriteProjectDialog";
+import { WriteProjectDialog } from "@/dialogs/WriteProjectDialog";
 import { useCreateProject } from "@/hooks/mutations/useCreateProject";
 
 const ProjectsSearchBar = () => {
@@ -20,7 +20,7 @@ const ProjectsSearchBar = () => {
           icon={<AddIcon />}
           aria-label={"create project"}
           onClick={() =>
-            openDialog(<CreateProjectDialog submit={(data) => mutate(data)} />)
+            openDialog(<WriteProjectDialog submit={(data) => mutate(data)} />)
           }
         />
         <AtLeastRoleFilter />

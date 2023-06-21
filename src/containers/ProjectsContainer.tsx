@@ -19,7 +19,6 @@ const ProjectsContainer = () => {
 
   if (isLoading) return <h3>Loading...</h3>
   if (isError || !pageable) return <h3>Error during fetching projects</h3>
-  console.log(pageable.docs)
   return (
     <div className="w-full h-full flex flex-col justify-between items-center align-middle">
       <div className="flex w-full flex-col items-center">
