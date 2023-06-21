@@ -21,6 +21,7 @@ export const transformProjectData = (data: ProjectData): MyProject => {
     username: members[0].user.username,
     avatarUrl: members[0].user.avatarUrl
   };
+
   const variables: Variable[] = vars.map(({ id, name, value, hiddenVariable }) => ({
     id,
     name,
