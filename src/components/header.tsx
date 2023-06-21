@@ -1,4 +1,4 @@
-import { projects, profile, settings } from "@/app/links";
+import { projects, profile } from "@/app/links";
 import Link from "next/link";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import { NavigationLinks } from "./navbar/NavigationLinks";
