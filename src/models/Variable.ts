@@ -7,3 +7,9 @@ export interface Variable extends BaseModel {
     hidden: boolean;
   }[];
 }
+
+export interface ProjectVariableView extends BaseModel {
+  name: string;
+  value: string;
+  hidden: boolean;
+}
