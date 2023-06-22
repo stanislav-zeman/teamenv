@@ -3,6 +3,7 @@ import ProfileAvatar from "@/components/profile/ProfileAvatar";
 import { Box, Divider, Skeleton } from "@chakra-ui/react";
 import { UserProfile, useUser } from "@clerk/nextjs";
 import { FC } from "react";
+import UserAPIKey from '@/components/profile/ProfileApiKey';
 
 const ProfileContainer: FC<any> = () => {
   const { isLoaded, user } = useUser();
@@ -10,6 +11,7 @@ const ProfileContainer: FC<any> = () => {
   return (
     <main className="px-20 h-full overflow-hidden">
       <h1 className="my-4 text-2xl pl-2">Profile</h1>{" "}
+      <UserAPIKey/>
       <Divider borderColor="gray.700" />
       <Box display="grid" gridTemplateColumns="20% 10% 70%" height="full" paddingTop="2rem">
         <ProfileAvatar name={user.username ?? ""} email={user.primaryEmailAddress?.emailAddress ?? ""} image={user.profileImageUrl} />
@@ -26,7 +28,7 @@ const ProfileContainer: FC<any> = () => {
             colorPrimary: "#01480f",
           }
         }}
-      />
+        />
       </Box>
     </main>
   );
