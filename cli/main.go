@@ -9,7 +9,10 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"time"
+)
+
+const (
+	PAGESIZE = 1000
 )
 
 var (
@@ -66,25 +69,36 @@ func main() {
 	}
 }
 
-func showProjects(_ *cli.Context) error {
-	apiKey := apiKey{ApiKey: key}
+func printProjects(projects []project) {
+	header := "Project Name"
+	maxWidth := len(header)
+	for _, proj := range projects {
+		if maxWidth < len(proj.Name) {
+			maxWidth = len(proj.Name)
+		}
+	}
 
-	marshalled, err := json.Marshal(apiKey)
+	fmt.Printf("%-*s    Project ID\n", maxWidth, header)
+	for _, proj := range projects {
+		fmt.Printf("%-*s    %-36s\n", maxWidth, proj.Name, proj.Id)
+	}
+}
+
+func showProjects(_ *cli.Context) error {
+	body := apiKey{ApiKey: key}
+
+	marshalled, err := json.Marshal(body)
 	if err != nil {
 		log.Fatalf("impossible to marshall teacher: %s", err)
 	}
-	fmt.Printf("%s\n", string(marshalled))
-	client := http.Client{
-		Timeout: 10 * time.Second,
-	}
-	req, err := http.NewRequest(http.MethodGet, host+"/api/cli/projects", bytes.NewReader(marshalled))
+
+	res, err := http.Post(fmt.Sprintf("%s/api/cli/projects?pageSize=%d", host, PAGESIZE), "application/json", bytes.NewReader(marshalled))
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	res, err := client.Do(req)
-	if err != nil {
-		log.Fatal(err)
+	if res.StatusCode != 200 {
+		log.Fatal("request returned non 200 status: ", res.StatusCode)
 	}
 
 	responseBytes, err := io.ReadAll(res.Body)
@@ -92,18 +106,14 @@ func showProjects(_ *cli.Context) error {
 		log.Fatal(err)
 	}
 
-	var projects []project
-	fmt.Printf("%s\n", string(responseBytes))
+	var projects pageable
 	err = json.Unmarshal(responseBytes, &projects)
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	for _, project := range projects {
-		fmt.Printf("%s     %s\n", project.Name, project.Id)
-	}
-
+	printProjects(projects.Docs)
 	return nil
 }
 

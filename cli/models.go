@@ -32,6 +32,14 @@ type apiKey struct {
 	ApiKey string `json:"apiKey"`
 }
 
+type pageable struct {
+	Docs  []project
+	Page  int
+	Pages int
+	Limit int
+	Total int
+}
+
 type project struct {
 	Id   string `json:"id"`
 	Name string `json:"name"`
