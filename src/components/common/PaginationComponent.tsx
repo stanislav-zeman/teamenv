@@ -1,7 +1,7 @@
 import useFilters from '@/app/hooks/useFilters'
-import { Pageable } from '@/models/Pageable'
-import { SxProps } from '@mui/material'
-import { FC } from 'react'
+import {Pageable} from '@/models/Pageable'
+import {SxProps} from '@mui/material'
+import {FC} from 'react'
 import Pagination from '@mui/material/Pagination'
 
 interface IPagination {

@@ -1,6 +1,6 @@
-import { profile, projects } from "@/app/links";
+import {profile, projects} from "@/app/links";
 import Link from "next/link";
-import { CurrentLinkHighlighter } from "./CurrentLinkHighlighter";
+import {CurrentLinkHighlighter} from "./CurrentLinkHighlighter";
 
 export const NavigationLinks = () => {
   return (

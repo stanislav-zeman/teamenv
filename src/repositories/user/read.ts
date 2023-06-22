@@ -1,7 +1,7 @@
-import { Role, User } from "@prisma/client";
+import {Role, User} from "@prisma/client";
 import prisma from "@/repositories/client";
-import { Result } from "@badrap/result";
-import { IFilter } from "@/models/Filters";
+import {Result} from "@badrap/result";
+import {IFilter} from "@/models/Filters";
 import {APIKey} from "@/repositories/user/types/data";
 
 async function specific(id: string): Promise<Result<User>> {

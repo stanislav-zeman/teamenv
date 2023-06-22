@@ -1,10 +1,10 @@
 "use client";
-import { closeDialog } from "@/signals/dialogSignal";
-import { Button, Dialog, DialogContent, Input } from "@mui/material";
-import { FC, useState } from "react";
-import { Text } from "@chakra-ui/react";
-import { Variable } from "@/models/Variable";
-import { generateEnvFile } from "@/utils/generateFileUtils";
+import {closeDialog} from "@/signals/dialogSignal";
+import {Button, Dialog, DialogContent, Input} from "@mui/material";
+import {FC, useState} from "react";
+import {Text} from "@chakra-ui/react";
+import {Variable} from "@/models/Variable";
+import {generateEnvFile} from "@/utils/generateFileUtils";
 import useFilters from "@/app/hooks/useFilters";
 
 interface IExportDialog {

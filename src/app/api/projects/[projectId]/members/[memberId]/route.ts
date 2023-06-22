@@ -1,10 +1,10 @@
 import {NextRequest} from "next/server";
 import {getAuth} from "@clerk/nextjs/server";
-import {unauthorizedResponse, parseResult, badRequestResponse} from "@/app/api/helpers";
+import {badRequestResponse, parseResult, unauthorizedResponse} from "@/app/api/helpers";
 import {ModifyMemberData} from "@/repositories/user/types/data";
 import userRepository from "@/repositories/user/index";
 import {MemberParams} from "@/app/api/types";
-import { z } from 'zod'
+import {z} from 'zod'
 import validation from "@/app/api/validation";
 
 const putValidator = z.object({

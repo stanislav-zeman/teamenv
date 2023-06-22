@@ -1,4 +1,4 @@
-import { Environment } from "@prisma/client"
+import {Environment} from "@prisma/client"
 
 export const envToIndex = (env: Environment) => {
     switch (env) {

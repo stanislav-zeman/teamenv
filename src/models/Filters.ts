@@ -1,6 +1,6 @@
-import { Role } from '@/models/Role'
-import { Environment } from '@prisma/client'
-import { ReadonlyURLSearchParams } from 'next/navigation'
+import {Role} from '@/models/Role'
+import {Environment} from '@prisma/client'
+import {ReadonlyURLSearchParams} from 'next/navigation'
 
 export type DisplayOptions = 'all' | 'deleted' | 'non-deleted'
 

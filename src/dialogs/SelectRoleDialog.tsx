@@ -1,24 +1,15 @@
 'use client'
-import { UserInfo } from '@/models/User'
-import { closeDialog } from '@/signals/dialogSignal'
-import { FC, useState } from 'react'
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  MenuItem,
-  Select,
-  Slider,
-  Typography,
-} from '@mui/material'
-import { Role } from '@/models/Role'
-import { MyProject } from '@/models/Project'
+import {UserInfo} from '@/models/User'
+import {closeDialog} from '@/signals/dialogSignal'
+import {FC, useState} from 'react'
+import {Button, Dialog, DialogContent, Slider, Typography,} from '@mui/material'
+import {Role} from '@/models/Role'
+import {MyProject} from '@/models/Project'
 import MuiThemeProvider from '@/app/providers/MuiThemeProvider'
-import { useAddUserToProject } from '@/hooks/mutations/useAddUserToProject'
-import { getRoleValueFromString } from '@/components/common/AtLeastRoleFilter'
-import { getRoleFromIndex, roleToIndex } from '@/utils/roleUtils'
-import { queryClient } from '@/app/providers/ReactQueryProvider'
-import { getMyProjectKey } from '@/hooks/useProject'
+import {useAddUserToProject} from '@/hooks/mutations/useAddUserToProject'
+import {getRoleFromIndex, roleToIndex} from '@/utils/roleUtils'
+import {queryClient} from '@/app/providers/ReactQueryProvider'
+import {getMyProjectKey} from '@/hooks/useProject'
 
 interface ISelectRoleDialog {
   selectedUser: UserInfo

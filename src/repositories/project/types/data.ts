@@ -1,4 +1,4 @@
-import type { Project, ProjectUser, Role, Variable } from "@prisma/client";
+import type {Project, ProjectUser, Role} from "@prisma/client";
 import {VariableInfoData} from "@/repositories/variable/types/data";
 
 export type ProjectCreateData = {

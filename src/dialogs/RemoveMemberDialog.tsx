@@ -1,15 +1,8 @@
-import { queryClient } from "@/app/providers/ReactQueryProvider";
-import { useRemoveUserFromProject } from "@/hooks/mutations/useRemoveUserFromProject";
-import { invalidateMembers } from "@/hooks/queries/useProjectMembers";
-import { closeDialog } from "@/signals/dialogSignal";
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from "@mui/material";
-import { FC } from "react";
+import {useRemoveUserFromProject} from "@/hooks/mutations/useRemoveUserFromProject";
+import {invalidateMembers} from "@/hooks/queries/useProjectMembers";
+import {closeDialog} from "@/signals/dialogSignal";
+import {Button, Dialog, DialogContent, DialogContentText, DialogTitle,} from "@mui/material";
+import {FC} from "react";
 
 interface RemoveMemberProps {
   memberId: string;

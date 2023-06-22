@@ -1,14 +1,14 @@
-import { FC } from "react";
-import { Text, GridItem, IconButton } from "@chakra-ui/react";
-import { DeleteIcon, InfoOutlineIcon } from "@chakra-ui/icons";
-import { OwnerRow } from "./OwnerRow";
-import { Role } from "@/models/Role";
-import { useRouter } from "next/navigation";
-import { getProjectDefaultUrl } from "@/app/links";
+import {FC} from "react";
+import {GridItem, IconButton, Text} from "@chakra-ui/react";
+import {DeleteIcon, InfoOutlineIcon} from "@chakra-ui/icons";
+import {OwnerRow} from "./OwnerRow";
+import {Role} from "@/models/Role";
+import {useRouter} from "next/navigation";
+import {getProjectDefaultUrl} from "@/app/links";
 import MemberRole from "../members/MemberRole";
-import { openDialog } from "@/signals/dialogSignal";
-import { ProjectDeleteDialog } from "@/dialogs/ProjectDeleteDialog";
-import { ProjectSummary } from "@/repositories/project/types/data";
+import {openDialog} from "@/signals/dialogSignal";
+import {ProjectDeleteDialog} from "@/dialogs/ProjectDeleteDialog";
+import {ProjectSummary} from "@/repositories/project/types/data";
 
 interface IProjectCard {
   project: ProjectSummary;

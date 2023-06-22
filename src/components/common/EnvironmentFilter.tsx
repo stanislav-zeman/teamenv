@@ -1,8 +1,8 @@
 'use client'
 import useFilters from '@/app/hooks/useFilters'
-import { envToIndex } from '@/utils/environmentUtils'
-import { Text } from '@chakra-ui/react'
-import { Environment } from '@prisma/client'
+import {envToIndex} from '@/utils/environmentUtils'
+import {Text} from '@chakra-ui/react'
+import {Environment} from '@prisma/client'
 
 export const getEnvStringFromValue = (env: number) => {
     return Object.entries(Environment).filter((k, v) => v === env)[0][0]

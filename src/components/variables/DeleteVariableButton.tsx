@@ -1,10 +1,7 @@
 "use client";
-import RemoveVariableDialog from "@/dialogs/RemoveVariableDialog";
-import { Variable } from "@/models/Variable";
-import { openDialog } from "@/signals/dialogSignal";
-import { DeleteIcon } from "@chakra-ui/icons";
-import { IconButton } from "@chakra-ui/react";
-import type { FC, MouseEventHandler } from "react";
+import {DeleteIcon} from "@chakra-ui/icons";
+import {IconButton} from "@chakra-ui/react";
+import type {FC, MouseEventHandler} from "react";
 
 export type DeleteVariableButtonProps = {
   action: MouseEventHandler<HTMLButtonElement>;

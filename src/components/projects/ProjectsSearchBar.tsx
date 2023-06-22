@@ -1,12 +1,12 @@
 import React from "react";
 import GenericLolInput from "@/components/common/GenericLolInput";
-import { OrderFilteringButtons } from "../common/OrderFilteringButtons";
-import { AtLeastRoleFilter } from "../common/AtLeastRoleFilter";
-import { IconButton } from "@chakra-ui/react";
-import { AddIcon } from "@chakra-ui/icons";
-import { openDialog } from "@/signals/dialogSignal";
-import { WriteProjectDialog } from "@/dialogs/WriteProjectDialog";
-import { useCreateProject } from "@/hooks/mutations/useCreateProject";
+import {OrderFilteringButtons} from "../common/OrderFilteringButtons";
+import {AtLeastRoleFilter} from "../common/AtLeastRoleFilter";
+import {IconButton} from "@chakra-ui/react";
+import {AddIcon} from "@chakra-ui/icons";
+import {openDialog} from "@/signals/dialogSignal";
+import {WriteProjectDialog} from "@/dialogs/WriteProjectDialog";
+import {useCreateProject} from "@/hooks/mutations/useCreateProject";
 
 const ProjectsSearchBar = () => {
   const { mutate } = useCreateProject();

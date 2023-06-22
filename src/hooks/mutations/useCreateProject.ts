@@ -1,8 +1,7 @@
-import { queryClient } from "@/app/providers/ReactQueryProvider";
-import { useMutation } from "@tanstack/react-query";
+import {useMutation} from "@tanstack/react-query";
 import axios from "axios";
-import { getMyProjectsKey, invalidateProjects } from "../useMyProjects";
-import { ProjectCreateData } from "@/app/api/types";
+import {invalidateProjects} from "../useMyProjects";
+import {ProjectCreateData} from "@/app/api/types";
 import environment from "@/utils/envMetadata";
 
 export const useCreateProject = () =>

@@ -1,13 +1,8 @@
 'use client'
 
-import React, { ChangeEvent, ChangeEventHandler, FC, useState } from 'react'
-import {
-  filteringSignalToSearchParams,
-  getFilters,
-} from '@/signals/filteringSignal'
-import { usePathname, useRouter } from 'next/navigation'
+import React, {FC, useState} from 'react'
 import useFilters from '@/app/hooks/useFilters'
-import { placeholderRandomizer } from '@/utils/placeholderRandomizer'
+import {placeholderRandomizer} from '@/utils/placeholderRandomizer'
 
 const GenericLolInput: FC = () => {
   const { filters, pushFilters } = useFilters()

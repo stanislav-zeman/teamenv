@@ -1,7 +1,7 @@
 'use client'
 
-import React, { FC, ReactNode, useState } from 'react'
-import { ThemeProvider, createTheme } from '@mui/material'
+import React, {FC, ReactNode} from 'react'
+import {createTheme, ThemeProvider} from '@mui/material'
 
 const theme = createTheme({
   palette: {

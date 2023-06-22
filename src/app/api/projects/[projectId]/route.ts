@@ -1,8 +1,8 @@
-import { NextRequest } from "next/server";
-import { getAuth } from "@clerk/nextjs/server";
+import {NextRequest} from "next/server";
+import {getAuth} from "@clerk/nextjs/server";
 import {badRequestResponse, parseResult, unauthorizedResponse} from "@/app/api/helpers";
-import { ProjectParams } from "@/app/api/types";
-import projectRepository  from "@/repositories/project/index";
+import {ProjectParams} from "@/app/api/types";
+import projectRepository from "@/repositories/project/index";
 import {z} from "zod";
 
 export async function GET(

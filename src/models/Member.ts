@@ -1,5 +1,5 @@
-import { BaseModel } from "./BaseModel";
-import { Role } from "./Role";
+import {BaseModel} from "./BaseModel";
+import {Role} from "./Role";
 
 export interface Member extends BaseModel {
   user: {

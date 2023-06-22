@@ -2,7 +2,6 @@ import {Result} from "@badrap/result";
 import {Environment, User, Variable} from "@prisma/client";
 import validation from "@/app/api/validation";
 import userRepository from "@/repositories/user";
-import {NextRequest} from "next/server";
 
 export type Params = {
   projectId: string;

@@ -1,19 +1,10 @@
 "use client"
-import { queryClient } from "@/app/providers/ReactQueryProvider";
-import { useRemoveUserFromProject } from "@/hooks/mutations/useRemoveUserFromProject";
-import { invalidateProjects } from "@/hooks/useMyProjects";
-import { getMyProjectKey } from "@/hooks/useProject";
-import { closeDialog } from "@/signals/dialogSignal";
-import environment from "@/utils/envMetadata";
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from "@mui/material";
-import { useRouter } from "next/navigation";
-import { FC } from "react";
+import {useRemoveUserFromProject} from "@/hooks/mutations/useRemoveUserFromProject";
+import {invalidateProjects} from "@/hooks/useMyProjects";
+import {closeDialog} from "@/signals/dialogSignal";
+import {Button, Dialog, DialogContent, DialogContentText, DialogTitle,} from "@mui/material";
+import {useRouter} from "next/navigation";
+import {FC} from "react";
 
 type LeaveProjectDialogProps = {
   memberId: string;

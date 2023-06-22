@@ -1,9 +1,8 @@
-import { MemberParams } from "@/app/api/types";
-import { queryClient } from "@/app/providers/ReactQueryProvider";
+import {MemberParams} from "@/app/api/types";
 import environment from "@/utils/envMetadata";
-import { useMutation } from "@tanstack/react-query";
+import {useMutation} from "@tanstack/react-query";
 import axios from "axios";
-import { getMembersKey, invalidateMembers } from "../queries/useProjectMembers";
+import {invalidateMembers} from "../queries/useProjectMembers";
 
 export const useRemoveUserFromProject = ({
   projectId,

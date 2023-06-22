@@ -1,6 +1,6 @@
-import { closeDialog } from "@/signals/dialogSignal";
-import { Dialog, DialogContent, DialogContentText, DialogTitle } from "@mui/material";
-import { FC } from "react";
+import {closeDialog} from "@/signals/dialogSignal";
+import {Dialog, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
+import {FC} from "react";
 
 interface ProjectInfoDialogProps {
     description?: string;

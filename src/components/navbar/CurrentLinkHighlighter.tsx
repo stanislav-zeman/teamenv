@@ -1,9 +1,9 @@
 'use client'
 
-import { Divider, keyframes } from '@chakra-ui/react'
-import { motion } from 'framer-motion'
-import { usePathname, useRouter } from 'next/navigation'
-import { FC } from 'react'
+import {Divider, keyframes} from '@chakra-ui/react'
+import {motion} from 'framer-motion'
+import {usePathname} from 'next/navigation'
+import {FC} from 'react'
 
 interface ICurrentLinkHighlighter {
   pathname: string

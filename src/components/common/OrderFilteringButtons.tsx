@@ -1,8 +1,9 @@
 'use client'
 
 import useFilters from '@/app/hooks/useFilters'
-import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
-import { IconButton } from '@chakra-ui/react'
+import {ChevronDownIcon, ChevronUpIcon} from '@chakra-ui/icons'
+import {IconButton} from '@chakra-ui/react'
+
 export const OrderFilteringButtons = () => {
   const { filters, pushFilters } = useFilters()
 

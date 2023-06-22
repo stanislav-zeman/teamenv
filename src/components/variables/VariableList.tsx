@@ -1,15 +1,12 @@
 "use client";
-import { FC, useMemo, useState } from "react";
-import GenericCard from "../common/GenericCard";
-import { Input, Skeleton, Switch, Text } from "@chakra-ui/react";
-import { DeleteIcon, HamburgerIcon } from "@chakra-ui/icons";
+import {FC} from "react";
+import {Skeleton} from "@chakra-ui/react";
 import GenericList from "../common/GenericList";
-import { Variable } from "@/models/Variable";
 import VariableItem from "./VariableItem";
-import { NewVariableItem } from "./NewVariableItem";
-import { useProjectVariables } from "@/hooks/queries/useProjectVariables";
-import { filteringSignal } from "@/signals/filteringSignal";
-import { VariableColumns } from "./VariableColumns";
+import {NewVariableItem} from "./NewVariableItem";
+import {useProjectVariables} from "@/hooks/queries/useProjectVariables";
+import {filteringSignal} from "@/signals/filteringSignal";
+import {VariableColumns} from "./VariableColumns";
 
 interface VariableListProps {
   projectId: string;

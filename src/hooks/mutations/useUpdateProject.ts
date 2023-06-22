@@ -1,9 +1,9 @@
-import { ProjectCreateData } from "@/app/api/types";
-import { queryClient } from "@/app/providers/ReactQueryProvider";
+import {ProjectCreateData} from "@/app/api/types";
+import {queryClient} from "@/app/providers/ReactQueryProvider";
 import environment from "@/utils/envMetadata";
-import { useMutation } from "@tanstack/react-query";
+import {useMutation} from "@tanstack/react-query";
 import axios from "axios";
-import { getMyProjectKey } from "../useProject";
+import {getMyProjectKey} from "../useProject";
 
 export const useUpdateProject = (projectId: string) => {
   return useMutation(

@@ -1,8 +1,7 @@
 "use client";
-import { saveAs } from "file-saver";
-import { Variable } from "@/models/Variable";
-import useFilters from "@/app/hooks/useFilters";
-import { Environment } from "@prisma/client";
+import {saveAs} from "file-saver";
+import {Variable} from "@/models/Variable";
+import {Environment} from "@prisma/client";
 
 const filterHiddenAndEnvironment = (variables: Variable[], env: Environment) =>
   variables.filter(

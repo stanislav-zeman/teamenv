@@ -1,21 +1,14 @@
-import { VariableCreateData } from "@/app/api/types";
-import {
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  IconButton,
-  Input,
-  Select,
-} from "@chakra-ui/react";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
+import {VariableCreateData} from "@/app/api/types";
+import {Alert, AlertIcon, AlertTitle, IconButton, Input, Select,} from "@chakra-ui/react";
+import {yupResolver} from "@hookform/resolvers/yup";
+import {useForm} from "react-hook-form";
 import GenericCard from "../common/GenericCard";
-import { AddIcon, CheckIcon } from "@chakra-ui/icons";
-import { FC, useState } from "react";
-import { useAddVariableToProject } from "@/hooks/mutations/useAddVariableToProject";
-import { Environment } from "@prisma/client";
-import { VariableCreateSchema } from "@/models/Variable";
-import { DeleteVariableButton } from "./DeleteVariableButton";
+import {AddIcon, CheckIcon} from "@chakra-ui/icons";
+import {FC, useState} from "react";
+import {useAddVariableToProject} from "@/hooks/mutations/useAddVariableToProject";
+import {Environment} from "@prisma/client";
+import {VariableCreateSchema} from "@/models/Variable";
+import {DeleteVariableButton} from "./DeleteVariableButton";
 
 interface INewVariableItem {
   projectId: string;

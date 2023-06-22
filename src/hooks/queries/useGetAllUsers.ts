@@ -1,8 +1,7 @@
 "use client";
-import { queryClient } from "@/app/providers/ReactQueryProvider";
-import { UserInfo } from "@/models/User";
-import { getFilters } from "@/signals/filteringSignal";
-import { useQuery } from "@tanstack/react-query";
+import {queryClient} from "@/app/providers/ReactQueryProvider";
+import {UserInfo} from "@/models/User";
+import {useQuery} from "@tanstack/react-query";
 import axios from "axios";
 import environment from "@/utils/envMetadata";
 

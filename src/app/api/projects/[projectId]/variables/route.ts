@@ -1,9 +1,9 @@
 import {NextRequest} from "next/server";
 import {getAuth} from "@clerk/nextjs/server";
 import variableRepository from "@/repositories/variable/index";
-import {unauthorizedResponse, Params, parseResult, badRequestResponse} from "@/app/api/helpers";
+import {badRequestResponse, Params, parseResult, unauthorizedResponse} from "@/app/api/helpers";
 import {z} from "zod";
-import {EnvironmentParams, ProjectParams} from "@/app/api/types";
+import {ProjectParams} from "@/app/api/types";
 import {ReadonlyURLSearchParams} from "next/navigation";
 import {parseFiltersFromParams} from "@/models/Filters";
 import validation from "@/app/api/validation";

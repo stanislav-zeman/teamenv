@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useClerk } from "@clerk/nextjs";
+import {useClerk} from "@clerk/nextjs";
 
 function LogoutButton() {
   const { signOut, user } = useClerk();

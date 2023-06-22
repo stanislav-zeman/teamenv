@@ -3,7 +3,8 @@ import {
   badRequestResponse,
   exportVariables,
   internalServerErrorResponse,
-  validateApiKeyUser, validateEnvironment
+  validateApiKeyUser,
+  validateEnvironment
 } from "@/app/api/helpers";
 import {ReadonlyURLSearchParams} from "next/navigation";
 import {parseFiltersFromParams} from "@/models/Filters";

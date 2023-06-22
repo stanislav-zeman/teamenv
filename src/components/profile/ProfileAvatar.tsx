@@ -1,6 +1,6 @@
 "use client";
-import { Avatar, Box, Text } from "@chakra-ui/react";
-import { FC } from "react";
+import {Avatar, Box, Text} from "@chakra-ui/react";
+import {FC} from "react";
 
 interface UserAvatarProps {
   name: string;

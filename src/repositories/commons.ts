@@ -1,6 +1,6 @@
-import { Role } from '@prisma/client'
+import {Role} from '@prisma/client'
 import userRepository from '@/repositories/user/index'
-import { ModifyMemberData } from '@/repositories/user/types/data'
+import {ModifyMemberData} from '@/repositories/user/types/data'
 
 type Deletable = {
   deletedAt: Date | null

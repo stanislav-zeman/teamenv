@@ -1,7 +1,7 @@
 'use client'
-import React, { FC, ReactNode, useEffect } from 'react'
-import { useClerk } from '@clerk/nextjs'
-import { useEnsureUser } from '@/hooks/mutations/useEnsureUser'
+import React, {FC, ReactNode, useEffect} from 'react'
+import {useClerk} from '@clerk/nextjs'
+import {useEnsureUser} from '@/hooks/mutations/useEnsureUser'
 
 const AuthProvider: FC<{ children?: ReactNode }> = ({ children }) => {
   const { user } = useClerk()

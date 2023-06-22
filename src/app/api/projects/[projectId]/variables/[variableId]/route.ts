@@ -3,7 +3,7 @@ import {getAuth} from "@clerk/nextjs/server";
 import variableRepository from "@/repositories/variable/index"
 import userRepository from "@/repositories/user/index";
 import {VariableParams} from "@/app/api/types";
-import {unauthorizedResponse, parseResult, internalServerErrorResponse, badRequestResponse} from "@/app/api/helpers";
+import {badRequestResponse, internalServerErrorResponse, parseResult, unauthorizedResponse} from "@/app/api/helpers";
 import {z} from "zod";
 import validation from "@/app/api/validation";
 

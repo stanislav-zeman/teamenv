@@ -1,13 +1,11 @@
-import { FC, useState } from "react";
-import { ReadonlyProjectNameDisplay } from "./ReadonlyProjectNameDisplay";
-import { IconButton, Text } from "@chakra-ui/react";
-import { EditIcon, InfoIcon } from "@chakra-ui/icons";
-import useFilters from "@/app/hooks/useFilters";
-import { openDialog } from "@/signals/dialogSignal";
-import { WriteProjectDialog } from "@/dialogs/WriteProjectDialog";
-import { MyProject } from "@/models/Project";
-import { useUpdateProject } from "@/hooks/mutations/useUpdateProject";
-import { Dialog } from "@mui/material";
+import {FC} from "react";
+import {ReadonlyProjectNameDisplay} from "./ReadonlyProjectNameDisplay";
+import {IconButton} from "@chakra-ui/react";
+import {EditIcon, InfoIcon} from "@chakra-ui/icons";
+import {openDialog} from "@/signals/dialogSignal";
+import {WriteProjectDialog} from "@/dialogs/WriteProjectDialog";
+import {MyProject} from "@/models/Project";
+import {useUpdateProject} from "@/hooks/mutations/useUpdateProject";
 import ProjectInfoDialog from "@/dialogs/ProjectInfoDialog";
 
 interface IEditableProjectName {

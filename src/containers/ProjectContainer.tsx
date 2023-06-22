@@ -2,7 +2,7 @@
 import MemberList from "@/components/members/MemberList";
 import ProjectHeader from "@/components/members/ProjectHeader";
 import VariableList from "@/components/variables/VariableList";
-import { useProject } from "@/hooks/useProject";
+import {useProject} from "@/hooks/useProject";
 
 interface IProjectContainerProps {
   projectId: string;

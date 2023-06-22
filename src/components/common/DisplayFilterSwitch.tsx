@@ -1,6 +1,6 @@
 import useFilters from '@/app/hooks/useFilters'
-import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
-import { IconButton } from '@chakra-ui/react'
+import {ViewIcon, ViewOffIcon} from '@chakra-ui/icons'
+import {IconButton} from '@chakra-ui/react'
 
 export const DisplayFilterSwitch = () => {
   const { filters, pushFilters } = useFilters()

@@ -1,8 +1,8 @@
 import prisma from "../client";
-import type { Project } from "@prisma/client";
-import { Result } from "@badrap/result";
+import type {Project} from "@prisma/client";
+import {Role} from "@prisma/client";
+import {Result} from "@badrap/result";
 import userRepository from "@/repositories/user/index";
-import { Role } from "@prisma/client";
 
 async function remove(id: string, userId: string): Promise<Result<Project>> {
   try {

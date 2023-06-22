@@ -1,17 +1,17 @@
-import { Member } from "@/models/Member";
-import { FC } from "react";
+import {Member} from "@/models/Member";
+import {FC} from "react";
 import GenericCard from "../common/GenericCard";
-import { Avatar, IconButton, Text } from "@chakra-ui/react";
+import {Avatar, IconButton, Text} from "@chakra-ui/react";
 import MemberRole from "./MemberRole";
-import { Role } from "@/models/Role";
-import { DeleteIcon } from "@chakra-ui/icons";
-import { openDialog } from "@/signals/dialogSignal";
+import {Role} from "@/models/Role";
+import {DeleteIcon} from "@chakra-ui/icons";
+import {openDialog} from "@/signals/dialogSignal";
 import RemoveMemberDialog from "@/dialogs/RemoveMemberDialog";
 import MemberRoleUpdate from "./MemberRoleUpdate";
-import { roleToIndex } from "@/utils/roleUtils";
-import { LeaveIcon } from "@/icons/LeaveIcon";
+import {roleToIndex} from "@/utils/roleUtils";
+import {LeaveIcon} from "@/icons/LeaveIcon";
 import LeaveProjectDialog from "@/dialogs/LeaveProjectDialog";
-import { useUser } from "@clerk/nextjs";
+import {useUser} from "@clerk/nextjs";
 
 interface MemberItemProps {
   member: Member;

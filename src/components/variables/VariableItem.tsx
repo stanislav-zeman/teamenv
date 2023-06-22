@@ -1,23 +1,16 @@
 "use client";
-import { Variable, VariableUpdateSchema } from "@/models/Variable";
-import { FC } from "react";
+import {Variable, VariableUpdateSchema} from "@/models/Variable";
+import {FC} from "react";
 import GenericCard from "../common/GenericCard";
-import {
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  Input,
-  Select,
-  Switch,
-} from "@chakra-ui/react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { VariableUpdateData } from "@/app/api/types";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useUpdateVariable } from "@/hooks/mutations/useUpdateVariable";
-import { Environment } from "@prisma/client";
-import { DeleteVariableButton } from "./DeleteVariableButton";
-import { UpdateButtons } from "./UpdateButtons";
-import { openDialog } from "@/signals/dialogSignal";
+import {Alert, AlertIcon, AlertTitle, Input, Select, Switch,} from "@chakra-ui/react";
+import {SubmitHandler, useForm} from "react-hook-form";
+import {VariableUpdateData} from "@/app/api/types";
+import {yupResolver} from "@hookform/resolvers/yup";
+import {useUpdateVariable} from "@/hooks/mutations/useUpdateVariable";
+import {Environment} from "@prisma/client";
+import {DeleteVariableButton} from "./DeleteVariableButton";
+import {UpdateButtons} from "./UpdateButtons";
+import {openDialog} from "@/signals/dialogSignal";
 import RemoveVariableDialog from "@/dialogs/RemoveVariableDialog";
 
 interface VariableItemProps {

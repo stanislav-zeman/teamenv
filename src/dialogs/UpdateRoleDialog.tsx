@@ -1,21 +1,13 @@
 'use client'
-import { closeDialog } from '@/signals/dialogSignal'
-import { FC, useState } from 'react'
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  Slider,
-  Typography,
-} from '@mui/material'
-import { Role } from '@/models/Role'
+import {closeDialog} from '@/signals/dialogSignal'
+import {FC, useState} from 'react'
+import {Button, Dialog, DialogContent, Slider, Typography,} from '@mui/material'
+import {Role} from '@/models/Role'
 import MuiThemeProvider from '@/app/providers/MuiThemeProvider'
-import { getRoleFromIndex, roleToIndex } from '@/utils/roleUtils'
-import { queryClient } from '@/app/providers/ReactQueryProvider'
-import { getMyProjectKey } from '@/hooks/useProject'
-import { useUpdateUser } from '@/hooks/mutations/useUpdateUser'
-import { Member } from '@/models/Member'
-import { invalidateMembers } from '@/hooks/queries/useProjectMembers'
+import {getRoleFromIndex, roleToIndex} from '@/utils/roleUtils'
+import {useUpdateUser} from '@/hooks/mutations/useUpdateUser'
+import {Member} from '@/models/Member'
+import {invalidateMembers} from '@/hooks/queries/useProjectMembers'
 
 interface IUpdateRoleDialog {
   selectedUser: Member;

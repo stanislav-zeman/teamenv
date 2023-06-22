@@ -1,13 +1,10 @@
 "use client";
-import { queryClient } from "@/app/providers/ReactQueryProvider";
-import { IFilter } from "@/models/Filters";
-import { Member } from "@/models/Member";
-import {
-  filteringSignalToSearchParams,
-  getFilters,
-} from "@/signals/filteringSignal";
+import {queryClient} from "@/app/providers/ReactQueryProvider";
+import {IFilter} from "@/models/Filters";
+import {Member} from "@/models/Member";
+import {filteringSignalToSearchParams,} from "@/signals/filteringSignal";
 import environment from "@/utils/envMetadata";
-import { useQuery } from "@tanstack/react-query";
+import {useQuery} from "@tanstack/react-query";
 import axios from "axios";
 
 const membersKey = "members";

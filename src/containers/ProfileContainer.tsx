@@ -1,8 +1,8 @@
 "use client";
 import ProfileAvatar from "@/components/profile/ProfileAvatar";
-import { Box, Divider, Skeleton } from "@chakra-ui/react";
-import { UserProfile, useUser } from "@clerk/nextjs";
-import { FC } from "react";
+import {Box, Divider, Skeleton} from "@chakra-ui/react";
+import {UserProfile, useUser} from "@clerk/nextjs";
+import {FC} from "react";
 import UserAPIKey from '@/components/profile/ProfileApiKey';
 
 const ProfileContainer: FC<any> = () => {

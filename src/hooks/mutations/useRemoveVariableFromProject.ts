@@ -1,8 +1,8 @@
-import { VariableParams } from "@/app/api/types";
+import {VariableParams} from "@/app/api/types";
 import environment from "@/utils/envMetadata";
-import { useMutation } from "@tanstack/react-query";
+import {useMutation} from "@tanstack/react-query";
 import axios from "axios";
-import { invalidateVariables } from "../queries/useProjectVariables";
+import {invalidateVariables} from "../queries/useProjectVariables";
 
 export const useRemoveVariableFromProject = ({
   projectId,

@@ -1,14 +1,10 @@
 "use client";
 import React from "react";
 import ProjectsSearchBar from "@/components/projects/ProjectsSearchBar";
-import { auth, useUser } from "@clerk/nextjs";
-import { useMyProjects } from "@/hooks/useMyProjects";
-import { Skeleton } from "@chakra-ui/react";
-import { ProjectsList } from "@/components/projects/ProjectsList";
-import { PaginationComponent } from "@/components/common/PaginationComponent";
-import { closeDialog, openDialog } from "@/signals/dialogSignal";
-import { Button, Dialog, DialogContent } from "@mui/material";
-import { filteringSignal } from "@/signals/filteringSignal";
+import {useMyProjects} from "@/hooks/useMyProjects";
+import {ProjectsList} from "@/components/projects/ProjectsList";
+import {PaginationComponent} from "@/components/common/PaginationComponent";
+import {filteringSignal} from "@/signals/filteringSignal";
 
 const ProjectsContainer = () => {
   const {

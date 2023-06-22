@@ -1,5 +1,5 @@
-import { signal } from '@preact/signals-react'
-import { ReactNode } from 'react'
+import {signal} from '@preact/signals-react'
+import {ReactNode} from 'react'
 
 export const dialogSignal = signal<ReactNode | null>(null)
 

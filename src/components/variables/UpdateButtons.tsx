@@ -1,8 +1,8 @@
-import { VariableUpdateData } from "@/app/api/types";
-import { CheckIcon, CloseIcon } from "@chakra-ui/icons";
-import { IconButton } from "@chakra-ui/react";
-import type { FC } from "react";
-import { UseFormReset } from "react-hook-form/dist/types";
+import {VariableUpdateData} from "@/app/api/types";
+import {CheckIcon, CloseIcon} from "@chakra-ui/icons";
+import {IconButton} from "@chakra-ui/react";
+import type {FC} from "react";
+import {UseFormReset} from "react-hook-form/dist/types";
 
 export type UpdateButtonsProps = {
   changed: number;

@@ -1,8 +1,8 @@
-import { VariableCreateData } from "@/app/api/types";
-import { useMutation } from "@tanstack/react-query";
+import {VariableCreateData} from "@/app/api/types";
+import {useMutation} from "@tanstack/react-query";
 import axios from "axios";
 import environment from "@/utils/envMetadata";
-import { invalidateVariables } from "../queries/useProjectVariables";
+import {invalidateVariables} from "../queries/useProjectVariables";
 
 export const useAddVariableToProject = (projectId: string) => {
   return useMutation(

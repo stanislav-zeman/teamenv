@@ -1,6 +1,6 @@
 'use client'
 
-import React, { FC, ReactNode } from 'react'
+import React, {FC, ReactNode} from 'react'
 
 const AdaptiveBackground: FC<{ children?: ReactNode }> = ({ children }) => {
   const bgString = 'bg-neutral-100'

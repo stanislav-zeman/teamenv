@@ -1,15 +1,7 @@
-import { queryClient } from "@/app/providers/ReactQueryProvider";
-import { useRemoveVariableFromProject } from "@/hooks/mutations/useRemoveVariableFromProject";
-import { getMyProjectKey } from "@/hooks/useProject";
-import { closeDialog } from "@/signals/dialogSignal";
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from "@mui/material";
-import { FC } from "react";
+import {useRemoveVariableFromProject} from "@/hooks/mutations/useRemoveVariableFromProject";
+import {closeDialog} from "@/signals/dialogSignal";
+import {Button, Dialog, DialogContent, DialogContentText, DialogTitle,} from "@mui/material";
+import {FC} from "react";
 
 interface RemoveMemberProps {
   variableId: string;

@@ -1,4 +1,4 @@
-import { Environment, Role } from '@prisma/client'
+import {Environment, Role} from '@prisma/client'
 
 export type ProjectMemberData = {
   memberId: string

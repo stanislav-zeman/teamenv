@@ -1,7 +1,7 @@
 "use client";
-import { Badge } from "@chakra-ui/react";
-import { Role } from "@prisma/client";
-import { FC } from "react";
+import {Badge} from "@chakra-ui/react";
+import {Role} from "@prisma/client";
+import {FC} from "react";
 
 interface IMemberRoleProps {
   role: Role;

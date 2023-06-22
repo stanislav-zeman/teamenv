@@ -1,4 +1,4 @@
-import { Role } from '@/models/Role'
+import {Role} from '@/models/Role'
 
 // Used for backwards compatibility
 export const getRoleFromIndex = (index: number) => {

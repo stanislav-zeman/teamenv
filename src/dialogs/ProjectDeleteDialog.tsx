@@ -1,9 +1,8 @@
-import { Button, Dialog, DialogContent } from "@mui/material";
-import { FC } from "react";
-import { Text } from "@chakra-ui/react";
-import { useForm } from "react-hook-form";
-import { closeDialog } from "@/signals/dialogSignal";
-import { useDeleteProject } from "@/hooks/mutations/useDeleteProject";
+import {Button, Dialog, DialogContent} from "@mui/material";
+import {FC} from "react";
+import {Text} from "@chakra-ui/react";
+import {closeDialog} from "@/signals/dialogSignal";
+import {useDeleteProject} from "@/hooks/mutations/useDeleteProject";
 
 interface IProjectDeleteDialog {
   projectId: string;

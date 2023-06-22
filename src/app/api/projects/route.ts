@@ -1,14 +1,10 @@
-import { NextRequest } from "next/server";
+import {NextRequest} from "next/server";
 import projectRepository from "@/repositories/project/index";
-import { getAuth } from "@clerk/nextjs/server";
-import { ReadonlyURLSearchParams } from "next/navigation";
-import {
-  badRequestResponse,
-  parseResult,
-  unauthorizedResponse,
-} from "@/app/api/helpers";
-import { parseFiltersFromParams } from "@/models/Filters";
-import { z } from "zod";
+import {getAuth} from "@clerk/nextjs/server";
+import {ReadonlyURLSearchParams} from "next/navigation";
+import {badRequestResponse, parseResult, unauthorizedResponse,} from "@/app/api/helpers";
+import {parseFiltersFromParams} from "@/models/Filters";
+import {z} from "zod";
 
 export async function GET(request: NextRequest): Promise<Response> {
   const user = getAuth(request);

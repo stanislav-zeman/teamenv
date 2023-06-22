@@ -1,5 +1,5 @@
 import React from "react";
-import { SignIn } from "@clerk/nextjs";
+import {SignIn} from "@clerk/nextjs";
 
 async function Page() {
   return (

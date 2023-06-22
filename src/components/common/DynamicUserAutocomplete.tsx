@@ -1,13 +1,6 @@
 "use client";
-import {
-  ChangeEvent,
-  FC,
-  MutableRefObject,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { Input } from "@mui/material";
+import {ChangeEvent, FC, MutableRefObject, useEffect, useRef, useState,} from "react";
+import {Input} from "@mui/material";
 import {
   Button,
   ChakraProvider,
@@ -18,11 +11,11 @@ import {
   Skeleton,
   Text,
 } from "@chakra-ui/react";
-import { getFilters } from "@/signals/filteringSignal";
-import { MyProject } from "@/models/Project";
-import { useGetAllUsers } from "@/hooks/queries/useGetAllUsers";
-import { UserInfo } from "@/models/User";
-import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
+import {MyProject} from "@/models/Project";
+import {useGetAllUsers} from "@/hooks/queries/useGetAllUsers";
+import {UserInfo} from "@/models/User";
+import {ChevronDownIcon, ChevronUpIcon} from "@chakra-ui/icons";
+
 function useOutsideAlerter(
   ref: MutableRefObject<any>,
   outsideCallback: () => void

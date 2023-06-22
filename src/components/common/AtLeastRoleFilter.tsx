@@ -1,8 +1,8 @@
 'use client'
 import useFilters from '@/app/hooks/useFilters'
-import { Role } from '@/models/Role'
-import { getRoleFromIndex, roleToIndex } from '@/utils/roleUtils'
-import { Select, Text } from '@chakra-ui/react'
+import {Role} from '@/models/Role'
+import {roleToIndex} from '@/utils/roleUtils'
+import {Text} from '@chakra-ui/react'
 
 export const getRoleStringFromValue = (role: number) => {
   return Object.entries(Role).filter((k, v) => v === role)[0][0]

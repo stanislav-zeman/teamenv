@@ -1,6 +1,6 @@
 "use client";
-import { Card, CardBody } from "@chakra-ui/react";
-import { FC, ReactNode } from "react";
+import {Card, CardBody} from "@chakra-ui/react";
+import {FC, ReactNode} from "react";
 
 interface GenericCardProps {
   children?: ReactNode;

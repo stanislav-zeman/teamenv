@@ -1,4 +1,4 @@
-import { FC } from "react";
+import {FC} from "react";
 import GenericCard from "../common/GenericCard";
 
 export const VariableColumns: FC<{}> = () => {

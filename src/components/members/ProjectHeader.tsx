@@ -1,20 +1,20 @@
 "use client";
-import { AddIcon } from "@chakra-ui/icons";
-import { Button, IconButton, Stack, StackDivider } from "@chakra-ui/react";
-import { FC } from "react";
+import {AddIcon} from "@chakra-ui/icons";
+import {Button, IconButton, Stack, StackDivider} from "@chakra-ui/react";
+import {FC} from "react";
 import GenericLolInput from "../common/GenericLolInput";
-import { useRouter } from "next/navigation";
-import { OrderFilteringButtons } from "../common/OrderFilteringButtons";
-import { AtLeastRoleFilter } from "../common/AtLeastRoleFilter";
-import { DisplayFilterSwitch } from "../common/DisplayFilterSwitch";
-import { ProjectNameDisplay } from "../projects/ProjectNameDisplay/ProjectNameDisplay";
-import { Role } from "@/models/Role";
-import { openDialog } from "@/signals/dialogSignal";
-import { ProjectAddUserDialog } from "@/dialogs/ProjectAddUserDialog";
-import { MyProject } from "@/models/Project";
-import { ExportDialog } from "@/dialogs/ExportDialog";
-import { EnvironmentFilter } from "../common/EnvironmentFilter";
-import { getLinkStyles } from "@/utils/styleUtils";
+import {useRouter} from "next/navigation";
+import {OrderFilteringButtons} from "../common/OrderFilteringButtons";
+import {AtLeastRoleFilter} from "../common/AtLeastRoleFilter";
+import {DisplayFilterSwitch} from "../common/DisplayFilterSwitch";
+import {ProjectNameDisplay} from "../projects/ProjectNameDisplay/ProjectNameDisplay";
+import {Role} from "@/models/Role";
+import {openDialog} from "@/signals/dialogSignal";
+import {ProjectAddUserDialog} from "@/dialogs/ProjectAddUserDialog";
+import {MyProject} from "@/models/Project";
+import {ExportDialog} from "@/dialogs/ExportDialog";
+import {EnvironmentFilter} from "../common/EnvironmentFilter";
+import {getLinkStyles} from "@/utils/styleUtils";
 
 interface ProjectHeaderProps {
   project: MyProject;

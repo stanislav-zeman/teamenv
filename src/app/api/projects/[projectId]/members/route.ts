@@ -1,17 +1,13 @@
-import { NextRequest } from "next/server";
-import {
-  unauthorizedResponse,
-  parseResult,
-  badRequestResponse,
-} from "@/app/api/helpers";
-import { getAuth } from "@clerk/nextjs/server";
-import { ProjectParams } from "@/app/api/types";
+import {NextRequest} from "next/server";
+import {badRequestResponse, parseResult, unauthorizedResponse,} from "@/app/api/helpers";
+import {getAuth} from "@clerk/nextjs/server";
+import {ProjectParams} from "@/app/api/types";
 import userRepository from "@/repositories/user/index";
-import { z } from "zod";
+import {z} from "zod";
 import validation from "@/app/api/validation";
 import projectRepository from "@/repositories/project/index";
-import { ReadonlyURLSearchParams } from "next/navigation";
-import { parseFiltersFromParams } from "@/models/Filters";
+import {ReadonlyURLSearchParams} from "next/navigation";
+import {parseFiltersFromParams} from "@/models/Filters";
 
 const postValidator = z
   .object({

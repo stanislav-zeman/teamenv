@@ -1,12 +1,11 @@
-import { Button, Dialog, DialogContent, Input, TextField } from "@mui/material";
-import { useForm } from "react-hook-form";
-import { Text } from "@chakra-ui/react";
-import { yupResolver } from "@hookform/resolvers/yup";
+import {Button, Dialog, DialogContent, Input, TextField} from "@mui/material";
+import {useForm} from "react-hook-form";
+import {Text} from "@chakra-ui/react";
+import {yupResolver} from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { closeDialog } from "@/signals/dialogSignal";
-import { useCreateProject } from "@/hooks/mutations/useCreateProject";
-import { FC } from "react";
-import { ProjectCreateData } from "@/app/api/types";
+import {closeDialog} from "@/signals/dialogSignal";
+import {FC} from "react";
+import {ProjectCreateData} from "@/app/api/types";
 
 const schema = yup
   .object()

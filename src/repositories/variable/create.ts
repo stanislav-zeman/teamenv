@@ -1,7 +1,5 @@
 import prisma from "@/repositories/client";
-import type {
-  Variable
-} from "@prisma/client";
+import type {Variable} from "@prisma/client";
 import {VariableCreateData} from "@/repositories/variable/types/data";
 import {Result} from "@badrap/result";
 

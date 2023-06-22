@@ -1,10 +1,8 @@
-import { MemberParams, VariableParams, VariableUpdateData } from "@/app/api/types";
-import { queryClient } from "@/app/providers/ReactQueryProvider";
+import {MemberParams} from "@/app/api/types";
 import environment from "@/utils/envMetadata";
-import { useMutation } from "@tanstack/react-query";
+import {useMutation} from "@tanstack/react-query";
 import axios from "axios";
-import { getMyProjectKey } from "../useProject";
-import { Role } from "@prisma/client";
+import {Role} from "@prisma/client";
 
 export const useUpdateUser = ({
   projectId,

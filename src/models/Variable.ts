@@ -1,6 +1,6 @@
-import { Environment } from "@prisma/client";
-import { BaseModel } from "./BaseModel";
-import { boolean, lazy, mixed, object, string } from "yup";
+import {Environment} from "@prisma/client";
+import {BaseModel} from "./BaseModel";
+import {boolean, lazy, mixed, object, string} from "yup";
 
 export interface Variable extends BaseModel {
   name: string;

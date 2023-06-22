@@ -1,8 +1,7 @@
-import { ProjectData } from "@/repositories/project/types/data";
-import { useQuery } from "@tanstack/react-query";
+import {useQuery} from "@tanstack/react-query";
 import axios from "axios";
 import environment from "@/utils/envMetadata";
-import { MyProject } from "@/models/Project";
+import {MyProject} from "@/models/Project";
 
 
 export const getMyProjectKey = (projectId: string) => [projectId, "myProject"];

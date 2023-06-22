@@ -1,5 +1,5 @@
-import { FC, ReactNode } from 'react'
-import { Icon, IconButton, Text } from '@chakra-ui/react'
+import {FC, ReactNode} from 'react'
+import {Icon, IconButton, Text} from '@chakra-ui/react'
 
 interface IPopoverRow {
   label: string

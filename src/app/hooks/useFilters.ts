@@ -1,13 +1,6 @@
-import { BaseFilters, UrlFilters } from "@/models/Filters";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import {usePathname, useRouter} from "next/navigation";
 import queryString from "query-string";
-import { filter } from "@chakra-ui/react";
-import { filterProps } from "framer-motion";
-import {
-  filteringSignalToSearchParams,
-  getFilters,
-} from "@/signals/filteringSignal";
+import {filteringSignalToSearchParams, getFilters,} from "@/signals/filteringSignal";
 
 function parseFilters<T>(urlString: string): Partial<T> {
   return queryString.parse(urlString) as Partial<T>;

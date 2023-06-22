@@ -1,12 +1,9 @@
-import { Result } from '@badrap/result'
-import {
-  CreateProjectMemberData,
-  EnsureUserData,
-} from '@/repositories/user/types/data'
+import {Result} from '@badrap/result'
+import {CreateProjectMemberData, EnsureUserData,} from '@/repositories/user/types/data'
 import prisma from '@/repositories/client'
-import { ProjectUser } from '@prisma/client'
+import {ProjectUser} from '@prisma/client'
 import userRepository from '@/repositories/user/index'
-import { hasAtLeastRole } from '@/repositories/commons'
+import {hasAtLeastRole} from '@/repositories/commons'
 import generateApiKey from 'generate-api-key'
 
 

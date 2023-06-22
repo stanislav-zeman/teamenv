@@ -1,8 +1,7 @@
-import { projects, profile } from "@/app/links";
 import Link from "next/link";
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
-import { NavigationLinks } from "./navbar/NavigationLinks";
-import { FC, ReactNode } from "react";
+import {SignedIn, SignedOut, SignInButton, UserButton} from "@clerk/nextjs";
+import {NavigationLinks} from "./navbar/NavigationLinks";
+import {FC, ReactNode} from "react";
 import TeamENV from "@/icons/TeamEnv";
 
 const Header: FC<{ children?: ReactNode }> = ({ children }) => {

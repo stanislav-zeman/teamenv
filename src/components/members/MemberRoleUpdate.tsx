@@ -1,12 +1,12 @@
 "use client";
-import { Badge, IconButton, Text } from "@chakra-ui/react";
-import { Role } from "@prisma/client";
-import { FC } from "react";
-import { getRoleStyles } from "./MemberRole";
-import { openDialog } from "@/signals/dialogSignal";
-import { UpdateRoleDialog } from "@/dialogs/UpdateRoleDialog";
-import { Member } from "@/models/Member";
-import { ThreeDotsIcon } from "@/icons/ThreeDotsIcon";
+import {Badge, IconButton, Text} from "@chakra-ui/react";
+import {Role} from "@prisma/client";
+import {FC} from "react";
+import {getRoleStyles} from "./MemberRole";
+import {openDialog} from "@/signals/dialogSignal";
+import {UpdateRoleDialog} from "@/dialogs/UpdateRoleDialog";
+import {Member} from "@/models/Member";
+import {ThreeDotsIcon} from "@/icons/ThreeDotsIcon";
 
 interface IMemberRoleProps {
   member: Member;

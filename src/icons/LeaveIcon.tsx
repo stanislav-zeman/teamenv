@@ -1,4 +1,4 @@
-import type { FC } from "react";
+import type {FC} from "react";
 
 export const LeaveIcon: FC<{}> = () => {
   return (

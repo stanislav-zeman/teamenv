@@ -1,8 +1,8 @@
-import { Result } from "@badrap/result";
-import { Variable } from "@prisma/client";
+import {Result} from "@badrap/result";
+import {Variable} from "@prisma/client";
 import prisma from "@/repositories/client";
-import { VariableInfoData } from "@/repositories/variable/types/data";
-import { VariableFilters } from "@/models/Filters";
+import {VariableInfoData} from "@/repositories/variable/types/data";
+import {VariableFilters} from "@/models/Filters";
 
 async function specific(
   userId: string,

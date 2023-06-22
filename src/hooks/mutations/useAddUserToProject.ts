@@ -1,8 +1,8 @@
-import { ProjectMemberData } from "@/app/api/types";
-import { useMutation } from "@tanstack/react-query";
+import {ProjectMemberData} from "@/app/api/types";
+import {useMutation} from "@tanstack/react-query";
 import axios from "axios";
 import environment from "@/utils/envMetadata";
-import { invalidateMembers } from "../queries/useProjectMembers";
+import {invalidateMembers} from "../queries/useProjectMembers";
 
 export const useAddUserToProject = (projectId: string) => {
   return useMutation(

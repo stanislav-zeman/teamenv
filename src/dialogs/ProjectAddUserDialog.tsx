@@ -1,18 +1,13 @@
 'use client'
-import { DynamicUserAutocomplete } from '@/components/common/DynamicUserAutocomplete'
-import {
-  invalidateAllGetAllUsersKeys,
-  useGetAllUsers,
-} from '@/hooks/queries/useGetAllUsers'
-import { Text } from '@chakra-ui/react'
-import { MyProject } from '@/models/Project'
-import { UserInfo } from '@/models/User'
-import { closeDialog, openDialog } from '@/signals/dialogSignal'
+import {DynamicUserAutocomplete} from '@/components/common/DynamicUserAutocomplete'
+import {Text} from '@chakra-ui/react'
+import {MyProject} from '@/models/Project'
+import {UserInfo} from '@/models/User'
+import {closeDialog, openDialog} from '@/signals/dialogSignal'
 
-import { Button, Dialog, DialogContent, Select } from '@mui/material'
-import { FC, useState } from 'react'
-import { Role } from '@/models/Role'
-import { SelectRoleDialog } from './SelectRoleDialog'
+import {Button, Dialog, DialogContent} from '@mui/material'
+import {FC, useState} from 'react'
+import {SelectRoleDialog} from './SelectRoleDialog'
 
 interface IProjectAddUserDialog {
   project: MyProject

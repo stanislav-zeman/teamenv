@@ -1,15 +1,10 @@
 import prisma from "../client";
-import { Prisma, ProjectUser, Role } from "@prisma/client";
-import { Result } from "@badrap/result";
-import {
-  Pageable,
-  ProjectData,
-  ProjectSummary,
-} from "@/repositories/project/types/data";
+import {Prisma, ProjectUser, Role} from "@prisma/client";
+import {Result} from "@badrap/result";
+import {Pageable, ProjectData, ProjectSummary,} from "@/repositories/project/types/data";
 import userRepository from "@/repositories/user/index";
-import { ProjectFilters } from "@/models/Filters";
-import { getPrismaRoles } from "@/repositories/commons";
-import { Member } from "@/models/Member";
+import {ProjectFilters} from "@/models/Filters";
+import {getPrismaRoles} from "@/repositories/commons";
 
 async function specific(
   id: string,

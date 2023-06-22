@@ -1,12 +1,12 @@
 "use client";
-import { FC } from "react";
-import { Skeleton } from "@chakra-ui/react";
+import {FC} from "react";
+import {Skeleton} from "@chakra-ui/react";
 import GenericList from "../common/GenericList";
 import MemberItem from "./MemberItem";
-import { useProjectMembers } from "@/hooks/queries/useProjectMembers";
-import { filteringSignal } from "@/signals/filteringSignal";
-import { Role } from "@prisma/client";
-import { getRandomColors } from "@/utils/styleUtils";
+import {useProjectMembers} from "@/hooks/queries/useProjectMembers";
+import {filteringSignal} from "@/signals/filteringSignal";
+import {Role} from "@prisma/client";
+import {getRandomColors} from "@/utils/styleUtils";
 
 interface MemberListProps {
   myRole: Role;

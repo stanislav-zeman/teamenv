@@ -1,7 +1,5 @@
 import prisma from "../client";
-import type {
-    Project
-} from "@prisma/client";
+import type {Project} from "@prisma/client";
 import {Result} from "@badrap/result";
 import {ProjectUpdateData} from "@/repositories/project/types/data";
 import userRepository from "@/repositories/user/index";
