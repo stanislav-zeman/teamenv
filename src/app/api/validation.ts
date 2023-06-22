@@ -5,7 +5,7 @@ const zodRoleObject = z.union([
   z.literal('MAINTAINER'),
   z.literal('DEVELOPER'),
   z.literal('GUEST'),
-]).optional();
+]);
 
 const zodEnvironment = z.union([
     z.literal('DEVELOPMENT'),
