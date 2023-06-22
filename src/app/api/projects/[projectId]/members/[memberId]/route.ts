@@ -31,7 +31,7 @@ export async function PUT(request: NextRequest, context: { params: MemberParams 
   };
 
   const data = validationResult.data
-  const result =  await userRepository.update(modifyMemberData, data.role);
+  const result =  await userRepository.update.specific(modifyMemberData, data.role);
   return parseResult(result, 200);
 }
 

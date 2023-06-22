@@ -1,5 +1,7 @@
 import {Role} from "@prisma/client";
 
+export type APIKey = string;
+
 export type EnsureUserData = {
   id: string;
   username: string;

@@ -7,6 +7,8 @@ import prisma from '@/repositories/client'
 import { ProjectUser } from '@prisma/client'
 import userRepository from '@/repositories/user/index'
 import { hasAtLeastRole } from '@/repositories/commons'
+import generateApiKey from 'generate-api-key';
+
 
 async function ensureUser(data: EnsureUserData): Promise<Result<boolean>> {
   try {
@@ -18,8 +20,14 @@ async function ensureUser(data: EnsureUserData): Promise<Result<boolean>> {
           },
         });
 
+        const apiKey = generateApiKey().toString();
         if (!user) {
-          await transaction.user.create({data});
+          await transaction.user.create({
+            data: {
+              ...data,
+              APIKey: apiKey,
+            }
+          });
           return true;
         }
 
@@ -30,6 +38,7 @@ async function ensureUser(data: EnsureUserData): Promise<Result<boolean>> {
             },
             data: {
               ...data,
+              APIKey: apiKey,
             },
           });
           return true;

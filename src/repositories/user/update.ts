@@ -1,10 +1,11 @@
-import {ModifyMemberData} from "@/repositories/user/types/data";
+import {APIKey, ModifyMemberData} from "@/repositories/user/types/data";
 import {Result} from "@badrap/result";
 import {ProjectUser, Role} from "@prisma/client";
 import prisma from "@/repositories/client";
+import generateApiKey from 'generate-api-key';
 
 
-async function update(data: ModifyMemberData, newRole: Role): Promise<Result<ProjectUser>> {
+async function specific(data: ModifyMemberData, newRole: Role): Promise<Result<ProjectUser>> {
   try {
     const editedAt = new Date();
     return Result.ok(
@@ -54,5 +55,29 @@ async function update(data: ModifyMemberData, newRole: Role): Promise<Result<Pro
     return Result.err(e as Error);
   }
 }
+
+async function resetAPIKey(userId: string): Promise<Result<APIKey>> {
+  try {
+    const newKey = generateApiKey().toString();
+
+    await prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        APIKey: newKey,
+      },
+    });
+
+    return Result.ok(newKey)
+  } catch (e) {
+    return Result.err(e as Error)
+  }
+}
+
+const update = {
+  specific,
+  resetAPIKey,
+};
 
 export default update;
