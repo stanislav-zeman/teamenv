@@ -29,6 +29,7 @@
     "eslint-config-next": "13.4.1",
     "file-saver": "^2.0.5",
     "framer-motion": "^10.12.16",
+    "generate-api-key": "^1.0.2",
     "next": "13.4.1",
     "query-string": "^8.1.0",
     "react": "18.2.0",
