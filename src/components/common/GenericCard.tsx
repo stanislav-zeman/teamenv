@@ -4,6 +4,7 @@ import { FC, ReactNode } from "react";
 
 interface GenericCardProps {
   children?: ReactNode;
+  columns: string;
 }
 
 const GenericCard: FC<GenericCardProps> = (props) => {
@@ -13,7 +14,7 @@ const GenericCard: FC<GenericCardProps> = (props) => {
         display="grid"
         paddingTop="3"
         paddingBottom="3"
-        gridTemplateColumns="2% 30% 30% 20%"
+        gridTemplateColumns={props.columns}
         maxWidth="full"
         width="full"
         justifyContent="space-between"

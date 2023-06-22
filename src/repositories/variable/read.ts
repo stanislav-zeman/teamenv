@@ -53,6 +53,7 @@ async function all(filters: VariableFilters): Promise<Result<Variable[]>> {
       where: {
         projectId: filters.projectId,
         deletedAt: null,
+        environment: filters.environment,
         name: {
           contains: filters?.search ?? "",
           mode: "insensitive",

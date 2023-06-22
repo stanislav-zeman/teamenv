@@ -5,14 +5,16 @@ import {
   AlertTitle,
   IconButton,
   Input,
+  Select,
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { boolean, lazy, object, string } from "yup";
+import { boolean, lazy, mixed, object, string } from "yup";
 import GenericCard from "../common/GenericCard";
 import { AddIcon, CheckIcon, DeleteIcon } from "@chakra-ui/icons";
 import { FC, useState } from "react";
 import { useAddVariableToProject } from "@/hooks/mutations/useAddVariableToProject";
+import { Environment } from "@prisma/client";
 
 interface INewVariableItem {
   projectId: string;
@@ -24,6 +26,7 @@ const schema = object()
       .required()
       .min(3, "Name must be atleast three characters long!"),
     value: string().required(),
+    environment: mixed<Environment>().oneOf(Object.values(Environment)).optional(),
   })
   .required();
 
@@ -63,7 +66,7 @@ export const NewVariableItem: FC<INewVariableItem> = ({ projectId }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <GenericCard>
+      <GenericCard columns="2% 15% 25% 25% 20%">
         <div>
           <IconButton
             type="submit"
@@ -74,6 +77,13 @@ export const NewVariableItem: FC<INewVariableItem> = ({ projectId }) => {
             icon={<CheckIcon />}
           />
         </div>
+        <Select variant="flushed"
+          {...register("environment")}>
+          <option className="text-black" value={Environment.DEVELOPMENT}>{Environment.DEVELOPMENT}</option>
+          <option className="text-black" value={Environment.PREVIEW}>{Environment.PREVIEW}</option>
+          <option className="text-black" value={Environment.PRODUCTION}>{Environment.PRODUCTION}</option>
+          <option className="text-black" value={Environment.STAGING}>{Environment.STAGING}</option>
+        </Select>
         <div className=" border-r border-white w-full">
           <Input
             backgroundColor="white"

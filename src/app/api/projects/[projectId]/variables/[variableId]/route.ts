@@ -5,6 +5,7 @@ import userRepository from "@/repositories/user/index";
 import {VariableParams} from "@/app/api/types";
 import {unauthorizedResponse, parseResult, internalServerErrorResponse, badRequestResponse} from "@/app/api/helpers";
 import {z} from "zod";
+import validation from "@/app/api/validation";
 
 
 export async function GET(request: NextRequest, context: { params: VariableParams }): Promise<Response> {
@@ -37,6 +38,7 @@ const putValidator = z.object({
   name: z.string().optional(),
   value: z.string().optional(),
   hidden: z.boolean().optional(),
+  environment: validation.environment.optional()
 }).strict()
 
 export async function PUT(request: NextRequest, context: { params: VariableParams }): Promise<Response> {

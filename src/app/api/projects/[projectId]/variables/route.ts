@@ -3,13 +3,15 @@ import {getAuth} from "@clerk/nextjs/server";
 import variableRepository from "@/repositories/variable/index";
 import {unauthorizedResponse, Params, parseResult, badRequestResponse} from "@/app/api/helpers";
 import {z} from "zod";
-import {ProjectParams} from "@/app/api/types";
+import {EnvironmentParams, ProjectParams} from "@/app/api/types";
 import {ReadonlyURLSearchParams} from "next/navigation";
 import {parseFiltersFromParams} from "@/models/Filters";
+import validation from "@/app/api/validation";
 
 const postValidator = z.object({
   name: z.string(),
   value: z.string(),
+  environment: validation.environment
 }).strict()
 
 export async function POST(request: NextRequest, context: { params: Params }): Promise<Response> {
@@ -38,7 +40,7 @@ export async function POST(request: NextRequest, context: { params: Params }): P
 
 export async function GET(
   request: NextRequest,
-  context: { params: ProjectParams }
+  context: { params: EnvironmentParams }
 ): Promise<Response> {
   const user = getAuth(request);
   if (!user.userId) {
@@ -54,6 +56,7 @@ export async function GET(
 
   const result = await variableRepository.read.all({
     projectId: context.params.projectId,
+    environment: context.params.environment,
       ...filters,
     }
   );

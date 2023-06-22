@@ -29,7 +29,7 @@ const MemberItem: FC<MemberItemProps> = ({
       : "flex justify-end gap-3 items-center";
 
   return (
-    <GenericCard>
+    <GenericCard columns="5% 30% 30% 20%">
       <Avatar
         color={color}
         src={member.user.avatarUrl}

@@ -8,16 +8,18 @@ import {
   AlertTitle,
   IconButton,
   Input,
+  Select,
   Switch,
 } from "@chakra-ui/react";
 import { CheckIcon, CloseIcon, DeleteIcon } from "@chakra-ui/icons";
 import { openDialog } from "@/signals/dialogSignal";
 import RemoveVariableDialog from "@/dialogs/RemoveVariableDialog";
-import { boolean, lazy, object, string } from "yup";
+import { boolean, lazy, object, string, mixed } from "yup";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { VariableUpdateData } from "@/app/api/types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useUpdateVariable } from "@/hooks/mutations/useUpdateVariable";
+import { Environment } from "@prisma/client";
 
 interface VariableItemProps {
   variable: Variable;
@@ -35,6 +37,7 @@ const dataSchema = object()
       return string().optional();
     }),
     value: string().optional(),
+    environment: mixed<Environment>().oneOf(Object.values(Environment)).optional()
   })
   .required();
 
@@ -50,6 +53,7 @@ const VariableItem: FC<VariableItemProps> = ({ variable, projectId }) => {
       name: variable.name,
       value: variable.value,
       hidden: !variable.hiddenVariable[0].hidden,
+      environment: variable.environment,
     },
     resolver: yupResolver<VariableUpdateData>(dataSchema),
   });
@@ -62,13 +66,14 @@ const VariableItem: FC<VariableItemProps> = ({ variable, projectId }) => {
   const { onChange: nameChange, ...name } = register("name");
   const { onChange: valueChange, ...value } = register("value");
   const { onChange: hiddenChange, ...hidden } = register("hidden");
+  const { onChange: envChange, ...env } = register("environment");
   const onSubmit: SubmitHandler<VariableUpdateData> = (data) => {
     update({ ...data, hidden: !data.hidden });
     setChange(false);
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <GenericCard>
+      <GenericCard columns="2% 15% 25% 25% 20%">
         <Switch
           size="lg"
           onChange={(e) => {
@@ -80,6 +85,18 @@ const VariableItem: FC<VariableItemProps> = ({ variable, projectId }) => {
           {...hidden}
           colorScheme="orange"
         />
+        <Select variant="flushed" onChange={(e) => {
+            envChange(e);
+            setChange(
+              getValues("environment") !== variable.environment
+            );
+          }}
+          {...env}>
+          <option className="text-black" value={Environment.DEVELOPMENT}>{Environment.DEVELOPMENT}</option>
+          <option className="text-black" value={Environment.PREVIEW}>{Environment.PREVIEW}</option>
+          <option className="text-black" value={Environment.PRODUCTION}>{Environment.PRODUCTION}</option>
+          <option className="text-black" value={Environment.STAGING}>{Environment.STAGING}</option>
+        </Select>
         <div className=" border-r border-white">
           <Input
             backgroundColor="white"

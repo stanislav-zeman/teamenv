@@ -19,6 +19,7 @@ async function create(data: VariableCreateData): Promise<Result<Variable>> {
         projectId: data.projectId,
         name: data.name,
         value: data.value,
+        environment: data.environment,
         hiddenVariable: {
           create: {
             projectUserId: projectUser.id,

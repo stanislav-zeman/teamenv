@@ -7,7 +7,7 @@ import prisma from '@/repositories/client'
 import { ProjectUser } from '@prisma/client'
 import userRepository from '@/repositories/user/index'
 import { hasAtLeastRole } from '@/repositories/commons'
-import generateApiKey from 'generate-api-key';
+import generateApiKey from 'generate-api-key'
 
 
 async function ensureUser(data: EnsureUserData): Promise<Result<boolean>> {

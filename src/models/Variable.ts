@@ -1,3 +1,4 @@
+import { Environment } from "@prisma/client";
 import { BaseModel } from "./BaseModel";
 
 export interface Variable extends BaseModel {
@@ -6,5 +7,6 @@ export interface Variable extends BaseModel {
   hiddenVariable: {
     hidden: boolean;
   }[];
+  environment: Environment;
 }
 

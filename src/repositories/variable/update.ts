@@ -32,6 +32,7 @@ async function update(data: VariableUpdateData): Promise<Result<Variable>> {
           data: {
             name: data.name,
             value: data.value,
+            environment: data.environment,
             hiddenVariable: {
               updateMany: {
                 where: {

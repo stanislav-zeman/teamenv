@@ -7,7 +7,15 @@ const zodRoleObject = z.union([
   z.literal('GUEST'),
 ]);
 
+const zodEnvironmentObject = z.union([
+  z.literal('DEVELOPMENT'),
+  z.literal('PRODUCTION'),
+  z.literal('PREVIEW'),
+  z.literal('STAGING'),
+]);
+
 const validation = {
   role: zodRoleObject,
+  environment: zodEnvironmentObject,
 }
 export default validation;

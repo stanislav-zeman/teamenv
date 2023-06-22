@@ -1,4 +1,5 @@
 import { Role } from '@/models/Role'
+import { Environment } from '@prisma/client'
 import { ReadonlyURLSearchParams } from 'next/navigation'
 
 export type DisplayOptions = 'all' | 'deleted' | 'non-deleted'
@@ -29,6 +30,7 @@ export interface ProjectFilters extends IFilter {
 export interface VariableFilters extends IFilter {
   userId: string
   projectId: string
+  environment: Environment
 }
 
 export const parseFiltersFromParams = (
