@@ -9,9 +9,9 @@ import { openDialog } from "@/signals/dialogSignal";
 import RemoveMemberDialog from "@/dialogs/RemoveMemberDialog";
 import MemberRoleUpdate from "./MemberRoleUpdate";
 import { roleToIndex } from "@/utils/roleUtils";
-import { getUserId } from "@/signals/userIdSignal";
 import { LeaveIcon } from "@/icons/LeaveIcon";
 import LeaveProjectDialog from "@/dialogs/LeaveProjectDialog";
+import { useUser } from "@clerk/nextjs";
 
 interface MemberItemProps {
   member: Member;
@@ -26,6 +26,7 @@ const MemberItem: FC<MemberItemProps> = ({
   projectId,
   myRole,
 }) => {
+  const { user } = useUser()
 
   const showDeleteButton =
     roleToIndex(myRole) < roleToIndex(Role.MAINTAINER) ||
@@ -36,7 +37,7 @@ const MemberItem: FC<MemberItemProps> = ({
   const showUpdateButton = roleToIndex(myRole) > roleToIndex(member.role);
 
   const showLeaveButton =
-    member.user.id === getUserId() && myRole !== Role.OWNER
+    member.user.id === user?.id && myRole !== Role.OWNER
       ? "flex justify-end items-center"
       : "hidden";
 
