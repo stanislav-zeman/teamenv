@@ -9,11 +9,12 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 )
 
 var (
 	key         = os.Getenv("TEAMENV_API_KEY")
-	host        = "https://teamenv.vercel.com"
+	host        = os.Getenv("TEAMENV_HOST")
 	environment string
 	output      string
 )
@@ -23,6 +24,10 @@ var (
 func main() {
 	if key == "" {
 		log.Fatal("TEAMENV_API_KEY environmental variable not found or left empty!")
+	}
+
+	if host == "" {
+		log.Fatal("TEAMENV_HOST environmental variable not found or left empty!")
 	}
 
 	app := &cli.App{
@@ -68,9 +73,16 @@ func showProjects(_ *cli.Context) error {
 	if err != nil {
 		log.Fatalf("impossible to marshall teacher: %s", err)
 	}
+	fmt.Printf("%s\n", string(marshalled))
+	client := http.Client{
+		Timeout: 10 * time.Second,
+	}
+	req, err := http.NewRequest(http.MethodGet, host+"/api/cli/projects", bytes.NewReader(marshalled))
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	res, err := http.NewRequest(http.MethodGet, host+"/api/cli/projects", bytes.NewReader(marshalled))
-
+	res, err := client.Do(req)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -81,6 +93,7 @@ func showProjects(_ *cli.Context) error {
 	}
 
 	var projects []project
+	fmt.Printf("%s\n", string(responseBytes))
 	err = json.Unmarshal(responseBytes, &projects)
 
 	if err != nil {
@@ -95,23 +108,37 @@ func showProjects(_ *cli.Context) error {
 }
 
 func pullVariables(ctx *cli.Context) error {
-	projectId := ctx.Args().Get(3)
+	projectId := ctx.Args().Get(0)
 
 	if projectId == "" {
 		log.Fatal("You need to provide project ID from which to pull!")
 	}
 
-	apiKey := apiKey{ApiKey: key}
+	env, err := parseEnvironment(environment)
+	if err != nil {
+		log.Printf("%s, using default environment preview", err.Error())
+		env = PREVIEW
+	}
 
-	marshalled, err := json.Marshal(apiKey)
+	log.Printf("using environment: %s", env)
+
+	body := variableRequest{
+		ApiKey:      key,
+		Environment: env,
+	}
+
+	marshalled, err := json.Marshal(body)
 	if err != nil {
 		log.Fatalf("impossible to marshall teacher: %s", err)
 	}
 
-	res, err := http.NewRequest(http.MethodGet, host+"/api/cli/projects/"+projectId, bytes.NewReader(marshalled))
-
+	res, err := http.Post(host+"/api/cli/projects/"+projectId, "application/json", bytes.NewReader(marshalled))
 	if err != nil {
 		log.Fatal(err)
+	}
+
+	if res.StatusCode != 200 {
+		log.Fatal("request returned non 200 status: ", res.StatusCode)
 	}
 
 	responseBytes, err := io.ReadAll(res.Body)
@@ -119,5 +146,9 @@ func pullVariables(ctx *cli.Context) error {
 		log.Fatal(err)
 	}
 
-	return os.WriteFile(output, responseBytes, 0644)
+	if err := os.WriteFile(output, responseBytes, 0644); err != nil {
+		log.Fatalf("failed to create file %s, err: %s", output, err.Error())
+	}
+	log.Printf("Successfully created env file")
+	return nil
 }

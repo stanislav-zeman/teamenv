@@ -1,5 +1,5 @@
 import {Result} from "@badrap/result";
-import {User, Variable} from "@prisma/client";
+import {Environment, User, Variable} from "@prisma/client";
 import validation from "@/app/api/validation";
 import userRepository from "@/repositories/user";
 import {NextRequest} from "next/server";
@@ -29,20 +29,30 @@ export function exportVariables(variables: Variable[]): string {
   return variables.map(variable => `${variable.name}=${variable.value}`).join("\n");
 }
 
-export async function validateApiKeyUser(request: NextRequest): Promise<Result<User>> {
-  const payload = await request.json();
-  const validationResult = validation.apiKey.safeParse(payload);
+export async function validateApiKeyUser(requestBody: any): Promise<Result<User>> {
+  const validationResult = validation.apiKey.safeParse(requestBody);
+
+  if (!validationResult.success) {
+    console.log("invalid apiKey")
+    return Result.err();
+  }
+
+  const apiKey = validationResult.data.apiKey;
+  const user = await userRepository.read.apiKeyUser(apiKey);
+
+  if (user.isErr) {
+    return Result.err();
+  }
+
+  return Result.ok(user.value);
+}
+
+export async function validateEnvironment(requestBody: any): Promise<Result<Environment>> {
+  const validationResult = validation.environmentObject.safeParse(requestBody);
 
   if (!validationResult.success) {
     return Result.err();
   }
-  
-  const apiKey = validationResult.data.apiKey;
-  const user = await userRepository.read.apiKeyUser(apiKey);
-  
-  if (user.isErr) {
-    return Result.err();
-  }
-  
-  return Result.ok(user.value);
+
+  return Result.ok(validationResult.data.environment);
 }

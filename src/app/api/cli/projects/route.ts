@@ -4,13 +4,14 @@ import projectRepository from "@/repositories/project";
 import {ReadonlyURLSearchParams} from "next/navigation";
 import {parseFiltersFromParams} from "@/models/Filters";
 
-export async function GET(request: NextRequest): Promise<Response> {
-  const validation = await validateApiKeyUser(request);
-  
+export async function POST(request: NextRequest): Promise<Response> {
+  const requestBody = await request.json();
+  const validation = await validateApiKeyUser(requestBody);
+
   if (validation.isErr) {
     return badRequestResponse();
   }
-  
+
   const searchParams = request.nextUrl.searchParams;
   const readonlySearchParams = new ReadonlyURLSearchParams(searchParams);
   const filters = {

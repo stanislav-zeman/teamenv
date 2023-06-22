@@ -11,7 +11,7 @@ import validation from "@/app/api/validation";
 const postValidator = z.object({
   name: z.string(),
   value: z.string(),
-  environment: validation.environment
+  environment: validation.environment,
 }).strict()
 
 export async function POST(request: NextRequest, context: { params: Params }): Promise<Response> {

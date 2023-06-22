@@ -3,17 +3,23 @@ import {
   badRequestResponse,
   exportVariables,
   internalServerErrorResponse,
-  validateApiKeyUser
+  validateApiKeyUser, validateEnvironment
 } from "@/app/api/helpers";
 import {ReadonlyURLSearchParams} from "next/navigation";
 import {parseFiltersFromParams} from "@/models/Filters";
 import variableRepository from "@/repositories/variable";
 import {ProjectParams} from "@/app/api/types";
 
-export async function GET(request: NextRequest, context: { params: ProjectParams }): Promise<Response> {
-  const validation = await validateApiKeyUser(request);
+export async function POST(request: NextRequest, context: { params: ProjectParams }): Promise<Response> {
+  const requestBody = await request.json();
+  const validation = await validateApiKeyUser(requestBody);
 
   if (validation.isErr) {
+    return badRequestResponse();
+  }
+
+  const environment = await validateEnvironment(requestBody);
+  if (environment.isErr) {
     return badRequestResponse();
   }
 
@@ -23,6 +29,7 @@ export async function GET(request: NextRequest, context: { params: ProjectParams
     userId: validation.value.id,
     projectId: context.params.projectId,
     ...parseFiltersFromParams(readonlySearchParams),
+    environment: environment.unwrap(),
   };
 
   const result = await variableRepository.read.all(filters)

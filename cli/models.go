@@ -1,7 +1,35 @@
 package main
 
+import (
+	"errors"
+)
+
+type Environment string
+
+const (
+	PREVIEW     Environment = "PREVIEW"
+	DEVELOPMENT Environment = "DEVELOPMENT"
+	STAGING     Environment = "STAGING"
+	PRODUCTION  Environment = "PRODUCTION"
+)
+
+func parseEnvironment(env string) (Environment, error) {
+	switch env {
+	case "preview":
+		return PREVIEW, nil
+	case "development":
+		return DEVELOPMENT, nil
+	case "staging":
+		return STAGING, nil
+	case "production":
+		return PRODUCTION, nil
+	default:
+		return "", errors.New("invalid environment")
+	}
+}
+
 type apiKey struct {
-	ApiKey string `json:"key"`
+	ApiKey string `json:"apiKey"`
 }
 
 type project struct {
@@ -12,4 +40,9 @@ type project struct {
 type variable struct {
 	Name  string `json:"name"`
 	Value string `json:"value"`
+}
+
+type variableRequest struct {
+	ApiKey      string      `json:"apiKey"`
+	Environment Environment `json:"environment"`
 }
