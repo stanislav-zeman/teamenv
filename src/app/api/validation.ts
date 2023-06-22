@@ -14,8 +14,14 @@ const zodEnvironmentObject = z.union([
   z.literal('STAGING'),
 ]);
 
+const zodAPiKeyObject = z.object({
+  apiKey: z.string(),
+})
+.strict();
+
 const validation = {
   role: zodRoleObject,
   environment: zodEnvironmentObject,
+  apiKey: zodAPiKeyObject
 }
 export default validation;

@@ -112,12 +112,33 @@ async function apiKey(
   }
 }
 
+async function apiKeyUser(
+  apiKey: APIKey,
+): Promise<Result<User>> {
+  try {
+    const user = await prisma.user.findFirst({
+      where: {
+        APIKey: apiKey,
+      },
+    });
+
+    if (!user) {
+      return Result.err(new Error("No such user!"))
+    }
+
+    return Result.ok(user);
+  } catch (e) {
+    return Result.err(e as Error);
+  }
+}
+
 const read = {
   specific,
   all,
   isMember,
   getRole,
   apiKey,
+  apiKeyUser,
 };
 
 export default read;

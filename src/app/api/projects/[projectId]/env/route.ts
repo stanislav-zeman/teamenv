@@ -1,6 +1,6 @@
 import {NextRequest} from "next/server";
 import {getAuth} from "@clerk/nextjs/server";
-import {internalServerErrorResponse, unauthorizedResponse} from "@/app/api/helpers";
+import {exportVariables, internalServerErrorResponse, unauthorizedResponse} from "@/app/api/helpers";
 import {ReadonlyURLSearchParams} from "next/navigation";
 import {parseFiltersFromParams} from "@/models/Filters";
 import {ProjectParams} from "@/app/api/types";
@@ -23,7 +23,7 @@ export async function GET(
   };
 
   const result = await variableRepository.read.all({
-    projectId: context.params.projectId,
+      projectId: context.params.projectId,
       ...filters,
     }
   );
@@ -32,9 +32,8 @@ export async function GET(
     return internalServerErrorResponse();
   }
 
-  const response = result.value
-    .map(variable => `${variable.name}=${variable.value}`)
-    .join("\n");
+  const variables = result.value;
+  const response = exportVariables(variables);
 
   return new Response(response, { status: 200 });
 }
