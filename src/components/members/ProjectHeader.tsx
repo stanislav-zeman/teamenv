@@ -1,13 +1,6 @@
 "use client";
-import { AddIcon, ViewIcon } from "@chakra-ui/icons";
-import {
-  Button,
-  IconButton,
-  Link,
-  Stack,
-  StackDivider,
-  Text,
-} from "@chakra-ui/react";
+import { AddIcon } from "@chakra-ui/icons";
+import { Button, IconButton, Stack, StackDivider } from "@chakra-ui/react";
 import { FC } from "react";
 import GenericLolInput from "../common/GenericLolInput";
 import { useRouter } from "next/navigation";
@@ -21,35 +14,16 @@ import { ProjectAddUserDialog } from "@/dialogs/ProjectAddUserDialog";
 import { MyProject } from "@/models/Project";
 import { ExportDialog } from "@/dialogs/ExportDialog";
 import { EnvironmentFilter } from "../common/EnvironmentFilter";
+import { getLinkStyles } from "@/utils/styleUtils";
 
 interface ProjectHeaderProps {
   project: MyProject;
   members: boolean;
 }
 
-type LinkStyles = {
-  textColor: string;
-  fontWeight: string;
-  textDecoration: string;
-};
-
-const getLinkStyles = (active: boolean): LinkStyles => {
-  if (active) {
-    return {
-      textColor: "black",
-      fontWeight: "bold",
-      textDecoration: "underline",
-    };
-  }
-  return {
-    textColor: "darkgray",
-    fontWeight: "normal",
-    textDecoration: "none",
-  };
-};
-
 const ProjectHeader: FC<ProjectHeaderProps> = ({ project, members }) => {
   const router = useRouter();
+  const showAddButton = members && project.myRole >= Role.MAINTAINER;
   return (
     <Stack divider={<StackDivider borderColor="gray.700" />}>
       <ProjectNameDisplay project={project} />
@@ -89,7 +63,7 @@ const ProjectHeader: FC<ProjectHeaderProps> = ({ project, members }) => {
           )}
           <OrderFilteringButtons />
           <GenericLolInput />
-          {members && project.myRole >= Role.MAINTAINER && (
+          {showAddButton && (
             <IconButton
               onClick={() => {
                 openDialog(<ProjectAddUserDialog project={project} />);

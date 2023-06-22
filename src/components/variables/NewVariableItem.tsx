@@ -9,26 +9,17 @@ import {
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { boolean, lazy, mixed, object, string } from "yup";
 import GenericCard from "../common/GenericCard";
-import { AddIcon, CheckIcon, DeleteIcon } from "@chakra-ui/icons";
+import { AddIcon, CheckIcon } from "@chakra-ui/icons";
 import { FC, useState } from "react";
 import { useAddVariableToProject } from "@/hooks/mutations/useAddVariableToProject";
 import { Environment } from "@prisma/client";
+import { VariableCreateSchema } from "@/models/Variable";
+import { DeleteVariableButton } from "./DeleteVariableButton";
 
 interface INewVariableItem {
   projectId: string;
 }
-
-const schema = object()
-  .shape({
-    name: string()
-      .required()
-      .min(3, "Name must be atleast three characters long!"),
-    value: string().required(),
-    environment: mixed<Environment>().oneOf(Object.values(Environment)).required(),
-  })
-  .required();
 
 export const NewVariableItem: FC<INewVariableItem> = ({ projectId }) => {
   const [displayNew, setDisplayNew] = useState(false);
@@ -39,9 +30,9 @@ export const NewVariableItem: FC<INewVariableItem> = ({ projectId }) => {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isDirty },
+    formState: { errors },
   } = useForm<VariableCreateData>({
-    resolver: yupResolver<VariableCreateData>(schema),
+    resolver: yupResolver<VariableCreateData>(VariableCreateSchema),
     mode: "onChange",
   });
 
@@ -79,10 +70,11 @@ export const NewVariableItem: FC<INewVariableItem> = ({ projectId }) => {
         </div>
         <Select variant="flushed"
           {...register("environment")}>
-          <option className="text-black" value={Environment.DEVELOPMENT}>{Environment.DEVELOPMENT}</option>
-          <option className="text-black" value={Environment.PREVIEW}>{Environment.PREVIEW}</option>
-          <option className="text-black" value={Environment.PRODUCTION}>{Environment.PRODUCTION}</option>
-          <option className="text-black" value={Environment.STAGING}>{Environment.STAGING}</option>
+          {Object.keys(Environment).map((env) => (
+            <option className="text-black" key={env} value={env}>
+              {env}
+            </option>
+          ))}
         </Select>
         <div className=" border-r border-white w-full">
           <Input
@@ -126,14 +118,7 @@ export const NewVariableItem: FC<INewVariableItem> = ({ projectId }) => {
           )}
         </div>
         <div className="flex justify-end gap-3 items-center">
-          <IconButton
-            type="button"
-            aria-label="delete-variable"
-            icon={<DeleteIcon color="white" boxSize="80%" />}
-            variant="ghost"
-            colorScheme="whiteAlpha"
-            onClick={handleClose}
-          />
+          <DeleteVariableButton action={handleClose} />
         </div>
       </GenericCard>
     </form>

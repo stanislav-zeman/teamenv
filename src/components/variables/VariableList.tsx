@@ -9,6 +9,7 @@ import VariableItem from "./VariableItem";
 import { NewVariableItem } from "./NewVariableItem";
 import { useProjectVariables } from "@/hooks/queries/useProjectVariables";
 import { filteringSignal } from "@/signals/filteringSignal";
+import { VariableColumns } from "./VariableColumns";
 
 interface VariableListProps {
   projectId: string;
@@ -27,6 +28,7 @@ const VariableList: FC<VariableListProps> = ({ projectId }) => {
 
   return (
     <GenericList>
+      <VariableColumns />
       {variables.map((variable) => (
         <VariableItem
           key={variable.id}

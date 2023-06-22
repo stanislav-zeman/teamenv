@@ -2,11 +2,11 @@
 import { FC } from "react";
 import { Skeleton } from "@chakra-ui/react";
 import GenericList from "../common/GenericList";
-import { getRandomColors } from "@/utils/randomColor";
 import MemberItem from "./MemberItem";
 import { useProjectMembers } from "@/hooks/queries/useProjectMembers";
-import { filteringSignal, getFilters } from "@/signals/filteringSignal";
+import { filteringSignal } from "@/signals/filteringSignal";
 import { Role } from "@prisma/client";
+import { getRandomColors } from "@/utils/styleUtils";
 
 interface MemberListProps {
   myRole: Role;
@@ -25,6 +25,7 @@ const MemberList: FC<MemberListProps> = ({ projectId, myRole }) => {
   if (!members || isError) return <h3>Error during data fetch</h3>;
 
   const colors = getRandomColors(members.length);
+  
   const rows = members.map((member, index) => (
     <MemberItem
       key={member.id}

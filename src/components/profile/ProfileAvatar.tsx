@@ -1,5 +1,4 @@
 "use client";
-import { getRandomColor } from "@/utils/randomColor";
 import { Avatar, Box, Text } from "@chakra-ui/react";
 import { FC } from "react";
 
@@ -10,7 +9,6 @@ interface UserAvatarProps {
 }
 
 const UserAvatar: FC<UserAvatarProps> = ({ name, email, image }) => {
-  console.log(image)
   return (
     <div className="flex flex-col justify-center items-center bg-gray-200 w-full rounded-2xl h-5/6 max-h-[44em] shadow-lg">
       <Box className=" absolute w-[20em] h-[20em] z-0"

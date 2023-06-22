@@ -15,3 +15,24 @@ export const getRandomColors = (count: number) => {
   }
   return listOfColors;
 };
+
+type LinkStyles = {
+  textColor: string;
+  fontWeight: string;
+  textDecoration: string;
+};
+
+export const getLinkStyles = (active: boolean): LinkStyles => {
+  if (active) {
+    return {
+      textColor: "black",
+      fontWeight: "bold",
+      textDecoration: "underline",
+    };
+  }
+  return {
+    textColor: "darkgray",
+    fontWeight: "normal",
+    textDecoration: "none",
+  };
+};

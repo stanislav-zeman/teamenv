@@ -2,7 +2,13 @@ import { queryClient } from "@/app/providers/ReactQueryProvider";
 import { useRemoveVariableFromProject } from "@/hooks/mutations/useRemoveVariableFromProject";
 import { getMyProjectKey } from "@/hooks/useProject";
 import { closeDialog } from "@/signals/dialogSignal";
-import { Button, Dialog } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
 import { FC } from "react";
 
 interface RemoveMemberProps {
@@ -36,18 +42,22 @@ const RemoveVariableDialog: FC<RemoveMemberProps> = ({
       onClose={closeDialog}
       className="text-center"
     >
-      <h2 className="mt-4">
-        You are about to remove {name} variable from this project.
-      </h2>
-      <h2>Do you wish to continue?</h2>
-      <div className="flex gap-4 my-4 justify-center">
-        <Button color="primary" variant="contained" onClick={handleContinue}>
-          CONTINUE
-        </Button>
-        <Button color="secondary" variant="contained" onClick={closeDialog}>
-          CANCEL
-        </Button>
-      </div>
+      <DialogTitle>Remove Variable:</DialogTitle>
+      <DialogContent>
+        <DialogContentText>
+          You are about to remove <strong>{name}</strong> from this project.{" "}
+          <br />
+          Do you wish to continue?
+        </DialogContentText>
+        <div className="flex gap-4 my-4 justify-center">
+          <Button color="primary" variant="contained" onClick={handleContinue}>
+            CONTINUE
+          </Button>
+          <Button color="secondary" variant="contained" onClick={closeDialog}>
+            CANCEL
+          </Button>
+        </div>
+      </DialogContent>
     </Dialog>
   );
 };

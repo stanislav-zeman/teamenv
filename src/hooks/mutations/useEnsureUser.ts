@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import environment from "@/utils/envMetadata";
+import { setUserId } from "@/signals/userIdSignal";
 
 export function useEnsureUser() {
   return useMutation(async () => {

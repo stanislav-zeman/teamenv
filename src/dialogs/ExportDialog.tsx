@@ -5,6 +5,7 @@ import { FC, useState } from "react";
 import { Text } from "@chakra-ui/react";
 import { Variable } from "@/models/Variable";
 import { generateEnvFile } from "@/utils/generateFileUtils";
+import useFilters from "@/app/hooks/useFilters";
 
 interface IExportDialog {
   variables: Variable[];
@@ -12,9 +13,10 @@ interface IExportDialog {
 
 export const ExportDialog: FC<IExportDialog> = ({ variables }) => {
   const [fileName, setFileName] = useState(".env");
+  const { filters } = useFilters();
 
   const handleExport = () => {
-    generateEnvFile(variables, fileName);
+    generateEnvFile(variables, filters.environment, fileName);
     closeDialog();
   };
 

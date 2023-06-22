@@ -11,15 +11,13 @@ import {
 } from "@mui/material";
 import { FC } from "react";
 
-interface RemoveMemberProps {
+type LeaveProjectDialogProps = {
   memberId: string;
-  username: string;
   projectId: string;
 }
 
-const RemoveMemberDialog: FC<RemoveMemberProps> = ({
+const LeaveProjectDialog: FC<LeaveProjectDialogProps> = ({
   memberId,
-  username,
   projectId,
 }) => {
   const { mutate: remove } = useRemoveUserFromProject({ memberId, projectId });
@@ -40,10 +38,10 @@ const RemoveMemberDialog: FC<RemoveMemberProps> = ({
       onClose={closeDialog}
       className="text-center"
     >
-      <DialogTitle>Remove Member:</DialogTitle>
+      <DialogTitle>Leave Project:</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          You are about to remove <strong>{username}</strong> from this project. <br />
+          You are about to leave this project. <br />
           Do you wish to continue?
         </DialogContentText>
         <div className="flex gap-4 my-4 justify-center">
@@ -59,4 +57,4 @@ const RemoveMemberDialog: FC<RemoveMemberProps> = ({
   );
 };
 
-export default RemoveMemberDialog;
+export default LeaveProjectDialog;

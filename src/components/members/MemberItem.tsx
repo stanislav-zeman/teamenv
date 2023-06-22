@@ -9,6 +9,9 @@ import { openDialog } from "@/signals/dialogSignal";
 import RemoveMemberDialog from "@/dialogs/RemoveMemberDialog";
 import MemberRoleUpdate from "./MemberRoleUpdate";
 import { roleToIndex } from "@/utils/roleUtils";
+import { getUserId } from "@/signals/userIdSignal";
+import { LeaveIcon } from "@/icons/LeaveIcon";
+import LeaveProjectDialog from "@/dialogs/LeaveProjectDialog";
 
 interface MemberItemProps {
   member: Member;
@@ -23,13 +26,22 @@ const MemberItem: FC<MemberItemProps> = ({
   projectId,
   myRole,
 }) => {
-  const iconsContainer =
-    member.role == Role.OWNER
+
+  const showDeleteButton =
+    roleToIndex(myRole) < roleToIndex(Role.MAINTAINER) ||
+    roleToIndex(myRole) <= roleToIndex(member.role)
       ? "hidden"
-      : "flex justify-end gap-3 items-center";
+      : "flex justify-end items-center";
+
+  const showUpdateButton = roleToIndex(myRole) > roleToIndex(member.role);
+
+  const showLeaveButton =
+    member.user.id === getUserId() && myRole !== Role.OWNER
+      ? "flex justify-end items-center"
+      : "hidden";
 
   return (
-    <GenericCard columns="5% 30% 30% 20%">
+    <GenericCard columns="2% 30% 30% 20%">
       <Avatar
         color={color}
         src={member.user.avatarUrl}
@@ -39,7 +51,7 @@ const MemberItem: FC<MemberItemProps> = ({
         fontWeight="600"
       />
       <Text fontSize="xl">{member.user.username}</Text>
-      {roleToIndex(myRole) > roleToIndex(member.role) ? (
+      {showUpdateButton ? (
         <MemberRoleUpdate
           myRole={myRole}
           member={member}
@@ -48,25 +60,39 @@ const MemberItem: FC<MemberItemProps> = ({
       ) : (
         <MemberRole role={member.role} />
       )}
-      {myRole >= Role.MAINTAINER && myRole > member.role && (
-        <div className={iconsContainer}>
-          <IconButton
-            aria-label="delete-member"
-            icon={<DeleteIcon color="white" boxSize="80%" />}
-            variant="ghost"
-            colorScheme="whiteAlpha"
-            onClick={() =>
-              openDialog(
-                <RemoveMemberDialog
-                  memberId={member.user.id}
-                  username={member.user.username}
-                  projectId={projectId}
-                />
-              )
-            }
-          />
-        </div>
-      )}
+      <div className={showDeleteButton}>
+        <IconButton
+          aria-label="delete-member"
+          icon={<DeleteIcon color="white" boxSize="80%" />}
+          variant="ghost"
+          colorScheme="whiteAlpha"
+          onClick={() =>
+            openDialog(
+              <RemoveMemberDialog
+              memberId={member.user.id}
+              username={member.user.username}
+              projectId={projectId}
+            />
+            )
+          }
+        />
+      </div>
+      <div className={showLeaveButton}>
+        <IconButton
+          aria-label="leave-project"
+          icon={<LeaveIcon />}
+          variant="ghost"
+          colorScheme="whiteAlpha"
+          onClick={() =>
+            openDialog(
+              <LeaveProjectDialog
+                memberId={member.user.id}
+                projectId={projectId}
+              />
+            )
+          }
+        />
+      </div>
     </GenericCard>
   );
 };

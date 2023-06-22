@@ -1,12 +1,12 @@
 "use client";
 import ProfileAvatar from "@/components/profile/ProfileAvatar";
-import { Box, Divider } from "@chakra-ui/react";
+import { Box, Divider, Skeleton } from "@chakra-ui/react";
 import { UserProfile, useUser } from "@clerk/nextjs";
 import { FC } from "react";
 
 const ProfileContainer: FC<any> = () => {
   const { isLoaded, user } = useUser();
-  if (!user || !isLoaded) return <h1>Loading..</h1>;
+  if (!user || !isLoaded) return <Skeleton />;
   return (
     <main className="px-20 h-full overflow-hidden">
       <h1 className="my-4 text-2xl pl-2">Profile</h1>{" "}

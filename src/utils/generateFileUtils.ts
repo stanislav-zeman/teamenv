@@ -1,14 +1,19 @@
 "use client";
 import { saveAs } from "file-saver";
 import { Variable } from "@/models/Variable";
+import useFilters from "@/app/hooks/useFilters";
+import { Environment } from "@prisma/client";
 
-const filterHidden = (variables: Variable[]) =>
-  variables.filter((variable) => !variable.hiddenVariable[0].hidden);
+const filterHiddenAndEnvironment = (variables: Variable[], env: Environment) =>
+  variables.filter(
+    (variable) =>
+      !variable.hiddenVariable[0].hidden && variable.environment === env
+  );
 
-export const generateEnvFile = (variables: Variable[], fileName = ".env") => {
+export const generateEnvFile = (variables: Variable[], environment: Environment, fileName = ".env") => {
   console.log(variables);
   let content = "";
-  const filtered = filterHidden(variables);
+  const filtered = filterHiddenAndEnvironment(variables, environment);
   filtered.forEach(
     (variable) =>
       (content = content.concat(`${variable.name}=${variable.value}\n`))
