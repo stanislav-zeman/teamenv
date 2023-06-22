@@ -1,7 +1,10 @@
+"use client"
 import { queryClient } from "@/app/providers/ReactQueryProvider";
 import { useRemoveUserFromProject } from "@/hooks/mutations/useRemoveUserFromProject";
+import { invalidateProjects } from "@/hooks/useMyProjects";
 import { getMyProjectKey } from "@/hooks/useProject";
 import { closeDialog } from "@/signals/dialogSignal";
+import environment from "@/utils/envMetadata";
 import {
   Button,
   Dialog,
@@ -9,6 +12,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
+import { useRouter } from "next/navigation";
 import { FC } from "react";
 
 type LeaveProjectDialogProps = {
@@ -20,13 +24,15 @@ const LeaveProjectDialog: FC<LeaveProjectDialogProps> = ({
   memberId,
   projectId,
 }) => {
+  const router = useRouter();
   const { mutate: remove } = useRemoveUserFromProject({ memberId, projectId });
 
   const handleContinue = () => {
     remove(undefined, {
       onSuccess: () => {
         closeDialog();
-        queryClient.invalidateQueries(getMyProjectKey(projectId));
+        invalidateProjects();
+        router.push(`/projects`)
       },
     });
   };

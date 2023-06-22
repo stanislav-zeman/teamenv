@@ -15,6 +15,7 @@ import { queryClient } from '@/app/providers/ReactQueryProvider'
 import { getMyProjectKey } from '@/hooks/useProject'
 import { useUpdateUser } from '@/hooks/mutations/useUpdateUser'
 import { Member } from '@/models/Member'
+import { invalidateMembers } from '@/hooks/queries/useProjectMembers'
 
 interface IUpdateRoleDialog {
   selectedUser: Member;
@@ -45,7 +46,7 @@ export const UpdateRoleDialog: FC<IUpdateRoleDialog> = ({
       {
         onSuccess: () => {
           closeDialog()
-          queryClient.invalidateQueries(getMyProjectKey(projectId))
+          invalidateMembers(projectId)
         },
       }
     )

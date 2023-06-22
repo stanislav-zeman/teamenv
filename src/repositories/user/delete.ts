@@ -29,13 +29,14 @@ export async function deleteMember(data: ModifyMemberData): Promise<Result<boole
             userId: data.memberId,
           },
         });
+
         const userRole = await userRepository.read.getRole(data.userId, data.projectId);
         if (userRole.isErr) {
           throw new Error("Failed to retrieve logged in user role!");
         }
-
-        checkRoles(userRole.unwrap(), member.role);
-
+        if (data.userId !== data.memberId) {
+          checkRoles(userRole.unwrap(), member.role);
+        }
         await transaction.projectUser.update({
           where: {
             id: member.id,

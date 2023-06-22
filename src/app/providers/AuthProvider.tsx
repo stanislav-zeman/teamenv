@@ -10,9 +10,9 @@ const AuthProvider: FC<{ children?: ReactNode }> = ({ children }) => {
 
   useEffect(() => {
     console.log(user?.id)
-    setUserId(user?.id)
     if (user) {
       mutate()
+      setUserId(user.id)
     }
   }, [user])
 

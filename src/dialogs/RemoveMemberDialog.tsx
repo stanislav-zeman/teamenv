@@ -1,6 +1,6 @@
 import { queryClient } from "@/app/providers/ReactQueryProvider";
 import { useRemoveUserFromProject } from "@/hooks/mutations/useRemoveUserFromProject";
-import { getMyProjectKey } from "@/hooks/useProject";
+import { invalidateMembers } from "@/hooks/queries/useProjectMembers";
 import { closeDialog } from "@/signals/dialogSignal";
 import {
   Button,
@@ -28,7 +28,7 @@ const RemoveMemberDialog: FC<RemoveMemberProps> = ({
     remove(undefined, {
       onSuccess: () => {
         closeDialog();
-        queryClient.invalidateQueries(getMyProjectKey(projectId));
+        invalidateMembers(projectId);
       },
     });
   };

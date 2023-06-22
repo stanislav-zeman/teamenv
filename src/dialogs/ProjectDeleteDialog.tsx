@@ -34,7 +34,7 @@ export const ProjectDeleteDialog: FC<IProjectDeleteDialog> = ({
             Do you want to delete project:{"\n"} {projectName}?
           </Text>
 
-          <div className="gap-4 flex">
+          <div className="gap-4 flex justify-center">
             <Button
               onClick={handleConfirmDelete}
               variant="contained"

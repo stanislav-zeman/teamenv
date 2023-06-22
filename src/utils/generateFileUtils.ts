@@ -11,9 +11,9 @@ const filterHiddenAndEnvironment = (variables: Variable[], env: Environment) =>
   );
 
 export const generateEnvFile = (variables: Variable[], environment: Environment, fileName = ".env") => {
-  console.log(variables);
   let content = "";
   const filtered = filterHiddenAndEnvironment(variables, environment);
+  console.log(filtered)
   filtered.forEach(
     (variable) =>
       (content = content.concat(`${variable.name}=${variable.value}\n`))
