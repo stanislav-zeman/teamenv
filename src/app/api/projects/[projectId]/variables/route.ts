@@ -40,7 +40,7 @@ export async function POST(request: NextRequest, context: { params: Params }): P
 
 export async function GET(
   request: NextRequest,
-  context: { params: EnvironmentParams }
+  context: { params: ProjectParams }
 ): Promise<Response> {
   const user = getAuth(request);
   if (!user.userId) {
@@ -56,7 +56,6 @@ export async function GET(
 
   const result = await variableRepository.read.all({
     projectId: context.params.projectId,
-    environment: context.params.environment,
       ...filters,
     }
   );

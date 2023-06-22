@@ -19,9 +19,8 @@ import { Role } from "@/models/Role";
 import { openDialog } from "@/signals/dialogSignal";
 import { ProjectAddUserDialog } from "@/dialogs/ProjectAddUserDialog";
 import { MyProject } from "@/models/Project";
-import { generateEnvFile } from "@/utils/generateFileUtils";
 import { ExportDialog } from "@/dialogs/ExportDialog";
-import { ProjectAddVariableDialog } from "@/dialogs/ProjectAddVariableDialog";
+import { EnvironmentFilter } from "../common/EnvironmentFilter";
 
 interface ProjectHeaderProps {
   project: MyProject;
@@ -77,6 +76,7 @@ const ProjectHeader: FC<ProjectHeaderProps> = ({ project, members }) => {
             <AtLeastRoleFilter />
           ) : (
             <div className="flex items-center justify-center gap-7">
+              <EnvironmentFilter />
               <Button
                 onClick={() =>
                   openDialog(<ExportDialog variables={project.variables} />)

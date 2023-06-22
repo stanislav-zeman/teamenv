@@ -14,6 +14,7 @@ export const filteringSignalToSearchParams = (): URLSearchParams => {
   );
   params.set("page", filteringSignal.value.page.toString());
   params.set("display", filteringSignal.value.display);
+  params.set("environment", filteringSignal.value.environment.valueOf().toString())
 
   return params;
 };

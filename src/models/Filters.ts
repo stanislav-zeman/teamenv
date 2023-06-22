@@ -13,6 +13,7 @@ export interface IFilter {
   display: DisplayOptions
   page: number
   ignoreProject?: string
+  environment: Environment
 }
 
 export interface UrlFilters {
@@ -30,7 +31,6 @@ export interface ProjectFilters extends IFilter {
 export interface VariableFilters extends IFilter {
   userId: string
   projectId: string
-  environment: Environment
 }
 
 export const parseFiltersFromParams = (
@@ -52,6 +52,7 @@ export const parseFiltersFromParams = (
     page: +(params.get('page') ?? defaultFilters.page),
     display: (params.get('display') as DisplayOptions) ?? 'all',
     ignoreProject: params.get("ignoreProject") ?? defaultFilters.ignoreProject,
+    environment: params.get("environment") as Environment ?? Environment.PREVIEW
   }
 }
 
@@ -63,5 +64,6 @@ export const getDefaultFilters = (): IFilter => ({
   atLeastRole: Role.GUEST,
   page: 1,
   display: 'all',
-  ignoreProject: undefined
+  ignoreProject: undefined,
+  environment: Environment.PREVIEW
 })
