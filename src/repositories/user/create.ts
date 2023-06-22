@@ -20,12 +20,11 @@ async function ensureUser(data: EnsureUserData): Promise<Result<boolean>> {
           },
         });
 
-        const apiKey = generateApiKey().toString();
         if (!user) {
           await transaction.user.create({
             data: {
               ...data,
-              APIKey: apiKey,
+              APIKey: generateApiKey().toString(),
             }
           });
           return true;
@@ -38,7 +37,6 @@ async function ensureUser(data: EnsureUserData): Promise<Result<boolean>> {
             },
             data: {
               ...data,
-              APIKey: apiKey,
             },
           });
           return true;
