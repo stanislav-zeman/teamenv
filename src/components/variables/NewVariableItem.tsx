@@ -26,7 +26,7 @@ const schema = object()
       .required()
       .min(3, "Name must be atleast three characters long!"),
     value: string().required(),
-    environment: mixed<Environment>().oneOf(Object.values(Environment)).optional(),
+    environment: mixed<Environment>().oneOf(Object.values(Environment)).required(),
   })
   .required();
 
@@ -41,7 +41,7 @@ export const NewVariableItem: FC<INewVariableItem> = ({ projectId }) => {
     reset,
     formState: { errors, isDirty },
   } = useForm<VariableCreateData>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver<VariableCreateData>(schema),
     mode: "onChange",
   });
 
