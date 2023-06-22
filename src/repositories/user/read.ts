@@ -2,6 +2,7 @@ import { Role, User } from "@prisma/client";
 import prisma from "@/repositories/client";
 import { Result } from "@badrap/result";
 import { IFilter } from "@/models/Filters";
+import {APIKey} from "@/repositories/user/types/data";
 
 async function specific(id: string): Promise<Result<User>> {
   try {
@@ -91,11 +92,32 @@ async function isMember(
   }
 }
 
+async function apiKey(
+  userId: string,
+): Promise<Result<APIKey>> {
+  try {
+    const user = await prisma.user.findFirst({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!user) {
+      return Result.err(new Error("No such user!"))
+    }
+
+    return Result.ok(user.APIKey);
+  } catch (e) {
+    return Result.err(e as Error);
+  }
+}
+
 const read = {
   specific,
   all,
   isMember,
   getRole,
+  apiKey,
 };
 
 export default read;
