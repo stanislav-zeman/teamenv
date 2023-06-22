@@ -10,6 +10,7 @@ import environment from "@/utils/envMetadata";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Variable } from "../../models/Variable";
+import {getMyProjectKey} from "@/hooks/useProject";
 
 const variablesKey = "variables";
 
@@ -18,6 +19,7 @@ export const invalidateVariables = (projectId: string) => {
     queryKey: [projectId, variablesKey],
     exact: false,
   });
+  queryClient.invalidateQueries(getMyProjectKey(projectId));
 };
 
 export const getVariablesKey = (projectId: string, filterString: string) => {

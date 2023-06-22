@@ -1,10 +1,8 @@
-import { VariableParams, VariableUpdateData } from "@/app/api/types";
-import { queryClient } from "@/app/providers/ReactQueryProvider";
+import {VariableParams, VariableUpdateData} from "@/app/api/types";
 import environment from "@/utils/envMetadata";
-import { useMutation } from "@tanstack/react-query";
+import {useMutation} from "@tanstack/react-query";
 import axios from "axios";
-import { getMyProjectKey } from "../useProject";
-import { invalidateVariables } from "../queries/useProjectVariables";
+import {invalidateVariables} from "../queries/useProjectVariables";
 
 export const useUpdateVariable = ({
   projectId,
