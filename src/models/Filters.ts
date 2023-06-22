@@ -12,6 +12,7 @@ export interface IFilter {
   atLeastRole: Role
   display: DisplayOptions
   page: number
+  pageSize: number,
   ignoreProject?: string
   environment: Environment
 }
@@ -50,6 +51,7 @@ export const parseFiltersFromParams = (
       ? (params.get('atLeastRole') as Role) || Role.GUEST
       : defaultFilters.atLeastRole,
     page: +(params.get('page') ?? defaultFilters.page),
+    pageSize: +(params.get("pageSize") ?? defaultFilters.pageSize),
     display: (params.get('display') as DisplayOptions) ?? 'all',
     ignoreProject: params.get("ignoreProject") ?? defaultFilters.ignoreProject,
     environment: params.get("environment") as Environment ?? Environment.PREVIEW
@@ -63,6 +65,7 @@ export const getDefaultFilters = (): IFilter => ({
   dateTo: null,
   atLeastRole: Role.GUEST,
   page: 1,
+  pageSize: 9,
   display: 'all',
   ignoreProject: undefined,
   environment: Environment.PREVIEW

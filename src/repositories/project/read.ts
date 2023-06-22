@@ -69,8 +69,6 @@ async function specific(
   }
 }
 
-const pageSize = 9;
-
 async function all(
   filters: ProjectFilters
 ): Promise<Result<Pageable<ProjectSummary>>> {
@@ -105,7 +103,7 @@ async function all(
 
     const projects = await prisma.project.findMany({
       skip,
-      take: pageSize,
+      take: filters.pageSize,
       where: whereFilter,
       include: {
         users: {
@@ -127,8 +125,8 @@ async function all(
       },
     });
 
-    let pageCount = Math.round(count / pageSize);
-    if (count % pageSize === 0) {
+    let pageCount = Math.round(count / filters.pageSize);
+    if (pageCount === 0 || count % filters.pageSize === 0) {
       pageCount += 1;
     }
 
@@ -142,7 +140,7 @@ async function all(
       docs: mapped,
       page: filters.page,
       pages: pageCount,
-      limit: pageSize,
+      limit: filters.pageSize,
       total: count,
     });
   } catch (e) {
