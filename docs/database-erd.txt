@@ -1,0 +1,60 @@
+Table User {
+  id varchar [primary key]
+  username varchar
+  email varchar
+  password varchar
+  created_at timestamp
+  editedAt timestamp
+  deleted_at timestamp
+}
+
+Table ProjectUser {
+  id varchar [primary key]
+  role Role
+  userId value [ref: > User.id]
+  projectId value [ref: > Project.id]
+  created_at timestamp
+  editedAt timestamp
+  deleted_at timestamp
+}
+
+Enum Role {
+  OWNER
+  MAINTANER
+  DEVELOPER
+  OBSERVER
+}
+
+Table Project {
+  id varchar [primary key]
+  name varchar
+  description varchar
+  created_at timestamp
+  editedAt timestamp
+  deleted_at timestamp
+}
+
+Table Variable {
+  id varchar [primary key]
+  projectId value [ref: > Project.id]
+  name varchar
+  value varchar
+  minimalAccessRight Role
+}
+
+Table VariableHistory {
+  id varchar [primary key]
+  variableId value [ref: > Variable.id]
+  name varchar // nullable
+  value varchar // nullable
+  minimalAccessRight Role // nullable
+  editedAt timestamp
+  editedBy value [ref: > User.id]
+}
+
+Table HiddenVariable {
+  id varchar [primary key]
+  userId value [ref: > User.id]
+  variableId value [ref: > Variable.id]
+}
+

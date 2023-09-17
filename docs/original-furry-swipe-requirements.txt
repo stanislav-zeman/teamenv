@@ -1,0 +1,19 @@
+FurrySwipe
+---
+A social network with Tinder-like features for making new furry friends
+---
+Must have:
+  - user profile management
+  - Tinder-like swiping feature
+  - live chat
+  - user authentication
+
+Should have:
+  - image sharing
+  - account leveling
+  - user blocking
+
+Can have:
+  - video streaming
+  - group chats
+  - theme customization
